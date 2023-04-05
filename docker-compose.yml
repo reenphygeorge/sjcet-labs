@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    container_name: lab-db
+    volumes:
+      - ./tmp/pg:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${API_DB_USER}
+      - POSTGRES_PASSWORD=${API_DB_PASS}
+      - POSTGRES_DB=${API_DB_NAME}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${API_DB_USER} -d ${API_DB_NAME}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5435:5432
+networks:
+  app_network:
+    driver: bridge
