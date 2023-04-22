@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a>
-    <img src="https://cdn3.vectorstock.com/i/1000x1000/59/87/computer-science-lab-logo-icon-design-vector-22915987.jpg" alt="Logo" width="80" height="80">
+    <img src="https://res.cloudinary.com/rxg/image/upload/v1682167700/lab-management/computer-science-lab-logo-icon-design-vector-22915987-removebg-preview_1_blx6rr.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center">Lab Management System</h3>
@@ -53,6 +53,7 @@ A software that assists college faculties to maintain and manage the laboratory.
 - [Prisma](https://www.prisma.io/)
 - [Next.js](https://nextjs.org/)
 - [ChakraUI](https://chakra-ui.com/)
+- [SuperTokens](https://supertokens.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
