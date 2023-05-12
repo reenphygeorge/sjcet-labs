@@ -1,12 +1,29 @@
 import express, { Application } from 'express';
-import dotenv from 'dotenv';
-import authRoute from './routes/auth';
+import cors from 'cors';
+import supertokens from 'supertokens-node';
+import { middleware, errorHandler } from 'supertokens-node/framework/express';
+import supertokensInit from './routes/auth';
+import env from './helpers/env';
 
-dotenv.config();
+// import authRoute from './routes/auth';
 
 const app: Application = express();
-const port: string | undefined = process.env.API_PORT;
+const port: string | undefined = env.apiPort;
 
-app.use('/login', authRoute);
+supertokensInit();
+
+app.use(
+  cors({
+    origin: env.websiteDomain,
+    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  })
+);
+
+app.use(middleware());
+
+// app.use('/login', authRoute);
+
+app.use(errorHandler());
 
 app.listen(port, () => console.log(`Server Listening on ${port}`));

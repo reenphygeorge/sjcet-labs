@@ -16,6 +16,17 @@ services:
       retries: 5
     ports:
       - 5435:5432
+  nocodb:
+    image: nocodb/nocodb:0.99.0
+    container_name: lab-noco
+    ports:
+      - '8080:8080'
+    restart: always
+    networks:
+      - app_network
+      - default
+    volumes:
+      - './tmp/noco:/usr/app/data'
 networks:
   app_network:
     driver: bridge
