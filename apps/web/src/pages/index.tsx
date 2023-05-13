@@ -1,7 +1,7 @@
 import Head from 'next/head';
-// import { Inter } from 'next/font/google';
-
-// const inter = Inter({ subsets: ['latin'] });
+import { Box } from '@chakra-ui/react';
+// eslint-disable-next-line import/extensions
+import TimetableCard from '@/components/timetableCard';
 
 const Home = () => (
   <>
@@ -11,7 +11,9 @@ const Home = () => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <main />
+    <Box m="20px">
+      <TimetableCard />
+    </Box>
   </>
 );
 
