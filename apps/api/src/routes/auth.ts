@@ -4,7 +4,7 @@ import EmailPassword from 'supertokens-node/recipe/emailpassword';
 import Dashboard from 'supertokens-node/recipe/dashboard';
 import env from '../helpers/env';
 
-export default function supertokensInit() {
+const supertokensInit = () => {
   supertokens.init({
     framework: 'express',
     supertokens: {
@@ -20,4 +20,6 @@ export default function supertokensInit() {
     },
     recipeList: [EmailPassword.init(), Session.init(), Dashboard.init()],
   });
-}
+};
+
+export default supertokensInit;

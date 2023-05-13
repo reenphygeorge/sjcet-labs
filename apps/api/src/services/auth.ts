@@ -1,5 +1,3 @@
-const login = () => {
-  return { data: 'Auth Coming Soon' };
-};
+// const login = () => ({ data: 'Auth Coming Soon' });
 
-export default login;
+// export default login;
