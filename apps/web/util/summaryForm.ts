@@ -1,0 +1,76 @@
+const summaryForm = [
+  {
+    label: 'Semester',
+    id: 'semester',
+    value: 'S6',
+    disabled: false,
+    inputType: 'select',
+    options: [
+      { optionValue: 'S1', selected: false },
+      { optionValue: 'S2', selected: false },
+      { optionValue: 'S3', selected: false },
+      { optionValue: 'S4', selected: false },
+      { optionValue: 'S5', selected: false },
+      { optionValue: 'S6', selected: true },
+      { optionValue: 'S7', selected: false },
+      { optionValue: 'S8', selected: false },
+    ],
+  },
+  {
+    label: 'Department',
+    id: 'department',
+    value: 'CSE',
+    disabled: false,
+    inputType: 'select',
+    options: [
+      { optionValue: 'CSE', selected: true },
+      { optionValue: 'ECE', selected: false },
+      { optionValue: 'ME', selected: false },
+      { optionValue: 'AD', selected: false },
+    ],
+  },
+  {
+    label: 'Batch',
+    id: 'batch',
+    value: 'B',
+    disabled: false,
+    inputType: 'select',
+    options: [
+      { optionValue: 'A', selected: true },
+      { optionValue: 'B', selected: false },
+    ],
+  },
+  {
+    label: 'Timing',
+    id: 'Timing',
+    value: '9:00 - 11:00',
+    disabled: true,
+    inputType: 'type',
+  },
+  {
+    label: 'Venue',
+    id: 'venue',
+    value: 'Software Computing Lab',
+    disabled: true,
+    inputType: 'type',
+  },
+  {
+    label: 'Level of need',
+    id: 'Level-of-need',
+    value: 'Negotiable',
+    disabled: false,
+    inputType: 'select',
+    options: [
+      { optionValue: 'Negotiable', selected: true },
+      { optionValue: 'Non-Negotiable', selected: false },
+    ],
+  },
+  {
+    label: 'Purpose',
+    id: 'purpose',
+    value: '',
+    disabled: false,
+    inputType: 'type',
+  },
+];
+export default summaryForm;

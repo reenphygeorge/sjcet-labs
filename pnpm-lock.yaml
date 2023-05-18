@@ -88,6 +88,7 @@ importers:
       next: 13.2.4
       react: 18.2.0
       react-dom: 18.2.0
+      react-feather: ^2.0.10
       supertokens-auth-react: ^0.31.5
       supertokens-web-js: ^0.5.0
       typescript: ^4.7.2
@@ -103,6 +104,7 @@ importers:
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-feather: 2.0.10_react@18.2.0
       supertokens-auth-react: 0.31.5_zh4rdguscatxykxktv3lwuw3je
       supertokens-web-js: 0.5.0
       typescript: 4.7.4
@@ -5015,6 +5017,15 @@ packages:
 
   /react-fast-compare/3.2.1:
     resolution: {integrity: sha512-xTYf9zFim2pEif/Fw16dBiXpe0hoy5PxcD8+OwBnTtNLfIm3g6WxhKNurY+6OmdH1u6Ta/W/Vl6vjbYP1MFnDg==}
+    dev: false
+
+  /react-feather/2.0.10_react@18.2.0:
+    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-focus-lock/2.9.4_pofolu2o2erjq4lhyzl3hqovzq:

@@ -5,6 +5,7 @@ import '@fontsource/exo-2';
 const theme = extendTheme({
   colors: {
     black: {
+      25: '#353535',
       50: '#272727',
     },
     gray: {
