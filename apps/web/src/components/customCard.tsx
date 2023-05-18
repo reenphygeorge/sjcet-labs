@@ -1,8 +1,9 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Card, CardBody, Flex, Spacer, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import { CustomCardProps } from '@/interfaces/customCard.interface';
+import { CustomCardProps } from '@/interfaces/customCard';
 import Circle from './circle';
 
 const CustomCard: FC<CustomCardProps> = ({

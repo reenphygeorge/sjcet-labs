@@ -3,6 +3,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'M0',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -11,6 +12,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'M1',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -19,6 +21,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'M2',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -27,6 +30,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'M3',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -35,6 +39,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'M4',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -43,6 +48,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'M5',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -55,6 +61,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'T0',
           periodName: 'Java Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -63,6 +70,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'T1',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -71,6 +79,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'T2',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -79,6 +88,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'T3',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -87,6 +97,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'T4',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -95,6 +106,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'T5',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -107,6 +119,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'W0',
           periodName: 'LSD Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -115,6 +128,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'W1',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -123,6 +137,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'W2',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -131,6 +146,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'W3',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -139,6 +155,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'W4',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -147,6 +164,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'W5',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -159,6 +177,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'TH0',
           periodName: 'Network Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -167,6 +186,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'TH1',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -175,6 +195,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'TH2',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -183,6 +204,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'TH3',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -191,6 +213,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'TH4',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -199,6 +222,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'TH5',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -211,6 +235,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'F0',
           periodName: 'OS Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -219,6 +244,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'F1',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -227,6 +253,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'F2',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -235,6 +262,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'F3',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -243,6 +271,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'F4',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -251,6 +280,7 @@ const teacherTimetable = {
           roomNo: 'MTB 209',
         },
         {
+          id: 'F5',
           periodName: 'Data Structures Lab',
           semester: 'S6',
           branch: 'CSEB',
@@ -263,6 +293,7 @@ const teacherTimetable = {
     {
       periods: [
         {
+          id: 'S0',
           periodName: 'Free',
           semester: '',
           branch: '',
@@ -271,6 +302,7 @@ const teacherTimetable = {
           roomNo: '',
         },
         {
+          id: 'S1',
           periodName: 'Free',
           semester: '',
           branch: '',
@@ -279,6 +311,7 @@ const teacherTimetable = {
           roomNo: '',
         },
         {
+          id: 'S2',
           periodName: 'Free',
           semester: '',
           branch: '',
@@ -287,6 +320,7 @@ const teacherTimetable = {
           roomNo: '',
         },
         {
+          id: 'S3',
           periodName: 'Free',
           semester: '',
           branch: '',
@@ -295,6 +329,7 @@ const teacherTimetable = {
           roomNo: '',
         },
         {
+          id: 'S4',
           periodName: 'Free',
           semester: '',
           branch: '',
@@ -303,6 +338,7 @@ const teacherTimetable = {
           roomNo: '',
         },
         {
+          id: 'S5',
           periodName: 'Free',
           semester: '',
           branch: '',

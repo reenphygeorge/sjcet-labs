@@ -1,12 +1,20 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import TimetableCard from '@/components/timetableCard';
 import CustomCard from '@/components/customCard';
+import { ArraySelect } from '@/interfaces/arraySelect';
 
 const Home = () => {
-  const options: Array<string> = ['Book Venue', 'My Bookings', 'Attendance', 'Reports'];
+  const options: Array<ArraySelect> = [
+    { id: nanoid(), value: 'Book Venue' },
+    { id: nanoid(), value: 'My Bookings' },
+    { id: nanoid(), value: 'Attendance' },
+    { id: nanoid(), value: 'Reports' },
+  ];
   const [selectOption, setSelectOption] = useState<number>(-1);
   return (
     <>
@@ -30,8 +38,9 @@ const Home = () => {
           <TimetableCard />
         </Box>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-          {options.map((option, key) => (
+          {options.map(({ id, value }, key) => (
             <CustomCard
+              key={id}
               onClick={() => {
                 setSelectOption(key);
               }}
@@ -41,7 +50,7 @@ const Home = () => {
               }}
               properties={[
                 {
-                  value: option,
+                  value,
                   textProps: {
                     color: selectOption !== key ? 'black.25' : 'white',
                     fontSize: 'md',

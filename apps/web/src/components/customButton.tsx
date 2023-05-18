@@ -1,5 +1,6 @@
+/* eslint-disable import/extensions */
 import { Button, Flex } from '@chakra-ui/react';
-import { CustomButtonProps } from '@/interfaces/customButton.interface';
+import { CustomButtonProps } from '@/interfaces/customButton';
 
 const CustomButton = ({ onClick, innerText, type }: CustomButtonProps) => (
   <Flex justify="center">

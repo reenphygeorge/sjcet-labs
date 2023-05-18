@@ -1,6 +1,7 @@
+/* eslint-disable import/extensions */
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { ArrowRight } from 'react-feather';
-import { TopHeadingProps } from '@/interfaces/topHeading.interface';
+import { TopHeadingProps } from '@/interfaces/topHeading';
 
 const TopHeading = ({ heading, subText }: TopHeadingProps) => (
   <Box mt="20px" mb="30px">

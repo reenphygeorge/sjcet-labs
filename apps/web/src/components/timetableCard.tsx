@@ -1,18 +1,30 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-extraneous-dependencies */
 import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import { ArraySelect } from '@/interfaces/arraySelect';
 import teacherTimetable from '../../util/teacherTimetable';
 
 const TimetableCard = () => {
   const [day, setDay] = useState<number>(0);
-  const days: Array<String> = ['M', 'T', 'W', 'T', 'F', 'S'];
+  const days: Array<ArraySelect> = [
+    { id: nanoid(), value: 'M' },
+    { id: nanoid(), value: 'T' },
+    { id: nanoid(), value: 'W' },
+    { id: nanoid(), value: 'T' },
+    { id: nanoid(), value: 'F' },
+    { id: nanoid(), value: 'S' },
+  ];
 
   return (
     <Card rounded="12px" shadow="md">
       <CardBody>
         <Grid templateColumns="repeat(6, 1fr)" gap={6} mb="20px">
           <>
-            {days.map((daySelect, key) => (
+            {days.map(({ id, value }, key) => (
               <Flex
+                key={id}
                 w="120%"
                 h="10"
                 bg={key !== day ? 'gray.50' : 'black.50'}
@@ -25,7 +37,7 @@ const TimetableCard = () => {
                   setDay(key);
                 }}
               >
-                <Text fontWeight="bold">{daySelect}</Text>
+                <Text fontWeight="bold">{value}</Text>
               </Flex>
             ))}
           </>
@@ -33,8 +45,8 @@ const TimetableCard = () => {
         <Grid templateColumns="repeat(6, 1fr)" overflowX="scroll" mb="20px">
           <>
             {teacherTimetable.days[day].periods.map(
-              ({ periodName, semester, branch, batch, venue, roomNo }, key) => (
-                <Box w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
+              ({ id, periodName, semester, branch, batch, venue, roomNo }, key) => (
+                <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                   <CardBody>
                     <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
                       {`${key + 1}. ${periodName}`}
