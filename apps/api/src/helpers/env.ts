@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import ENV from './interfaces/env.interface';
+import ENV from './interfaces/env';
 
 dotenv.config();
 
