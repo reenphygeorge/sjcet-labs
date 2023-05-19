@@ -13,92 +13,63 @@ const summaryForm = [
       {
         optionID: nanoid(),
         optionValue: 'S1',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S2',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S3',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S4',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S5',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S6',
-        selected: true,
       },
       {
         optionID: nanoid(),
         optionValue: 'S7',
-        selected: false,
       },
       {
         optionID: nanoid(),
         optionValue: 'S8',
-        selected: false,
       },
     ],
   },
   {
     id: nanoid(),
-    label: 'Department',
+    label: 'Department & Batch',
     htmlFor: 'department',
-    value: 'CSE',
     disabled: false,
     inputType: 'select',
     options: [
       {
         optionID: nanoid(),
-        optionValue: 'CSE',
-        selected: true,
+        optionValue: 'CSE-A',
       },
       {
         optionID: nanoid(),
-        optionValue: 'ECE',
-        selected: false,
+        optionValue: 'CSE-B',
       },
       {
         optionID: nanoid(),
-        optionValue: 'ME',
-        selected: false,
+        optionValue: 'ME-A',
+      },
+      {
+        optionID: nanoid(),
+        optionValue: 'ME-B',
       },
       {
         optionID: nanoid(),
         optionValue: 'AD',
-        selected: false,
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    label: 'Batch',
-    htmlFor: 'batch',
-    value: 'B',
-    disabled: false,
-    inputType: 'select',
-    options: [
-      {
-        optionID: nanoid(),
-        optionValue: 'A',
-        selected: true,
-      },
-      {
-        optionID: nanoid(),
-        optionValue: 'B',
-        selected: false,
       },
     ],
   },
@@ -106,9 +77,16 @@ const summaryForm = [
     id: nanoid(),
     label: 'Timing',
     htmlFor: 'Timing',
-    value: '9:00 - 11:00',
     disabled: true,
-    inputType: 'type',
+    inputType: 'react-select',
+    selectOptions: [
+      { value: '9:00AM - 9:55AM', label: '9:00AM - 9:55AM' },
+      { value: '10:00AM - 10:55AM', label: '10:00AM - 10:55AM' },
+      { value: '11:10AM - 12:00PM', label: '11:10AM - 12:00PM' },
+      { value: '12:00PM - 12:45PM', label: '12:00PM - 12:45PM' },
+      { value: '01:35PM - 02:30PM', label: '01:35PM - 02:30PM' },
+      { value: '03:35PM - 04:30PM', label: '03:35PM - 04:30PM' },
+    ],
   },
   {
     id: nanoid(),
@@ -129,12 +107,10 @@ const summaryForm = [
       {
         optionID: nanoid(),
         optionValue: 'Negotiable',
-        selected: true,
       },
       {
         optionID: nanoid(),
         optionValue: 'Non-Negotiable',
-        selected: false,
       },
     ],
   },
@@ -142,9 +118,9 @@ const summaryForm = [
     id: nanoid(),
     label: 'Purpose',
     htmlFor: 'purpose',
-    value: '',
     disabled: false,
     inputType: 'type',
+    placeholder: '(optional)',
   },
 ];
 export default summaryForm;

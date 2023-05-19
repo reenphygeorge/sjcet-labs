@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import { createContext, FC, ReactNode, useMemo, useState } from 'react';
-import { TimetableContextInterface } from '@/interfaces/timetableContext';
+import { TimetableContextInterface } from '@/types/timetableContext';
 
 const TimeTableContext = createContext<TimetableContextInterface>({ day: 0, setDay: () => {} });
 

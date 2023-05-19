@@ -3,7 +3,7 @@
 import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { ArraySelect } from '@/interfaces/arraySelect';
+import { ArraySelect } from '@/types/arraySelect';
 import teacherTimetable from '../../util/teacherTimetable';
 
 const TimetableCard = () => {
@@ -52,7 +52,8 @@ const TimetableCard = () => {
                       {`${key + 1}. ${periodName}`}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                      {semester !== '' ? `${semester} ${branch} batch ${batch}` : `-----`}
+                      {semester !== '' ? `${semester} ${branch} ` : `-----`}
+                      {batch !== '' ? `Batch ${batch}` : ''}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
                       {venue !== '' ? `Venue: ${venue} (${roomNo})` : `-----`}

@@ -1,10 +1,11 @@
 /* eslint-disable import/extensions */
 import { Button, Flex } from '@chakra-ui/react';
-import { CustomButtonProps } from '@/interfaces/customButton';
+import { CustomButtonProps } from '@/types/customButton';
 
-const CustomButton = ({ onClick, innerText, type }: CustomButtonProps) => (
+const CustomButton = ({ onClick, innerText, type, disabled }: CustomButtonProps) => (
   <Flex justify="center">
     <Button
+      mb={5}
       width={type === 'modal' ? '70vw' : '85vw'}
       height="50px"
       rounded="12px"
@@ -12,6 +13,7 @@ const CustomButton = ({ onClick, innerText, type }: CustomButtonProps) => (
       color="white"
       _hover={{ bg: 'gray.50', color: 'black.25' }}
       onClick={onClick}
+      isDisabled={disabled}
     >
       {innerText}
     </Button>

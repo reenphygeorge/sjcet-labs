@@ -1,9 +1,8 @@
 /* eslint-disable import/extensions */
-/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Card, CardBody, Flex, Spacer, Text } from '@chakra-ui/react';
-import { FC } from 'react';
-import { CustomCardProps } from '@/interfaces/customCard';
+import { Card, CardBody, Spacer, Text } from '@chakra-ui/react';
+import { FC, Fragment } from 'react';
+import { CustomCardProps } from '@/types/customCard';
 import Circle from './circle';
 
 const CustomCard: FC<CustomCardProps> = ({
@@ -12,32 +11,16 @@ const CustomCard: FC<CustomCardProps> = ({
   properties,
   circleComponent,
   circleProps,
-  flexMode,
 }) => (
   <Card bg="gray.50" rounded="12px" shadow="none" mb="20px" onClick={onClick} {...cardProps}>
     <CardBody>
-      {properties.map(({ value, textProps }) =>
+      {properties.map(({ id, value, textProps }) =>
         circleComponent === false ? (
-          <Text key={value} {...textProps}>
+          <Text key={id} {...textProps}>
             {value}
           </Text>
-        ) : flexMode === true ? (
-          <Flex key={value} justify="space-around" align="center">
-            <Text {...textProps}>{value}</Text>
-            <Spacer />
-            <Circle
-              circleProps={{
-                w: '40px',
-                h: '40px',
-                borderRadius: '100%',
-                border: 'none',
-                bg: 'white',
-                ...circleProps,
-              }}
-            />
-          </Flex>
         ) : (
-          <>
+          <Fragment key={id}>
             <Circle
               circleProps={{
                 w: '40px',
@@ -49,7 +32,7 @@ const CustomCard: FC<CustomCardProps> = ({
               }}
             />
             <Text {...textProps}>{value}</Text>
-          </>
+          </Fragment>
         )
       )}
       <Spacer />

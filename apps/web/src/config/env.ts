@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { ENV } from '@/interfaces/env';
+import { ENV } from '@/types/env';
 
 const env: ENV = {
   appName: process.env.NEXT_PUBLIC_SUPERTOKENS_APP_NAME as string,

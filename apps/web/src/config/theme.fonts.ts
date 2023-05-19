@@ -9,7 +9,18 @@ const theme = extendTheme({
       50: '#272727',
     },
     gray: {
+      25: '#D3D3D3',
       50: '#F0F2F5',
+    },
+    red: {
+      50: '#FE7E7E',
+    },
+    green: {
+      25: '#E0FFED',
+      50: '#C1FFDA',
+    },
+    purple: {
+      25: '#E3A7FF',
     },
   },
   fonts: {
