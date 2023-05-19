@@ -42,7 +42,26 @@ const TimetableCard = () => {
             ))}
           </>
         </Grid>
-        <Grid templateColumns="repeat(6, 1fr)" overflowX="scroll" mb="20px">
+        <Grid
+          templateColumns="repeat(6, 1fr)"
+          overflowX="scroll"
+          sx={{
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'transparent transparent',
+            '&::-webkit-scrollbar': {
+              width: '0px',
+              backgroundColor: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: 'transparent',
+              borderRadius: '0px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+          mb="20px"
+        >
           <>
             {teacherTimetable.days[day].periods.map(
               ({ id, periodName, semester, branch, batch, venue, roomNo }, key) => (
