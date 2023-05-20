@@ -4,18 +4,24 @@ import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import Link from 'next/router';
 import TimetableCard from '@/components/timetableCard';
 import CustomCard from '@/components/customCard';
-import { ArraySelect } from '@/interfaces/arraySelect';
+import { ArrayRouteSelect } from '@/types/arraySelect';
 
 const Home = () => {
-  const options: Array<ArraySelect> = [
-    { id: nanoid(), value: 'Book Venue' },
-    { id: nanoid(), value: 'My Bookings' },
-    { id: nanoid(), value: 'Attendance' },
-    { id: nanoid(), value: 'Reports' },
+  const options: Array<ArrayRouteSelect> = [
+    { id: nanoid(), value: 'Book Venue', route: '/venueSelect' },
+    { id: nanoid(), value: 'My Bookings', route: '/viewBookings' },
+    { id: nanoid(), value: 'Attendance', route: '/attendance' },
+    { id: nanoid(), value: 'Reports', route: 'reports' },
   ];
   const [selectOption, setSelectOption] = useState<number>(-1);
+
+  const changeOption = async (key: number, route: string) => {
+    setSelectOption(key);
+    await Link.push(route);
+  };
   return (
     <>
       <Head>
@@ -38,11 +44,11 @@ const Home = () => {
           <TimetableCard />
         </Box>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-          {options.map(({ id, value }, key) => (
+          {options.map(({ id, value, route }, key) => (
             <CustomCard
               key={id}
               onClick={() => {
-                setSelectOption(key);
+                changeOption(key, route);
               }}
               cardProps={{
                 height: '130px',
@@ -50,6 +56,7 @@ const Home = () => {
               }}
               properties={[
                 {
+                  id: `${id}0`,
                   value,
                   textProps: {
                     color: selectOption !== key ? 'black.25' : 'white',
@@ -61,7 +68,6 @@ const Home = () => {
                 },
               ]}
               circleComponent
-              flexMode={false}
             />
           ))}
         </Grid>

@@ -3,7 +3,7 @@
 import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { ArraySelect } from '@/interfaces/arraySelect';
+import { ArraySelect } from '@/types/arraySelect';
 import teacherTimetable from '../../util/teacherTimetable';
 
 const TimetableCard = () => {
@@ -42,7 +42,26 @@ const TimetableCard = () => {
             ))}
           </>
         </Grid>
-        <Grid templateColumns="repeat(6, 1fr)" overflowX="scroll" mb="20px">
+        <Grid
+          templateColumns="repeat(6, 1fr)"
+          overflowX="scroll"
+          sx={{
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'transparent transparent',
+            '&::-webkit-scrollbar': {
+              width: '0px',
+              backgroundColor: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: 'transparent',
+              borderRadius: '0px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+          mb="20px"
+        >
           <>
             {teacherTimetable.days[day].periods.map(
               ({ id, periodName, semester, branch, batch, venue, roomNo }, key) => (
@@ -52,7 +71,8 @@ const TimetableCard = () => {
                       {`${key + 1}. ${periodName}`}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                      {semester !== '' ? `${semester} ${branch} batch ${batch}` : `-----`}
+                      {semester !== '' ? `${semester} ${branch} ` : `-----`}
+                      {batch !== '' ? `Batch ${batch}` : ''}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
                       {venue !== '' ? `Venue: ${venue} (${roomNo})` : `-----`}

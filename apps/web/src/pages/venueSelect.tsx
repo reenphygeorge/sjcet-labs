@@ -2,24 +2,41 @@
 /* eslint-disable import/extensions */
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import Link from 'next/router';
+import { Box, useToast } from '@chakra-ui/react';
 import TopHeading from '@/components/topHeading';
-import CustomCard from '@/components/customCard';
-import { ArraySelect } from '@/interfaces/arraySelect';
+import { ArrayRouteSelect } from '@/types/arraySelect';
+import ElementCard from '@/components/elementCard';
 
 const VenueSelect = () => {
-  const venues: Array<ArraySelect> = [
-    { id: nanoid(), value: 'Conference Hall' },
-    { id: nanoid(), value: 'Laboratory' },
+  const venues: Array<ArrayRouteSelect> = [
+    { id: nanoid(), value: 'Conference Hall', route: '' },
+    { id: nanoid(), value: 'Laboratory', route: '/bookLab' },
   ];
   const [selectVenue, setSelectVenue] = useState<number>(-1);
+  const toast = useToast();
 
+  const changeOption = async (key: number, route: string) => {
+    setSelectVenue(key);
+    if (route === '') {
+      toast({
+        position: 'top',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="purple.25">
+            Coming Soon !
+          </Box>
+        ),
+      });
+    }
+    await Link.push(route);
+  };
   return (
     <>
       <TopHeading heading="Book Venue" subText="Choose the venue" />
-      {venues.map(({ id, value }, key) => (
-        <CustomCard
+      {venues.map(({ id, value, route }, key) => (
+        <ElementCard
           key={id}
-          onClick={() => setSelectVenue(key)}
+          onClick={() => changeOption(key, route)}
           cardProps={{
             bg: selectVenue !== key ? 'gray.50' : 'black.50',
           }}
@@ -33,9 +50,7 @@ const VenueSelect = () => {
               },
             },
           ]}
-          circleComponent
           circleProps={{}}
-          flexMode
         />
       ))}
     </>
