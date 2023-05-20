@@ -3,7 +3,7 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/router';
 import TimetableCard from '@/components/timetableCard';
 import CustomCard from '@/components/customCard';
@@ -30,7 +30,7 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <>
+      <Box pb="40">
         <Box my="20px">
           <Text fontSize="lg" lineHeight="0.5" fontWeight="black" color="black.50">
             Welcome
@@ -71,7 +71,7 @@ const Home = () => {
             />
           ))}
         </Grid>
-      </>
+      </Box>
     </>
   );
 };

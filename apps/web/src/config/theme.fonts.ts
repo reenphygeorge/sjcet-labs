@@ -8,11 +8,15 @@ const theme = extendTheme({
       25: '#353535',
       50: '#272727',
     },
+    yellow: {
+      50: '#FAFFC1',
+    },
     gray: {
       25: '#D3D3D3',
       50: '#F0F2F5',
     },
     red: {
+      25: '#FFE0E0',
       50: '#FE7E7E',
     },
     green: {
@@ -21,6 +25,9 @@ const theme = extendTheme({
     },
     purple: {
       25: '#E3A7FF',
+    },
+    blue: {
+      50: '#CFE8FF',
     },
   },
   fonts: {

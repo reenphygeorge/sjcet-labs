@@ -5,6 +5,8 @@ import { MouseEvent } from 'react';
 interface CardTextInterface {
   value: string;
   textProps: TextProps;
+  activeStatus?: boolean;
+  activeColor?: string;
 }
 
 export interface ElementCardProps {

@@ -164,7 +164,7 @@ const BookLab = () => {
   };
 
   return (
-    <Box pb="32">
+    <Box pb="40">
       <TopHeading
         heading="Book Lab"
         subText={bookingStep === 1 ? 'Select the periods' : 'Select the venue'}

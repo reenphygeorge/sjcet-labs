@@ -17,7 +17,7 @@ const App = ({ Component, pageProps }: AppProps) => (
       <Container h="100vh" pt="25px" px="25px">
         <Component {...pageProps} />
         <Flex justify="center">
-          <Box position="fixed" p="20px" bottom="10">
+          <Box position="fixed" p="20px" bottom="12">
             <BottomBar />
           </Box>
         </Flex>
