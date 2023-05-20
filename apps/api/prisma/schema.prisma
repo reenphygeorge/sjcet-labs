@@ -10,84 +10,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  user_id  Int    @id
-  password String
-  role     String
-}
-
 model Professors {
-  professor_id  Int             @id
-  first_name    String
-  last_name     String
-  email         String
-  phone_number  Int
-  dept_id       Int
-  department    Departments     @relation(fields: [department_id], references: [dept_id])
-  department_id Int             @unique
-  Reservation   Reservation[]
-  Notifications Notifications[]
-  Maintenance   Maintenance[]
+  id             String          @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  authId         String          @unique
+  registerNumber String
+  firstName      String
+  lastName       String
+  email          String
+  phoneNumber    Int
+  deptId         Int
+  department     Departments     @relation(fields: [departmentId], references: [id])
+  departmentId   String          @unique
+  reservation    Reservation[]
+  notifications  Notifications[]
+  naintenance    Maintenance[]
+  role           Roles
 }
 
 model Departments {
-  dept_id       Int         @id
-  dept_name     String
-  dept_head     Professors?
-  dept_location String
-  Courses       Courses[]
+  id           String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  deptName     String
+  deptHead     Professors?
+  deptLocation String
+  courses      Courses[]
 }
 
 model Labs {
-  lab_id           Int                @id
-  lab_name         String
-  capacity         Int
-  location         String
-  Usage_Statistics Usage_Statistics[]
-  Maintenance      Maintenance[]
+  id              String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  labName         String
+  capacity        Int
+  roomNumber      String
+  usageStatistics UsageStatistics[]
+  maintenance     Maintenance[]
 }
 
 model Reservation {
-  reservation_id String     @id @default(uuid())
-  professor      Professors @relation(fields: [professor_id], references: [professor_id])
-  professor_id   Int
-  date           DateTime
-  start_time     DateTime
-  end_time       DateTime
-  type           String
-  note           String?
+  id          String     @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor   Professors @relation(fields: [professorId], references: [id])
+  professorId String
+  date        DateTime
+  startTime   DateTime
+  endTime     DateTime
+  negotiable  Boolean
+  note        String?
 }
 
-model Usage_Statistics {
-  lab                Labs @relation(fields: [lab_id], references: [lab_id])
-  lab_id             Int  @id
-  reservation_count  Int
-  average_usage_time Int?
-  peak_usage_period  Int?
+model UsageStatistics {
+  lab              Labs   @relation(fields: [id], references: [id])
+  id               String @id
+  reservationCount Int
+  averageUsageTime Int?
+  peakUsagePeriod  Int?
 }
 
 model Courses {
-  course_id   String        @id
-  course_name String
-  department  Departments[]
+  id         String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  courseCode String
+  courseName String
+  department Departments[]
 }
 
 model Notifications {
-  notification_id        String     @id @default(uuid())
-  professor              Professors @relation(fields: [professorsProfessor_id], references: [professor_id])
-  professorsProfessor_id Int
-  message                String?
-  time_stamp             DateTime
+  id                    String     @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor             Professors @relation(fields: [professorsProfessorId], references: [id])
+  professorsProfessorId String
+  message               String?
+  timeStamp             DateTime
 }
 
 model Maintenance {
-  maintenance_id         String     @id @default(uuid())
-  lab                    Labs       @relation(fields: [labsLab_id], references: [lab_id])
-  labsLab_id             Int
-  professor              Professors @relation(fields: [professorsProfessor_id], references: [professor_id])
-  professorsProfessor_id Int
-  date                   DateTime
-  issue_type             String
-  issue_description      String?
-  status                 String
+  id                    String     @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  lab                   Labs       @relation(fields: [labsLabId], references: [id])
+  labsLabId             String
+  professor             Professors @relation(fields: [professorsProfessorId], references: [id])
+  professorsProfessorId String
+  date                  DateTime
+  issue_type            String
+  issue_description     String?
+  status                String
+}
+
+enum Roles {
+  Teacher
+  Administrator
+  Lab_Incharge
+  HOD
 }
