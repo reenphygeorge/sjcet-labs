@@ -18,9 +18,8 @@ model Professors {
   lastName       String
   email          String
   phoneNumber    Int
-  deptId         Int
   department     Departments     @relation(fields: [departmentId], references: [id])
-  departmentId   String          @unique
+  departmentId   String
   reservation    Reservation[]
   notifications  Notifications[]
   naintenance    Maintenance[]
@@ -28,19 +27,19 @@ model Professors {
 }
 
 model Departments {
-  id           String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  id           String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   deptName     String
-  deptHead     Professors?
+  deptHead     Professors[]
   deptLocation String
   courses      Courses[]
 }
 
 model Labs {
-  id              String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  id              String            @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   labName         String
   capacity        Int
   roomNumber      String
-  usageStatistics UsageStatistics[]
+  usageStatistics UsageStatistics?
   maintenance     Maintenance[]
 }
 
@@ -57,7 +56,7 @@ model Reservation {
 
 model UsageStatistics {
   lab              Labs   @relation(fields: [id], references: [id])
-  id               String @id
+  id               String @id @unique
   reservationCount Int
   averageUsageTime Int?
   peakUsagePeriod  Int?
