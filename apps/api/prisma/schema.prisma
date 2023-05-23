@@ -16,31 +16,33 @@ model Professors {
   registerNumber String
   firstName      String
   lastName       String
-  email          String
-  phoneNumber    Int
-  deptId         Int
-  department     Departments     @relation(fields: [departmentId], references: [id])
-  departmentId   String          @unique
+  email          String          @unique
+  phoneNumber    Int             @unique
+  department     Departments     @relation("EachProfessor", fields: [departmentId], references: [id])
+  departmentId   String
   reservation    Reservation[]
   notifications  Notifications[]
   naintenance    Maintenance[]
   role           Roles
+  Departments    Departments?    @relation("DepartmentHead")
 }
 
 model Departments {
-  id           String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  id           String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   deptName     String
-  deptHead     Professors?
+  professors   Professors[] @relation("EachProfessor")
   deptLocation String
   courses      Courses[]
+  deptHead     Professors   @relation("DepartmentHead", fields: [deptHeadId], references: [id])
+  deptHeadId   String       @unique
 }
 
 model Labs {
-  id              String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  id              String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   labName         String
   capacity        Int
   roomNumber      String
-  usageStatistics UsageStatistics[]
+  usageStatistics UsageStatistics?
   maintenance     Maintenance[]
 }
 
@@ -53,21 +55,24 @@ model Reservation {
   endTime     DateTime
   negotiable  Boolean
   note        String?
+  course      Courses    @relation(fields: [coursesId], references: [id])
+  coursesId   String
 }
 
 model UsageStatistics {
   lab              Labs   @relation(fields: [id], references: [id])
-  id               String @id
+  id               String @id @unique
   reservationCount Int
   averageUsageTime Int?
   peakUsagePeriod  Int?
 }
 
 model Courses {
-  id         String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  courseCode String
-  courseName String
-  department Departments[]
+  id          String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  courseCode  String
+  courseName  String
+  department  Departments[]
+  reservation Reservation[]
 }
 
 model Notifications {
