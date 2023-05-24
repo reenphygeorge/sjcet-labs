@@ -1,4 +1,4 @@
-const teacherTimetable = {
+const timetable = {
   days: [
     {
       periods: [
@@ -423,4 +423,4 @@ const teacherTimetable = {
   ],
 };
 
-export default teacherTimetable;
+export default timetable;

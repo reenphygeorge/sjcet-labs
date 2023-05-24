@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Text } from '@chakra-ui/react';
 import Select, { StylesConfig } from 'react-select';
 import { ReactSelectProps } from '@/types/reactSelect';
 
@@ -13,7 +12,7 @@ const customStyles: StylesConfig = {
   }),
 };
 
-const ReactSelect = ({ options, values }: ReactSelectProps) => {
+const ReactSelect = ({ options, values, disabled }: ReactSelectProps) => {
   if (values !== undefined && values !== null) {
     const updatedValues = values.map(({ timing, day }) => ({
       value: {
@@ -23,10 +22,17 @@ const ReactSelect = ({ options, values }: ReactSelectProps) => {
       label: `${day} ${timing}`,
     }));
     return (
-      <Select options={options} value={updatedValues} styles={customStyles} isMulti isDisabled />
+      <Select
+        options={options}
+        value={updatedValues}
+        styles={customStyles}
+        isMulti
+        isDisabled={disabled}
+        // onChange={() => (onChange !== null ? () : null)}
+      />
     );
   }
-  return <Text>Blah</Text>;
+  return null;
 };
 
 export default ReactSelect;

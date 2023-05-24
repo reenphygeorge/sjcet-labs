@@ -1,17 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { nanoid } from 'nanoid';
 import Link from 'next/router';
 import { Box, useToast } from '@chakra-ui/react';
 import TopHeading from '@/components/topHeading';
-import { ArrayRouteSelect } from '@/types/arraySelect';
 import ElementCard from '@/components/elementCard';
+// Required data
+import { RouteOptions } from '@/types/select-venue';
 
-const VenueSelect = () => {
-  const venues: Array<ArrayRouteSelect> = [
+const VenueSelect: FC = () => {
+  const venues: Array<RouteOptions> = [
     { id: nanoid(), value: 'Conference Hall', route: '' },
-    { id: nanoid(), value: 'Laboratory', route: '/bookLab' },
+    { id: nanoid(), value: 'Laboratory', route: 'book-lab' },
   ];
   const [selectVenue, setSelectVenue] = useState<number>(-1);
   const toast = useToast();

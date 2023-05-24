@@ -2,13 +2,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
-import { ArraySelect } from '@/types/arraySelect';
-import teacherTimetable from '../../util/teacherTimetable';
+import { FC, useState } from 'react';
+import { Options, Props } from '@/types/TimetableCard';
 
-const TimetableCard = () => {
+const TimetableCard: FC<Props> = ({ timetable }) => {
   const [day, setDay] = useState<number>(0);
-  const days: Array<ArraySelect> = [
+  const days: Array<Options> = [
     { id: nanoid(), value: 'M' },
     { id: nanoid(), value: 'T' },
     { id: nanoid(), value: 'W' },
@@ -63,7 +62,7 @@ const TimetableCard = () => {
           mb="20px"
         >
           <>
-            {teacherTimetable.days[day].periods.map(
+            {timetable.days[day].periods.map(
               ({ id, periodName, semester, branch, batch, venue, roomNo }, key) => (
                 <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                   <CardBody>

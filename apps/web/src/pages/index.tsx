@@ -3,17 +3,30 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { Fragment, useState } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/router';
 import TimetableCard from '@/components/timetableCard';
 import CustomCard from '@/components/customCard';
-import { ArrayRouteSelect } from '@/types/arraySelect';
+// Required data
+import { Gender, Profile, RouteOptions } from '@/types/home.d';
+import teacherTimetable from '../../util/teacherTimetable';
 
-const Home = () => {
-  const options: Array<ArrayRouteSelect> = [
-    { id: nanoid(), value: 'Book Venue', route: '/venueSelect' },
-    { id: nanoid(), value: 'My Bookings', route: '/viewBookings' },
-    { id: nanoid(), value: 'Attendance', route: '/attendance' },
+const Home: FC = () => {
+  // Required data
+  const profileDetails: Profile = {
+    id: '',
+    collegeID: '',
+    name: 'Kishore Sebastian',
+    department: 'Computer Sci & Engg',
+    email: '',
+    phone: '',
+    gender: Gender.Male,
+  };
+
+  const options: Array<RouteOptions> = [
+    { id: nanoid(), value: 'Book Venue', route: 'venue-select' },
+    { id: nanoid(), value: 'My Bookings', route: 'view-bookings' },
+    { id: nanoid(), value: 'Attendance', route: 'attendance' },
     { id: nanoid(), value: 'Reports', route: 'reports' },
   ];
   const [selectOption, setSelectOption] = useState<number>(-1);
@@ -37,11 +50,11 @@ const Home = () => {
             <br />
           </Text>
           <Text fontSize="4xl" fontWeight="bold" color="black.50">
-            Prof. Kishore
+            {`Prof. ${profileDetails.name.split(' ')[0]}`}
           </Text>
         </Box>
         <Box my="20px">
-          <TimetableCard />
+          <TimetableCard timetable={teacherTimetable} />
         </Box>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           {options.map(({ id, value, route }, key) => (

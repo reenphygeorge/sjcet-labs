@@ -25,15 +25,13 @@ import CustomButton from '@/components/customButton';
 import teacherTimetable from '../../util/teacherTimetable';
 import labDetails from '../../util/labDetails';
 import TopHeading from '@/components/topHeading';
-import { ArraySelect } from '@/types/arraySelect';
-import { PeriodTiming } from '@/types/periodTiming';
 import ElementCard from '@/components/elementCard';
 import ReactSelect from '@/components/reactSelect';
-import { BookingDetailsCollected } from '@/types/bookingDetails';
+import { LabBookingDetails, Options, PeriodTiming, ReservationInfo } from '@/types/book-lab';
 
 const BookLab = () => {
   const [dayNumber, setDayNumber] = useState<number>(0);
-  const days: Array<ArraySelect> = [
+  const days: Options[] = [
     { id: nanoid(), value: 'M' },
     { id: nanoid(), value: 'T' },
     { id: nanoid(), value: 'W' },
@@ -41,7 +39,8 @@ const BookLab = () => {
     { id: nanoid(), value: 'F' },
     { id: nanoid(), value: 'S' },
   ];
-  const semesters: Array<ArraySelect> = [
+
+  const semesters: Options[] = [
     { id: nanoid(), value: 'S1' },
     { id: nanoid(), value: 'S2' },
     { id: nanoid(), value: 'S3' },
@@ -52,7 +51,7 @@ const BookLab = () => {
     { id: nanoid(), value: 'S8' },
   ];
 
-  const departmentWithBatch: Array<ArraySelect> = [
+  const departmentWithBatch: Options[] = [
     { id: nanoid(), value: 'CSE-A' },
     { id: nanoid(), value: 'CSE-B' },
     { id: nanoid(), value: 'ME-A' },
@@ -62,12 +61,13 @@ const BookLab = () => {
     { id: nanoid(), value: 'ECE-A' },
     { id: nanoid(), value: 'ECE-B' },
   ];
+
   const [bookingStep, setBookingStep] = useState<number>(1);
   const [selectedPeriods, setSelectedPeriods] = useState<PeriodTiming[]>([]);
   const [labName, setLabName] = useState<string>('');
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
-  const [bookingDetails, setBookingDetails] = useState<BookingDetailsCollected>({
+  const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
     semester: '',
     departmentWithBatch: '',
     venue: '',
@@ -82,7 +82,7 @@ const BookLab = () => {
     purpose: '',
   });
 
-  const reservationInfo = {
+  const reservationInfo: ReservationInfo = {
     staffName: 'Prof. Mereen Thomas',
     semester: 'S6',
     departmentWithBatch: 'CSE-B',
@@ -376,7 +376,7 @@ const BookLab = () => {
                   <FormLabel htmlFor="timing" pl="1">
                     Timing
                   </FormLabel>
-                  <ReactSelect options={selectedPeriods} values={selectedPeriods} />
+                  <ReactSelect options={selectedPeriods} values={selectedPeriods} disabled />
 
                   <FormLabel htmlFor="purpose" pl="1">
                     Purpose
@@ -416,20 +416,6 @@ const BookLab = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-
-      {/* {reservationInfo.map(({ id, label, value }) => (
-        <CustomModal
-          key={id}
-          modalHeading="Reservation Info"
-          buttonText="Negotiate Now"
-          buttonDisable={false}
-          label={label}
-          value={value}
-          isOpen={isOpenReservationModal}
-          onClose={onCloseReservationModal}
-          buttonHandle={onCloseReservationModal}
-        />
-      ))} */}
 
       <Modal
         isCentered

@@ -19,34 +19,68 @@ import {
 import TopHeading from '@/components/topHeading';
 import ElementCard from '@/components/elementCard';
 import CustomButton from '@/components/customButton';
-import { StudentAttendance } from '@/types/StudentAttendance';
+import CustomCard from '@/components/customCard';
+import {
+  LabDetails,
+  StudentAttendanceData,
+  FreeSystems,
+  AttendanceStatus,
+} from '@/types/attendance.d';
 
 const Attendance: FC = () => {
-  const studentList = [
+  const [attendanceStep, setAttendanceStep] = useState<number>(1);
+
+  const studentList: StudentAttendanceData[] = [
     {
       id: '0',
       rollNo: '1',
       name: 'Abin K Jaimon',
       systemNo: '01',
-      attendanceStatus: 'Present',
+      attendanceStatus: AttendanceStatus.Present,
     },
     {
       id: '1',
       rollNo: '2',
       name: 'Aimil Bij',
       systemNo: '02',
-      attendanceStatus: 'Absent',
+      attendanceStatus: AttendanceStatus.Absent,
     },
   ];
 
-  const [selectedStudentDetails, setSelectedStudentDetails] = useState<StudentAttendance>({
+  const [selectedStudentDetails, setSelectedStudentDetails] = useState<StudentAttendanceData>({
     id: '',
+    rollNo: '',
     name: '',
     systemNo: '',
-    attendanceStatus: '',
+    attendanceStatus: AttendanceStatus.Absent,
   });
 
-  const freeLabs = [
+  const labDetails: LabDetails = {
+    data: [
+      {
+        id: '0',
+        name: 'Software Computing Lab',
+        roomNo: 'MTB 101',
+      },
+      {
+        id: '2',
+        name: 'Network Lab',
+        roomNo: 'MTB 101',
+      },
+      {
+        id: '3',
+        name: 'Research Lab',
+        roomNo: 'MTB 101',
+      },
+      {
+        id: '4',
+        name: 'Testing Lab',
+        roomNo: 'MTB 101',
+      },
+    ],
+  };
+
+  const freeSystems: FreeSystems[] = [
     {
       id: '0',
       systemNo: '55',
@@ -74,33 +108,72 @@ const Attendance: FC = () => {
   return (
     <>
       <TopHeading heading="Attendance" subText="Tap to mark/unmark" />
-      {studentList.map(({ id, rollNo, name, systemNo, attendanceStatus }, key) => (
-        <ElementCard
-          onClick={() => {
-            openModal(key);
-          }}
-          key={id}
-          circleProps={{
-            borderRadius: '12px',
-            w: '90px',
-            h: '30px',
-            bg: 'blue.50',
-          }}
-          circleInnerText={`#${systemNo}`}
-          properties={[
-            {
-              activeStatus: true,
-              activeColor: attendanceStatus === 'Present' ? 'green.50' : 'red.50',
-              value: `${rollNo}. ${name}`,
-              textProps: {
-                color: 'black.25',
-                fontSize: 'lg',
-                fontWeight: 'bold',
+
+      {attendanceStep === 1 ? (
+        <>
+          {labDetails.data.map(({ id, name, roomNo }, key) => {
+            const labNameHeading: string = `${key + 1}. ${name}`;
+            return (
+              <CustomCard
+                key={id}
+                onClick={() => {
+                  setAttendanceStep(2);
+                }}
+                properties={[
+                  {
+                    id: `${id}0`,
+                    value: labNameHeading,
+                    textProps: {
+                      color: 'black.25',
+                      fontSize: 'lg',
+                      fontWeight: 'bold',
+                    },
+                  },
+                  {
+                    id: `${id}1`,
+                    value: roomNo,
+                    textProps: {
+                      color: 'black.25',
+                      fontSize: '15',
+                      fontWeight: 'medium',
+                      ml: '5',
+                    },
+                  },
+                ]}
+                circleComponent={false}
+              />
+            );
+          })}
+        </>
+      ) : (
+        studentList.map(({ id, rollNo, name, systemNo, attendanceStatus }, key) => (
+          <ElementCard
+            onClick={() => {
+              openModal(key);
+            }}
+            key={id}
+            circleProps={{
+              borderRadius: '12px',
+              w: '90px',
+              h: '30px',
+              bg: 'blue.50',
+            }}
+            circleInnerText={`#${systemNo}`}
+            properties={[
+              {
+                activeStatus: true,
+                activeColor: attendanceStatus === 'Present' ? 'green.50' : 'red.50',
+                value: `${rollNo}. ${name}`,
+                textProps: {
+                  color: 'black.25',
+                  fontSize: 'lg',
+                  fontWeight: 'bold',
+                },
               },
-            },
-          ]}
-        />
-      ))}
+            ]}
+          />
+        ))
+      )}
 
       <Modal
         isCentered
@@ -140,7 +213,7 @@ const Attendance: FC = () => {
                 <option value={selectedStudentDetails.systemNo}>
                   {selectedStudentDetails.systemNo}
                 </option>
-                {freeLabs.map(({ id, systemNo }) => (
+                {freeSystems.map(({ id, systemNo }) => (
                   <option key={id} value={systemNo}>
                     {systemNo}
                   </option>

@@ -13,10 +13,21 @@ import {
 import ElementCard from '@/components/elementCard';
 import TopHeading from '@/components/topHeading';
 import CustomButton from '@/components/customButton';
-import { BookingDetailsFetched } from '@/types/bookingDetails';
+// import { BookingDetailsFetched } from '@/types/bookingDetails';
+
+interface BookingData {
+  id: string;
+  semester: string;
+  departmentWithBatch: string;
+  date: string;
+  timings: string[];
+  venue: string;
+  purpose: string;
+  status: string;
+}
 
 const ViewBookings: FC = () => {
-  const [selectedBooking, setSelectedBooking] = useState<BookingDetailsFetched>({
+  const [selectedBooking, setSelectedBooking] = useState<BookingData>({
     id: '',
     semester: '',
     departmentWithBatch: '',
@@ -32,7 +43,7 @@ const ViewBookings: FC = () => {
     onClose: onCloseBookingModal,
   } = useDisclosure();
 
-  const requestList: BookingDetailsFetched[] = [
+  const requestList: BookingData[] = [
     {
       id: '0',
       semester: 'S6',
