@@ -18,7 +18,7 @@ interface Timetable {
   days: Day[];
 }
 
-interface Props {
+interface TimetableCardProps {
   timetable: Timetable;
 }
 
@@ -27,4 +27,4 @@ interface Options {
   value: string;
 }
 
-export { Period, Day, Timetable, Props, Options };
+export { Period, Day, Timetable, TimetableCardProps, Options };

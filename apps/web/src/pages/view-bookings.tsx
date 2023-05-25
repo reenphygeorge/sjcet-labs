@@ -10,10 +10,10 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import ElementCard from '@/components/elementCard';
-import TopHeading from '@/components/topHeading';
-import CustomButton from '@/components/customButton';
-// import { BookingDetailsFetched } from '@/types/bookingDetails';
+import { nanoid } from 'nanoid';
+import ElementCard from '@/components/ElementCard';
+import TopHeading from '@/components/TopHeading';
+import CustomButton from '@/components/CustomButton';
 
 interface BookingData {
   id: string;
@@ -88,6 +88,7 @@ const ViewBookings: FC = () => {
           circleInnerText={status}
           properties={[
             {
+              id: nanoid(),
               value: venue,
               textProps: {
                 color: 'black.25',
@@ -96,6 +97,7 @@ const ViewBookings: FC = () => {
               },
             },
             {
+              id: nanoid(),
               value: date,
               textProps: {
                 color: 'black.25',

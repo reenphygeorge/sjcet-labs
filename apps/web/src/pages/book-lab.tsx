@@ -18,18 +18,24 @@ import {
   useToast,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { nanoid } from 'nanoid';
-import CustomCard from '@/components/customCard';
-import CustomButton from '@/components/customButton';
+import CustomCard from '@/components/CustomCard';
+import CustomButton from '@/components/CustomButton';
 import teacherTimetable from '../../util/teacherTimetable';
 import labDetails from '../../util/labDetails';
-import TopHeading from '@/components/topHeading';
-import ElementCard from '@/components/elementCard';
-import ReactSelect from '@/components/reactSelect';
-import { LabBookingDetails, Options, PeriodTiming, ReservationInfo } from '@/types/book-lab';
+import TopHeading from '@/components/TopHeading';
+import ElementCard from '@/components/ElementCard';
+import ReactSelect from '@/components/ReactSelect';
+import {
+  LabBookingDetails,
+  Options,
+  PeriodTiming,
+  ReservationInfo,
+  Status,
+} from '@/types/BookLab.d';
 
-const BookLab = () => {
+const BookLab: FC = () => {
   const [dayNumber, setDayNumber] = useState<number>(0);
   const days: Options[] = [
     { id: nanoid(), value: 'M' },
@@ -209,7 +215,7 @@ const BookLab = () => {
                   key={id}
                   properties={[
                     {
-                      id: `${id}0`,
+                      id: nanoid(),
                       value: periodHeading,
                       textProps: {
                         color: 'black.25',
@@ -218,7 +224,7 @@ const BookLab = () => {
                       },
                     },
                     {
-                      id: `${id}1`,
+                      id: nanoid(),
                       value: semesterHeading,
                       textProps: {
                         color: 'black.25',
@@ -246,25 +252,25 @@ const BookLab = () => {
         <>
           {labDetails.data.map(({ id, name, roomNo, status }, key) => {
             const labNameHeading: string = `${key + 1}. ${name}`;
-            return status !== 'reserved' ? (
+            return status !== Status.Reserved ? (
               <CustomCard
                 key={id}
-                onClick={status !== 'class' ? () => saveLabName(name) : undefined}
+                onClick={status !== Status.ClassTime ? () => saveLabName(name) : () => null}
                 properties={[
                   {
-                    id: `${id}0`,
+                    id: nanoid(),
                     value: labNameHeading,
                     textProps: {
-                      color: status !== 'class' ? 'black.25' : 'gray.25',
+                      color: status !== Status.ClassTime ? 'black.25' : 'gray.25',
                       fontSize: 'lg',
                       fontWeight: 'bold',
                     },
                   },
                   {
-                    id: `${id}1`,
+                    id: nanoid(),
                     value: roomNo,
                     textProps: {
-                      color: status === 'class' ? 'gray.25' : 'black.25',
+                      color: status === Status.ClassTime ? 'gray.25' : 'black.25',
                       fontSize: '15',
                       fontWeight: 'medium',
                       ml: '5',
@@ -288,6 +294,7 @@ const BookLab = () => {
                 circleInnerText="Reserved"
                 properties={[
                   {
+                    id: nanoid(),
                     value: labNameHeading,
                     textProps: {
                       color: 'black.25',
@@ -296,6 +303,7 @@ const BookLab = () => {
                     },
                   },
                   {
+                    id: nanoid(),
                     value: roomNo,
                     textProps: {
                       color: 'black.25',

@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Box, Card, Flex } from '@chakra-ui/react';
 import Link from 'next/router';
+import { FC } from 'react';
 import { Bell, Home, User } from 'react-feather';
 
-const BottomBar = () => {
+const BottomBar: FC = () => {
   const changeScreen = (option: string) => {
     if (option === 'Home') Link.push('/');
   };

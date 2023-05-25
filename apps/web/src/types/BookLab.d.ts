@@ -25,7 +25,7 @@ interface LabData {
   id: string;
   name: string;
   roomNo: string;
-  status: string;
+  status: Status;
   reservationInfo?: ReservationInfo;
 }
 
@@ -41,4 +41,11 @@ interface LabBookingDetails {
   negotiable: boolean;
   purpose: string;
 }
-export { Options, PeriodTiming, ReservationInfo, LabData, LabDetails, LabBookingDetails };
+
+enum Status {
+  Reserved = 'Reserved',
+  Available = 'Available',
+  ClassTime = 'ClassTime',
+}
+
+export { Options, PeriodTiming, ReservationInfo, LabData, LabDetails, LabBookingDetails, Status };

@@ -1,8 +1,9 @@
 /* eslint-disable import/extensions */
+import { FC } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
-import { CustomButtonProps } from '@/types/customButton';
+import { CustomButtonProps } from '@/types/CustomButton';
 
-const CustomButton = ({ onClick, innerText, type, disabled }: CustomButtonProps) => (
+const CustomButton: FC<CustomButtonProps> = ({ onClick, innerText, type, disabled }) => (
   <Flex justify="center">
     <Button
       mb={5}

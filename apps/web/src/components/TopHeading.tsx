@@ -1,9 +1,10 @@
 /* eslint-disable import/extensions */
+import { FC } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { ArrowRight } from 'react-feather';
-import { TopHeadingProps } from '@/types/topHeading';
+import { TopHeadingProps } from '@/types/TopHeading';
 
-const TopHeading = ({ heading, subText }: TopHeadingProps) => (
+const TopHeading: FC<TopHeadingProps> = ({ heading, subText }) => (
   <Box mt="20px" mb="30px">
     <Text fontSize="4xl" fontWeight="black" color="black.50">
       {heading}

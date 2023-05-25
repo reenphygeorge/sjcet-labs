@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app';
 import SuperTokensReact, { SuperTokensWrapper } from 'supertokens-auth-react';
 import { frontendConfig } from '../config/frontendConfig';
 import theme from '@/config/theme.fonts';
-import BottomBar from '@/components/bottomBar';
+import BottomBar from '@/components/BottomBar';
 
 if (typeof window !== 'undefined') {
   SuperTokensReact.init(frontendConfig());

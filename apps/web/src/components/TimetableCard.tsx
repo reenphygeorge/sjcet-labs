@@ -3,9 +3,9 @@
 import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { FC, useState } from 'react';
-import { Options, Props } from '@/types/TimetableCard';
+import { Options, TimetableCardProps } from '@/types/TimetableCard';
 
-const TimetableCard: FC<Props> = ({ timetable }) => {
+const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
   const [day, setDay] = useState<number>(0);
   const days: Array<Options> = [
     { id: nanoid(), value: 'M' },

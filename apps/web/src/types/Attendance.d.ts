@@ -2,7 +2,7 @@ interface StudentAttendanceData {
   id: string;
   rollNo: string;
   name: string;
-  systemNo: string;
+  systemNo: number;
   attendanceStatus: AttendanceStatus;
 }
 
@@ -23,7 +23,7 @@ interface LabDetails {
 
 interface FreeSystems {
   id: string;
-  systemNo: string;
+  systemNo: number;
 }
 
 export { StudentAttendanceData, LabDetails, FreeSystems, AttendanceStatus };

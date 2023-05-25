@@ -4,10 +4,10 @@ import { FC, useState } from 'react';
 import { nanoid } from 'nanoid';
 import Link from 'next/router';
 import { Box, useToast } from '@chakra-ui/react';
-import TopHeading from '@/components/topHeading';
-import ElementCard from '@/components/elementCard';
+import TopHeading from '@/components/TopHeading';
+import ElementCard from '@/components/ElementCard';
 // Required data
-import { RouteOptions } from '@/types/select-venue';
+import { RouteOptions } from '@/types/SelectVenue';
 
 const VenueSelect: FC = () => {
   const venues: Array<RouteOptions> = [
@@ -43,6 +43,7 @@ const VenueSelect: FC = () => {
           }}
           properties={[
             {
+              id: nanoid(),
               value,
               textProps: {
                 color: selectVenue !== key ? 'black.25' : 'white',

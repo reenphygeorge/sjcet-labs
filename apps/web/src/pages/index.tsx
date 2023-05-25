@@ -5,10 +5,10 @@ import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { FC, useState } from 'react';
 import Link from 'next/router';
-import TimetableCard from '@/components/timetableCard';
-import CustomCard from '@/components/customCard';
+import TimetableCard from '@/components/TimetableCard';
+import CustomCard from '@/components/CustomCard';
 // Required data
-import { Gender, Profile, RouteOptions } from '@/types/home.d';
+import { Gender, Profile, RouteOptions } from '@/types/Home.d';
 import teacherTimetable from '../../util/teacherTimetable';
 
 const Home: FC = () => {
@@ -69,7 +69,7 @@ const Home: FC = () => {
               }}
               properties={[
                 {
-                  id: `${id}0`,
+                  id: nanoid(),
                   value,
                   textProps: {
                     color: selectOption !== key ? 'black.25' : 'white',

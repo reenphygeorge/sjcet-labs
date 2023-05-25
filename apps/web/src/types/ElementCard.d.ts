@@ -2,7 +2,8 @@
 import { BoxProps, CardProps, TextProps } from '@chakra-ui/react';
 import { MouseEvent } from 'react';
 
-interface CardTextInterface {
+interface CardText {
+  id: string;
   value: string;
   textProps: TextProps;
   activeStatus?: boolean;
@@ -10,7 +11,7 @@ interface CardTextInterface {
 }
 
 export interface ElementCardProps {
-  properties: Array<CardTextInterface>;
+  properties: Array<CardText>;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   cardProps?: CardProps;
   circleProps?: BoxProps;

@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { CardProps, TextProps } from '@chakra-ui/react';
 import { MouseEvent } from 'react';
-import { CircleProps } from './circle';
+import { CircleProps } from './Circle';
 
 interface CardTextInterface {
   id: string;

@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -16,33 +16,34 @@ import {
   Select,
   useDisclosure,
 } from '@chakra-ui/react';
-import TopHeading from '@/components/topHeading';
-import ElementCard from '@/components/elementCard';
-import CustomButton from '@/components/customButton';
-import CustomCard from '@/components/customCard';
+import { nanoid } from 'nanoid';
+import TopHeading from '@/components/TopHeading';
+import ElementCard from '@/components/ElementCard';
+import CustomButton from '@/components/CustomButton';
+import CustomCard from '@/components/CustomCard';
 import {
   LabDetails,
   StudentAttendanceData,
   FreeSystems,
   AttendanceStatus,
-} from '@/types/attendance.d';
+} from '@/types/Attendance.d';
 
 const Attendance: FC = () => {
   const [attendanceStep, setAttendanceStep] = useState<number>(1);
 
   const studentList: StudentAttendanceData[] = [
     {
-      id: '0',
+      id: 'S0',
       rollNo: '1',
       name: 'Abin K Jaimon',
-      systemNo: '01',
+      systemNo: 1,
       attendanceStatus: AttendanceStatus.Present,
     },
     {
-      id: '1',
+      id: 'S1',
       rollNo: '2',
       name: 'Aimil Bij',
-      systemNo: '02',
+      systemNo: 2,
       attendanceStatus: AttendanceStatus.Absent,
     },
   ];
@@ -51,29 +52,48 @@ const Attendance: FC = () => {
     id: '',
     rollNo: '',
     name: '',
-    systemNo: '',
+    systemNo: 0,
     attendanceStatus: AttendanceStatus.Absent,
   });
+
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (event.target.id === 'systemNo') {
+      setSelectedStudentDetails({
+        ...selectedStudentDetails,
+        systemNo: parseInt(event.target.value, 2),
+      });
+    }
+    setSelectedStudentDetails({ ...selectedStudentDetails, [event.target.id]: event.target.value });
+  };
+
+  const handleRadioInput = (value: string) => {
+    const newAttendanceStatus =
+      value === 'Absent' ? AttendanceStatus.Absent : AttendanceStatus.Present;
+    setSelectedStudentDetails({
+      ...selectedStudentDetails,
+      attendanceStatus: newAttendanceStatus,
+    });
+  };
 
   const labDetails: LabDetails = {
     data: [
       {
-        id: '0',
+        id: 'L0',
         name: 'Software Computing Lab',
         roomNo: 'MTB 101',
       },
       {
-        id: '2',
+        id: 'L1',
         name: 'Network Lab',
         roomNo: 'MTB 101',
       },
       {
-        id: '3',
+        id: 'L2',
         name: 'Research Lab',
         roomNo: 'MTB 101',
       },
       {
-        id: '4',
+        id: 'L3',
         name: 'Testing Lab',
         roomNo: 'MTB 101',
       },
@@ -82,16 +102,16 @@ const Attendance: FC = () => {
 
   const freeSystems: FreeSystems[] = [
     {
-      id: '0',
-      systemNo: '55',
+      id: 'FS0',
+      systemNo: 55,
     },
     {
-      id: '1',
-      systemNo: '56',
+      id: 'FS1',
+      systemNo: 56,
     },
     {
-      id: '1',
-      systemNo: '57',
+      id: 'FS2',
+      systemNo: 57,
     },
   ];
 
@@ -104,6 +124,10 @@ const Attendance: FC = () => {
   const openModal = (key: number) => {
     setSelectedStudentDetails(studentList[key]);
     onOpenAttendanceModal();
+  };
+
+  const saveAttendance = () => {
+    // console.log(selectedStudentDetails);
   };
   return (
     <>
@@ -121,7 +145,7 @@ const Attendance: FC = () => {
                 }}
                 properties={[
                   {
-                    id: `${id}0`,
+                    id: nanoid(),
                     value: labNameHeading,
                     textProps: {
                       color: 'black.25',
@@ -130,7 +154,7 @@ const Attendance: FC = () => {
                     },
                   },
                   {
-                    id: `${id}1`,
+                    id: nanoid(),
                     value: roomNo,
                     textProps: {
                       color: 'black.25',
@@ -161,6 +185,7 @@ const Attendance: FC = () => {
             circleInnerText={`#${systemNo}`}
             properties={[
               {
+                id: nanoid(),
                 activeStatus: true,
                 activeColor: attendanceStatus === 'Present' ? 'green.50' : 'red.50',
                 value: `${rollNo}. ${name}`,
@@ -193,7 +218,7 @@ const Attendance: FC = () => {
               </FormLabel>
               <Input
                 bg="gray.50"
-                id="labName"
+                id="name"
                 value={selectedStudentDetails.name}
                 mb="7"
                 rounded="12px"
@@ -203,11 +228,11 @@ const Attendance: FC = () => {
                 System No
               </FormLabel>
               <Select
-                id="departmentWithBatch"
+                id="systemNo"
                 bg="gray.50"
                 mb="7"
                 rounded="12px"
-                // onChange={handleFormChange}
+                onChange={handleFormChange}
                 value={selectedStudentDetails.systemNo}
               >
                 <option value={selectedStudentDetails.systemNo}>
@@ -219,15 +244,20 @@ const Attendance: FC = () => {
                   </option>
                 ))}
               </Select>
-              <FormLabel as="legend">Attendance</FormLabel>
-              <RadioGroup defaultValue="Present" mb="7">
+              <FormLabel>Attendance</FormLabel>
+              <RadioGroup defaultValue="Present" mb="7" onChange={handleRadioInput}>
                 <HStack spacing="24px">
                   <Radio value="Present">Present</Radio>
                   <Radio value="Absent">Absent</Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
-            <CustomButton onClick={() => null} innerText="Save" type="modal" disabled={false} />
+            <CustomButton
+              innerText="Save"
+              onClick={() => saveAttendance()}
+              type="modal"
+              disabled={false}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>

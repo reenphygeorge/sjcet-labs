@@ -16,17 +16,19 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC, useState } from 'react';
-import ElementCard from '@/components/elementCard';
-import TopHeading from '@/components/topHeading';
-import { Data, Status } from '@/types/reports.d';
-import CustomButton from '@/components/customButton';
-import ReactSelect from '@/components/reactSelect';
+import { ChangeEvent, FC, useState } from 'react';
+import { nanoid } from 'nanoid';
+import ElementCard from '@/components/ElementCard';
+import TopHeading from '@/components/TopHeading';
+import CustomButton from '@/components/CustomButton';
+import ReactSelect from '@/components/ReactSelect';
+import { Data, LabList, NewReportData, Status } from '@/types/Reports.d';
+import { NumberOptions } from '@/types/ReactSelect';
 
 const Reports: FC = () => {
   const requestList: Data[] = [
     {
-      id: '0',
+      id: 'R0',
       date: 'March 22, 2023',
       timing: '09:45 AM',
       venue: 'Software Computing Lab',
@@ -35,7 +37,7 @@ const Reports: FC = () => {
       systemNo: [51, 22],
     },
     {
-      id: '1',
+      id: 'R1',
       date: 'March 22, 2023',
       timing: '09:45 AM',
       venue: 'Programming Lab',
@@ -44,7 +46,7 @@ const Reports: FC = () => {
       systemNo: [12],
     },
     {
-      id: '2',
+      id: 'R2',
       date: 'March 22, 2023',
       timing: '09:45 AM',
       venue: 'Network Lab',
@@ -54,12 +56,27 @@ const Reports: FC = () => {
     },
   ];
 
-  const labList: string[] = [
-    'Software Computing Lab',
-    'Programming Lab',
-    'Network Lab',
-    'Research Lab',
-    'Testing Lab',
+  const labList: LabList[] = [
+    {
+      id: 'L0',
+      labName: 'Software Computing Lab',
+    },
+    {
+      id: 'L1',
+      labName: 'Programming Lab',
+    },
+    {
+      id: 'L2',
+      labName: 'Network Lab',
+    },
+    {
+      id: 'L3',
+      labName: 'Research Lab',
+    },
+    {
+      id: 'L3',
+      labName: 'Testing Lab',
+    },
   ];
 
   const [selectedReportDetails, setReportStudentDetails] = useState<Data>({
@@ -72,7 +89,22 @@ const Reports: FC = () => {
     systemNo: [],
   });
 
-  const systemNos = [
+  const [newReportData, setNewReportData] = useState<NewReportData>({
+    systemNo: [],
+    venue: 'Software Computing Lab',
+    issue: '',
+  });
+
+  const handleSelectChange = (selectedOptions: NumberOptions[]) => {
+    // const selectedSystems: number[] = selectedOptions.map(({ value }) => value);
+    setNewReportData({ ...newReportData, systemNo: selectedOptions });
+  };
+
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
+  };
+
+  const systemNos: NumberOptions[] = [
     {
       value: 1,
       label: '01',
@@ -107,8 +139,6 @@ const Reports: FC = () => {
     },
   ];
 
-  const selectedSystemNos: string[] = [];
-
   const {
     isOpen: isOpenNewReportModal,
     onOpen: onOpenNewReportModal,
@@ -125,6 +155,11 @@ const Reports: FC = () => {
     setReportStudentDetails(requestList[key]);
     onOpenReportModal();
   };
+
+  const reportNow = () => {
+    // console.log(newReportData);
+  };
+
   return (
     <>
       <TopHeading heading="Report System" subText="Reported system errors" />
@@ -144,6 +179,7 @@ const Reports: FC = () => {
           circleInnerText={status}
           properties={[
             {
+              id: nanoid(),
               value: venue,
               textProps: {
                 color: 'black.25',
@@ -152,6 +188,7 @@ const Reports: FC = () => {
               },
             },
             {
+              id: nanoid(),
               value: date,
               textProps: {
                 color: 'black.25',
@@ -188,7 +225,7 @@ const Reports: FC = () => {
                 System No:
               </Text>
               {selectedReportDetails.systemNo.map((number) => (
-                <Tag fontSize="md" variant="solid" fontWeight="semibold">
+                <Tag fontSize="md" id={number.toString()} variant="solid" fontWeight="semibold">
                   {`# ${number}`}
                 </Tag>
               ))}
@@ -237,18 +274,25 @@ const Reports: FC = () => {
           <ModalBody>
             <FormControl>
               <FormLabel pl="1">System No</FormLabel>
-              <ReactSelect options={systemNos} values={selectedSystemNos} disabled={false} />
+              <ReactSelect
+                options={systemNos}
+                values={newReportData.systemNo}
+                disabled={false}
+                onChange={handleSelectChange}
+              />
               <FormLabel pl="1">Venue</FormLabel>
-              <Select bg="gray.50" mb="7" rounded="12px">
-                {labList.map((labName) => (
-                  <option value={labName}>{labName}</option>
+              <Select bg="gray.50" mb="7" rounded="12px" id="venue" onChange={handleFormChange}>
+                {labList.map(({ id, labName }) => (
+                  <option id={id} value={labName}>
+                    {labName}
+                  </option>
                 ))}
               </Select>
               <FormLabel pl="1">Describe the issue</FormLabel>
-              <Input bg="gray.50" id="labName" mb="7" rounded="12px" />
+              <Input bg="gray.50" id="issue" mb="7" rounded="12px" onChange={handleFormChange} />
               <CustomButton
                 onClick={() => {
-                  // onOpenNewReportModal();
+                  reportNow();
                 }}
                 innerText="Report Now"
                 type="regular"

@@ -1,26 +1,30 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
+import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
-import { ReactSelectProps } from '@/types/reactSelect';
+import { ReactSelectProps } from '@/types/ReactSelect';
 
 const customStyles: StylesConfig = {
   control: (provided) => ({
     ...provided,
     backgroundColor: '#F0F2F5',
     borderRadius: '12px',
-    marginBottom: '30px', // Set the desired background color
+    marginBottom: '30px',
   }),
 };
 
-const ReactSelect = ({ options, values, disabled }: ReactSelectProps) => {
+const ReactSelect: FC<ReactSelectProps> = ({ options, values, disabled, onChange }) => {
+  let updatedValues = values;
   if (values !== undefined && values !== null) {
-    const updatedValues = values.map(({ timing, day }) => ({
-      value: {
-        timing,
-        day,
-      },
-      label: `${day} ${timing}`,
-    }));
+    if (values.some((value) => value.timing !== undefined)) {
+      updatedValues = values.map(({ timing, day }) => ({
+        value: {
+          timing,
+          day,
+        },
+        label: `${day} ${timing}`,
+      }));
+    }
     return (
       <Select
         options={options}
@@ -28,7 +32,7 @@ const ReactSelect = ({ options, values, disabled }: ReactSelectProps) => {
         styles={customStyles}
         isMulti
         isDisabled={disabled}
-        // onChange={() => (onChange !== null ? () : null)}
+        onChange={onChange}
       />
     );
   }

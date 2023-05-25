@@ -2,8 +2,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Card, CardBody, Flex, HStack, Spacer, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import Circle from './circle';
-import { ElementCardProps } from '@/types/elementCard';
+import Circle from './Circle';
+import { ElementCardProps } from '@/types/ElementCard';
 
 const ElementCard: FC<ElementCardProps> = ({
   cardProps,
@@ -16,14 +16,13 @@ const ElementCard: FC<ElementCardProps> = ({
     <CardBody>
       <Flex justify="space-around" align="center">
         <Flex flexDirection="column">
-          {properties.map(({ value, textProps, activeStatus, activeColor }) => (
-            <HStack>
+          {properties.map(({ id, value, textProps, activeStatus, activeColor }) => (
+            <HStack key={id}>
               <Text key={value} {...textProps}>
                 {value}
               </Text>
               {activeStatus === true ? (
                 <Circle
-                  // innerText={}
                   circleProps={{
                     w: '10px',
                     h: '10px',
