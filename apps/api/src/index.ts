@@ -2,7 +2,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import supertokens from 'supertokens-node';
-import { middleware, errorHandler } from 'supertokens-node/framework/express';
+import { middleware } from 'supertokens-node/framework/express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import supertokensInit from './routes/auth';
@@ -32,6 +32,5 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Add the route here
 app.use('/users', userRoute);
-app.use(errorHandler);
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));
