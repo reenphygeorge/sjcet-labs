@@ -2,6 +2,7 @@ import { NumberOptions } from './ReactSelect';
 
 interface Data {
   id: string;
+  staffName: string;
   date: string;
   timing: string;
   venue: string;
@@ -32,4 +33,8 @@ interface NewReportData {
   issue: string;
 }
 
-export { Data, Status, LabList, NewReportData };
+interface ResolveInfo {
+  comment: string;
+}
+
+export { Data, Status, LabList, NewReportData, ResolveInfo };

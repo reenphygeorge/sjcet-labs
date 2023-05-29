@@ -1,17 +1,25 @@
-interface Period {
+interface TeacherPeriod {
   id: string;
   periodName: string;
   semester: string;
   branch: string;
   timing: string;
-  day: string;
-  batch: string;
   venue: string;
   roomNo: string;
 }
 
+interface LabAdminPeriod {
+  id: string;
+  periodName: string;
+  inCharge: string;
+  semester: string;
+  branch: string;
+  timing: string;
+}
+
 interface Day {
-  periods: Period[];
+  day: string;
+  periods: TeacherPeriod[];
 }
 
 interface Timetable {
@@ -27,4 +35,4 @@ interface Options {
   value: string;
 }
 
-export { Period, Day, Timetable, TimetableCardProps, Options };
+export { TeacherPeriod, LabAdminPeriod, Day, Timetable, TimetableCardProps, Options };

@@ -63,7 +63,7 @@ const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
         >
           <>
             {timetable.days[day].periods.map(
-              ({ id, periodName, semester, branch, batch, venue, roomNo }, key) => (
+              ({ id, periodName, semester, branch, venue, roomNo }, key) => (
                 <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                   <CardBody>
                     <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
@@ -71,10 +71,9 @@ const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
                       {semester !== '' ? `${semester} ${branch} ` : `-----`}
-                      {batch !== '' ? `Batch ${batch}` : ''}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
-                      {venue !== '' ? `Venue: ${venue} (${roomNo})` : `-----`}
+                      {venue ? `Venue: ${venue} (${roomNo})` : '-----'}
                     </Text>
                   </CardBody>
                 </Box>

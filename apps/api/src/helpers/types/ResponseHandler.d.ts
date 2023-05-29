@@ -1,4 +1,4 @@
 export interface ResponseBody {
   success: boolean;
-  data: object;
+  data: unknown;
 }

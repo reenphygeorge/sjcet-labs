@@ -200,12 +200,12 @@ const BookLab: FC = () => {
             </>
           </Grid>
           {teacherTimetable.days[dayNumber].periods.map(
-            ({ id, periodName, semester, branch, timing, day }, key) => {
+            ({ id, periodName, semester, branch, timing }, key) => {
               const periodHeading: string = `${key + 1}. ${periodName}`;
               const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : `-----`;
               return (
                 <CustomCard
-                  onClick={() => togglePeriods(id, timing, day)}
+                  onClick={() => togglePeriods(id, timing, teacherTimetable.days[dayNumber].day)}
                   cardProps={{
                     bg:
                       selectedPeriods.some((period) => period.id.includes(id)) === false

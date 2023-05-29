@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Tag,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -14,27 +15,18 @@ import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
-
-interface BookingData {
-  id: string;
-  semester: string;
-  departmentWithBatch: string;
-  date: string;
-  timings: string[];
-  venue: string;
-  purpose: string;
-  status: string;
-}
+import { RequestData, Status } from '@/types/LabRequests.d';
 
 const ViewBookings: FC = () => {
-  const [selectedBooking, setSelectedBooking] = useState<BookingData>({
+  const [selectedBooking, setSelectedBooking] = useState<RequestData>({
     id: '',
+    staffName: '',
     semester: '',
     departmentWithBatch: '',
-    date: '',
+    dateOfRequest: '',
     timings: [],
-    venue: '',
     purpose: '',
+    venue: '',
     status: '',
   });
   const {
@@ -43,23 +35,28 @@ const ViewBookings: FC = () => {
     onClose: onCloseBookingModal,
   } = useDisclosure();
 
-  const requestList: BookingData[] = [
+  const requestList: RequestData[] = [
     {
       id: '0',
+      staffName: 'Current Staff',
       semester: 'S6',
       departmentWithBatch: 'CSE-B',
-      date: 'April 22, 2023',
-      timings: ['9:00 - 11:00', '11:00 - 12:45'],
+      dateOfRequest: 'April 22, 2023',
+      timings: [
+        { id: nanoid(), time: '9:00 - 11:00', date: 'April 22, 2023' },
+        { id: nanoid(), time: '11:00 - 12:45', date: 'April 22, 2023' },
+      ],
       venue: 'Software Computing Lab',
       purpose: '',
       status: 'Requested',
     },
     {
       id: '1',
+      staffName: 'Current Staff',
       semester: 'S4',
       departmentWithBatch: 'CSE-A',
-      date: 'April 22, 2023',
-      timings: ['01:35 - 03:30'],
+      dateOfRequest: 'April 22, 2023',
+      timings: [{ id: nanoid(), time: '01:35 - 03:30', date: 'April 28, 2023' }],
       venue: 'Programming Lab',
       purpose: '',
       status: 'Approved',
@@ -73,7 +70,7 @@ const ViewBookings: FC = () => {
   return (
     <>
       <TopHeading heading="My Bookings" subText="View my bookings" />
-      {requestList.map(({ id, venue, date, status }, key) => (
+      {requestList.map(({ id, venue, dateOfRequest, status }, key) => (
         <ElementCard
           onClick={() => {
             openModal(key);
@@ -83,7 +80,7 @@ const ViewBookings: FC = () => {
             borderRadius: '12px',
             w: '90px',
             h: '30px',
-            bg: status === 'Requested' ? 'red.50' : 'green.50',
+            bg: status === Status.Requested ? 'red.50' : 'green.50',
           }}
           circleInnerText={status}
           properties={[
@@ -98,7 +95,7 @@ const ViewBookings: FC = () => {
             },
             {
               id: nanoid(),
-              value: date,
+              value: dateOfRequest,
               textProps: {
                 color: 'black.25',
                 fontSize: '15',
@@ -135,12 +132,15 @@ const ViewBookings: FC = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Date:  ${selectedBooking.date}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Timing:  ${selectedBooking.timings}`}</Text>
+            >{`Date:  ${selectedBooking.dateOfRequest}`}</Text>
+            <Text fontSize="md" mb={4} fontWeight="semibold">
+              Timing:
+              <br />
+              <br />
+              {selectedBooking.timings.map(({ id, time, date }) => (
+                <Tag key={id} mb={2}>{`${date} ${time}`}</Tag>
+              ))}
+            </Text>
             <Text
               fontSize="md"
               mb={4}

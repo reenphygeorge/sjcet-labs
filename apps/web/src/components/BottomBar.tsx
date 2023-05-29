@@ -6,7 +6,8 @@ import { Bell, Home, User } from 'react-feather';
 
 const BottomBar: FC = () => {
   const changeScreen = (option: string) => {
-    if (option === 'Home') Link.push('/');
+    const path = option === 'home' ? '/' : option;
+    Link.push(path);
   };
 
   return (
@@ -17,10 +18,10 @@ const BottomBar: FC = () => {
             <Bell />
           </Box>
           <Box>
-            <Home onClick={() => changeScreen('Home')} />
+            <Home onClick={() => changeScreen('home')} />
           </Box>
           <Box>
-            <User />
+            <User onClick={() => changeScreen('profile')} />
           </Box>
         </Flex>
       </Card>

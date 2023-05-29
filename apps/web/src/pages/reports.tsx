@@ -22,40 +22,11 @@ import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
-import { Data, LabList, NewReportData, Status } from '@/types/Reports.d';
+import { Data, LabList, NewReportData } from '@/types/Reports.d';
 import { NumberOptions } from '@/types/ReactSelect';
+import reportList from '../../util/reportData';
 
 const Reports: FC = () => {
-  const requestList: Data[] = [
-    {
-      id: 'R0',
-      date: 'March 22, 2023',
-      timing: '09:45 AM',
-      venue: 'Software Computing Lab',
-      issue: '',
-      status: Status.Pending,
-      systemNo: [51, 22],
-    },
-    {
-      id: 'R1',
-      date: 'March 22, 2023',
-      timing: '09:45 AM',
-      venue: 'Programming Lab',
-      issue: '',
-      status: Status.InProgress,
-      systemNo: [12],
-    },
-    {
-      id: 'R2',
-      date: 'March 22, 2023',
-      timing: '09:45 AM',
-      venue: 'Network Lab',
-      issue: '',
-      status: Status.Resolved,
-      systemNo: [10, 24, 51],
-    },
-  ];
-
   const labList: LabList[] = [
     {
       id: 'L0',
@@ -82,6 +53,7 @@ const Reports: FC = () => {
   const [selectedReportDetails, setReportStudentDetails] = useState<Data>({
     id: '',
     date: '',
+    staffName: '',
     timing: '',
     venue: '',
     issue: '',
@@ -152,7 +124,7 @@ const Reports: FC = () => {
   } = useDisclosure();
 
   const openReportModal = (key: number) => {
-    setReportStudentDetails(requestList[key]);
+    setReportStudentDetails(reportList[key]);
     onOpenReportModal();
   };
 
@@ -163,7 +135,7 @@ const Reports: FC = () => {
   return (
     <>
       <TopHeading heading="Report System" subText="Reported system errors" />
-      {requestList.map(({ id, venue, date, status }, key) => (
+      {reportList.map(({ id, venue, date, status }, key) => (
         <ElementCard
           onClick={() => {
             openReportModal(key);

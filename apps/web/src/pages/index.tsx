@@ -8,27 +8,37 @@ import Link from 'next/router';
 import TimetableCard from '@/components/TimetableCard';
 import CustomCard from '@/components/CustomCard';
 // Required data
-import { Gender, Profile, RouteOptions } from '@/types/Home.d';
+import { RouteOptions } from '@/types/Home.d';
+import { Gender, ProfileData, Role } from '@/types/Profile.d';
 import teacherTimetable from '../../util/teacherTimetable';
 
 const Home: FC = () => {
   // Required data
-  const profileDetails: Profile = {
-    id: '',
+  const profileData: ProfileData = {
     collegeID: '',
     name: 'Kishore Sebastian',
     department: 'Computer Sci & Engg',
     email: '',
     phone: '',
     gender: Gender.Male,
+    role: Role.Administrator,
+    dualMode: false,
   };
 
-  const options: Array<RouteOptions> = [
-    { id: nanoid(), value: 'Book Venue', route: 'venue-select' },
-    { id: nanoid(), value: 'My Bookings', route: 'view-bookings' },
-    { id: nanoid(), value: 'Attendance', route: 'attendance' },
-    { id: nanoid(), value: 'Reports', route: 'reports' },
-  ];
+  const options: RouteOptions[] =
+    profileData.role === Role.Teacher
+      ? [
+          { id: nanoid(), value: 'Book Venue', route: 'venue-select' },
+          { id: nanoid(), value: 'My Bookings', route: 'view-bookings' },
+          { id: nanoid(), value: 'Attendance', route: 'attendance' },
+          { id: nanoid(), value: 'Reports', route: 'reports' },
+        ]
+      : [
+          { id: nanoid(), value: 'Requests', route: 'requests' },
+          { id: nanoid(), value: 'Report & Repair', route: 'report-repair' },
+          { id: nanoid(), value: 'Todo List', route: 'todo' },
+          { id: nanoid(), value: 'Logs', route: 'logs' },
+        ];
   const [selectOption, setSelectOption] = useState<number>(-1);
 
   const changeOption = async (key: number, route: string) => {
@@ -50,7 +60,7 @@ const Home: FC = () => {
             <br />
           </Text>
           <Text fontSize="4xl" fontWeight="bold" color="black.50">
-            {`Prof. ${profileDetails.name.split(' ')[0]}`}
+            {`Prof. ${profileData.name.split(' ')[0]}`}
           </Text>
         </Box>
         <Box my="20px">
