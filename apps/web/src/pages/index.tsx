@@ -21,7 +21,7 @@ const Home: FC = () => {
     email: '',
     phone: '',
     gender: Gender.Male,
-    role: Role.Administrator,
+    role: Role.Teacher,
     dualMode: false,
   };
 
