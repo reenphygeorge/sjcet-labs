@@ -30,14 +30,10 @@ model Departments {
   id          String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   name        String
   professors  User[]        @relation("EachProfessor")
-  // courses      Courses[]
-  // deptHead     Professors   @relation("DepartmentHead", fields: [deptHeadId], references: [id])
-  // deptHeadId   String       @unique
   Reservation Reservation[]
   batches     Int
   Student     Student[]
   TimeTable   TimeTable[]
-  Periods     Periods[]
   Courses     Courses[]
 }
 
@@ -86,7 +82,7 @@ model Reservation {
 //   peakUsagePeriod  Int?
 // }
 
-model Periods {
+model TimeTable {
   id            String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   department    Departments @relation(fields: [departmentsId], references: [id])
   departmentsId String
@@ -108,19 +104,19 @@ model Periods {
   course7       Courses     @relation("Period7", fields: [course7Id], references: [id])
   course7Id     String
 
-  @@unique([departmentsId, semester, batch])
+  @@unique([departmentsId, semester, batch, dayOfTheWeek])
 }
 
-model TimeTable {
-  department    Departments @relation(fields: [departmentsId], references: [id])
-  departmentsId String
-  semester      Semester
-  batch         Batch
-  // periods       Periods[] @relation(fields: [departmentsId, semester, batch], references: [departmentsId, semester, batch])
-  // periodsId     String[]
+// model TimeTable {
+//   department    Departments @relation(fields: [departmentsId], references: [id])
+//   departmentsId String
+//   semester      Semester
+//   batch         Batch
+//   // periods       Periods[] @relation(fields: [departmentsId, semester, batch], references: [departmentsId, semester, batch])
+//   // periodsId     String[]
 
-  @@id([departmentsId, semester, batch])
-}
+//   @@id([departmentsId, semester, batch])
+// }
 
 model Courses {
   id         String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
@@ -128,13 +124,13 @@ model Courses {
   courseName String
   department Departments[]
   // reservation Reservation[]
-  Periods1   Periods[]     @relation("Period1")
-  Periods2   Periods[]     @relation("Period2")
-  Periods3   Periods[]     @relation("Period3")
-  Periods4   Periods[]     @relation("Period4")
-  Periods5   Periods[]     @relation("Period5")
-  Periods6   Periods[]     @relation("Period6")
-  Periods7   Periods[]     @relation("Period7")
+  Periods1   TimeTable[]   @relation("Period1")
+  Periods2   TimeTable[]   @relation("Period2")
+  Periods3   TimeTable[]   @relation("Period3")
+  Periods4   TimeTable[]   @relation("Period4")
+  Periods5   TimeTable[]   @relation("Period5")
+  Periods6   TimeTable[]   @relation("Period6")
+  Periods7   TimeTable[]   @relation("Period7")
 }
 
 // model Notifications {
