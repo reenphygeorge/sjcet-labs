@@ -126,7 +126,7 @@ const ReportRepair: FC = () => {
               {`Issue: ${selectedReport.issue}`}
             </Text>
             <FormControl>
-              <FormLabel htmlFor="">Comment on issue</FormLabel>
+              <FormLabel htmlFor="comment">Comment on issue</FormLabel>
               <Input
                 bg="gray.50"
                 id="comment"

@@ -6,7 +6,7 @@ interface ProfileData {
   phone: string;
   gender: Gender;
   role: Role;
-  dualMode: boolean;
+  labInCharge: boolean;
 }
 
 enum Gender {

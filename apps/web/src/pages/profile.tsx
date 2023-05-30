@@ -1,6 +1,18 @@
 /* eslint-disable import/extensions */
-import { FormControl, FormLabel, Image, Input, Select, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  IconButton,
+  Image,
+  Input,
+  Select,
+  Text,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
 import { ChangeEvent, FC, useState } from 'react';
+import { Repeat } from 'react-feather';
 import CustomButton from '@/components/CustomButton';
 import { Department, Gender, ProfileData, Role } from '@/types/Profile.d';
 
@@ -10,7 +22,9 @@ const Profile: FC = () => {
     { id: 'D1', name: 'Artificial Inteligence & Data Sci' },
     { id: 'D2', name: 'Electrical & Electronics Engg' },
   ];
+
   const [editMode, setEditMode] = useState<boolean>(false);
+
   const [profileData, setProfileData] = useState<ProfileData>({
     collegeID: '05CS007',
     name: 'Kishore Sebastian',
@@ -19,14 +33,33 @@ const Profile: FC = () => {
     phone: '+919012345678',
     gender: Gender.Male,
     role: Role.Teacher,
-    dualMode: false,
+    labInCharge: true,
   });
+
   const saveProfile = () => {
     setEditMode(!editMode);
     // console.log(profileData);
   };
+
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setProfileData({ ...profileData, [event.target.id]: event.target.value });
+  };
+
+  const toast = useToast();
+  const switchAccount = () => {
+    const role: Role = profileData.role === Role.Administrator ? Role.Teacher : Role.Administrator;
+    setProfileData({
+      ...profileData,
+      role,
+    });
+    toast({
+      position: 'top',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="purple.25">
+          Switched to {role}!
+        </Box>
+      ),
+    });
   };
   return (
     <VStack pb="40" mx="5">
@@ -43,6 +76,19 @@ const Profile: FC = () => {
         }
         alt="profile-pic"
       />
+      {profileData.labInCharge === true ? (
+        <IconButton
+          onClick={() => switchAccount()}
+          aria-label="Switch-Account"
+          position="absolute"
+          right="16"
+          top="40"
+          rounded="100%"
+          icon={<Repeat width="18px" />}
+        />
+      ) : (
+        ''
+      )}
       <FormControl isDisabled={!editMode}>
         <FormLabel htmlFor="name" pl="1">
           College ID

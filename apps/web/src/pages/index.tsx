@@ -22,7 +22,7 @@ const Home: FC = () => {
     phone: '',
     gender: Gender.Male,
     role: Role.Teacher,
-    dualMode: false,
+    labInCharge: false,
   };
 
   const options: RouteOptions[] =

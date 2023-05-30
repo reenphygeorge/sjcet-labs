@@ -70,10 +70,10 @@ const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
                       {`${key + 1}. ${periodName}`}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                      {semester !== '' ? `${semester} ${branch} ` : `-----`}
+                      {semester !== '' ? `${semester} ${branch} ` : ``}
                     </Text>
                     <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
-                      {venue ? `Venue: ${venue} (${roomNo})` : '-----'}
+                      {venue ? `Venue: ${venue} (${roomNo})` : ''}
                     </Text>
                   </CardBody>
                 </Box>

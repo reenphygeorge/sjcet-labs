@@ -5,6 +5,7 @@ interface ReactSelectProps {
   values: PeriodTiming[] | Options[] | any[];
   disabled: boolean;
   onChange?: (event: ValueType<Options>) => void;
+  placeHolder?: string;
 }
 
 interface StringValuedOptions {

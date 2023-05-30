@@ -13,7 +13,13 @@ const customStyles: StylesConfig = {
   }),
 };
 
-const ReactSelect: FC<ReactSelectProps> = ({ options, values, disabled, onChange }) => {
+const ReactSelect: FC<ReactSelectProps> = ({
+  options,
+  values,
+  disabled,
+  onChange,
+  placeHolder,
+}) => {
   let updatedValues = values;
   if (values !== undefined && values !== null) {
     if (values.some((value) => value.timing !== undefined)) {
@@ -33,6 +39,7 @@ const ReactSelect: FC<ReactSelectProps> = ({ options, values, disabled, onChange
         isMulti
         isDisabled={disabled}
         onChange={onChange}
+        placeholder={placeHolder !== undefined ? placeHolder : ''}
       />
     );
   }

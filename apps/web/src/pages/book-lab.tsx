@@ -202,7 +202,7 @@ const BookLab: FC = () => {
           {teacherTimetable.days[dayNumber].periods.map(
             ({ id, periodName, semester, branch, timing }, key) => {
               const periodHeading: string = `${key + 1}. ${periodName}`;
-              const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : `-----`;
+              const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : ``;
               return (
                 <CustomCard
                   onClick={() => togglePeriods(id, timing, teacherTimetable.days[dayNumber].day)}
