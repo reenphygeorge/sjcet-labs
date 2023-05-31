@@ -16,14 +16,18 @@ app.use(
     origin: env.websiteDomain,
     allowedHeaders: ['content-type'],
     credentials: true,
-  })
+  }),
 );
+
+app.use(express.json())
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Add the route here
-app.use('/users', userRoute);
+// app.use('/users', userRoute);
+
+app.use('/user', userRoute)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

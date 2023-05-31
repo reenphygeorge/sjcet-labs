@@ -4,34 +4,68 @@ import logger from '../helpers/logger/logger.init';
 
 const prisma = new PrismaClient();
 
-const getUserService = async () => {
+// const getUserService = async () => {
   // Get data from prisma with prisma queries
-  const data = {
-    data: [
-      {
-        id: '001',
-        name: 'Kishore Sebastian',
-      },
-      {
-        id: '002',
-        name: 'Sarju S',
-      },
-    ],
-  };
-  return data;
+//   const data = {
+//     data: [
+//       {
+//         id: '001',
+//         name: 'Kishore Sebastian',
+//       },
+//       {
+//         id: '002',
+//         name: 'Sarju S',
+//       },
+//     ],
+//   };
+//   return data;
+// };
+
+const getUserService = async (id: string) => {
+  // Get data from prisma with prisma queries
+  if (id === 'hello') {
+    const data = {
+      id: 'asjdna2133',
+      name: 'Kishore Sebastian'
+    }
+    console.log(data)
+    return data
+  } else {
+    const professor = await prisma.user.findUnique({
+      where: {
+        authId: id
+      }
+    })
+    console.log(professor)
+    const data = {
+      id: professor?.id,
+      name: professor?.name
+    }
+    return data;
+  }
 };
 
-getUserService()
-  .then(async () => {
-    await prisma.$disconnect();
+const postUserData = async (name: string, batches: number) => {
+  const professor = await prisma.departments.create({
+    data: {
+      name: name,
+      batches: batches
+
+    }
   })
+  console.log(professor)
+}
+// getUserService()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
 
-  .catch(async (error: Error) => {
-    logger.error(error);
+//   .catch(async (error: Error) => {
+//     logger.error(error);
 
-    await prisma.$disconnect();
+//     await prisma.$disconnect();
 
-    process.exit(1);
-  });
+//     process.exit(1);
+//   });
 
-export { getUserService };
+export { getUserService, postUserData };
