@@ -41,16 +41,17 @@ model Departments {
 }
 
 model Student {
-  id                 String            @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  registerNumber     String            @unique
+  id                 String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  registerNumber     String             @unique
   name               String
-  department         Departments       @relation(fields: [departmentsId], references: [id])
+  department         Departments        @relation(fields: [departmentsId], references: [id])
   departmentsId      String
   semester           Semester
   batch              Batch
   labBatch           LabBatch
-  AttendanceRecord   AttendanceRecord? @relation(fields: [attendanceRecordId], references: [id])
+  AttendanceRecord   AttendanceRecord?  @relation(fields: [attendanceRecordId], references: [id])
   attendanceRecordId String?
+  StudentPositions   StudentPositions[]
 }
 
 model Lab {
@@ -83,32 +84,46 @@ model Reservation {
 }
 
 model TimeTable {
-  id                   String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  course               Courses          @relation(fields: [coursesId], references: [courseCode])
+  id                   String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  course               Courses            @relation(fields: [coursesId], references: [courseCode])
   coursesId            String
   batch                Batch
-  user                 User             @relation(fields: [userId], references: [id])
+  user                 User               @relation(fields: [userId], references: [id])
   userId               String
-  teachingDepartment   Departments      @relation(fields: [teachingDepartmentId], references: [id])
+  teachingDepartment   Departments        @relation(fields: [teachingDepartmentId], references: [id])
   teachingDepartmentId String
   time                 DateTime
   periodNumber         PeriodNumber
   day                  Days
-  lab                  Lab?             @relation(fields: [labId], references: [id])
+  lab                  Lab?               @relation(fields: [labId], references: [id])
   labId                String?
   labBatch             LabBatch?
-  attendanceRecord     AttendanceRecord @relation(fields: [attendanceRecordId], references: [id])
-  attendanceRecordId   String
+  attendanceRecord     AttendanceRecord[]
 }
 
 model AttendanceRecord {
-  id             String         @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  date           DateTime
-  lab            Lab            @relation(fields: [labId], references: [id])
-  labId          String
-  periods        PeriodNumber[]
-  absentStudents Student[]
-  timeTable      TimeTable[]
+  id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  date             DateTime
+  lab              Lab                @relation(fields: [labId], references: [id])
+  labId            String
+  periods          PeriodNumber[]
+  absentStudents   Student[]
+  timeTable        TimeTable          @relation(fields: [timeTableId], references: [id])
+  timeTableId      String
+  StudentPositions StudentPositions[]
+
+  @@unique([date, labId, periods])
+}
+
+model StudentPositions {
+  id                 String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  student            Student          @relation(fields: [studentId], references: [id])
+  studentId          String
+  systemNumber       Int
+  attendanceRecord   AttendanceRecord @relation(fields: [attendanceRecordId], references: [id])
+  attendanceRecordId String
+
+  @@unique([studentId, systemNumber])
 }
 
 model Courses {
