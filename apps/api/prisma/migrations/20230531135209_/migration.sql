@@ -1,0 +1,13 @@
+-- AlterTable
+ALTER TABLE "AttendanceRecord" ALTER COLUMN "date" SET DATA TYPE DATE;
+
+-- AlterTable
+ALTER TABLE "Report" ALTER COLUMN "date" SET DATA TYPE DATE;
+
+-- AlterTable
+ALTER TABLE "Reservation" ALTER COLUMN "date" SET DATA TYPE DATE,
+ALTER COLUMN "startTime" SET DATA TYPE TIME,
+ALTER COLUMN "endTime" SET DATA TYPE TIME;
+
+-- AlterTable
+ALTER TABLE "TimeTable" ALTER COLUMN "time" SET DATA TYPE TIME;

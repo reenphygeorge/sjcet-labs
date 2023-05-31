@@ -56,7 +56,7 @@ model Student {
 
 model Lab {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  labName          String
+  labName          String             @unique
   labAdmins        User[]
   capacity         Int
   roomNumber       String
@@ -70,9 +70,9 @@ model Reservation {
   id            String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   professor     User        @relation(fields: [professorId], references: [id])
   professorId   String
-  date          DateTime
-  startTime     DateTime
-  endTime       DateTime
+  date          DateTime    @db.Date
+  startTime     DateTime    @db.Time()
+  endTime       DateTime    @db.Time()
   negotiable    Boolean
   purpose       String?
   // course      Courses  @relation(fields: [coursesId], references: [id])
@@ -92,7 +92,7 @@ model TimeTable {
   userId               String
   teachingDepartment   Departments        @relation(fields: [teachingDepartmentId], references: [id])
   teachingDepartmentId String
-  time                 DateTime
+  time                 DateTime           @db.Time()
   periodNumber         PeriodNumber
   day                  Days
   lab                  Lab?               @relation(fields: [labId], references: [id])
@@ -103,16 +103,16 @@ model TimeTable {
 
 model AttendanceRecord {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  date             DateTime
-  lab              Lab                @relation(fields: [labId], references: [id])
-  labId            String
+  date             DateTime           @db.Date
+  lab              Lab                @relation(fields: [labName], references: [labName])
+  labName          String
   periods          PeriodNumber[]
   absentStudents   Student[]
   timeTable        TimeTable          @relation(fields: [timeTableId], references: [id])
   timeTableId      String
   StudentPositions StudentPositions[]
 
-  @@unique([date, labId, periods])
+  @@unique([date, labName, periods])
 }
 
 model StudentPositions {
@@ -149,7 +149,7 @@ model Report {
   labId             String
   professor         User     @relation(fields: [professorId], references: [id])
   professorId       String
-  date              DateTime
+  date              DateTime @db.Date
   issue_type        String
   issue_description String?
   status            String
