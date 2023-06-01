@@ -53,7 +53,7 @@ A software that assists college faculties to maintain and manage the laboratory.
 - [Prisma](https://www.prisma.io/)
 - [Next.js](https://nextjs.org/)
 - [ChakraUI](https://chakra-ui.com/)
-- [SuperTokens](https://supertokens.com/)
+- [Supabase Auth](https://supabase.com/docs/guides/auth)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

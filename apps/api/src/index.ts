@@ -1,11 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import express, { Application } from 'express';
 import cors from 'cors';
-import supertokens from 'supertokens-node';
-import { middleware } from 'supertokens-node/framework/express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
-import supertokensInit from './routes/auth';
 import env from './helpers/env';
 import logger from './helpers/logger/logger.init';
 import swaggerOptions from './helpers/swagger/config';
@@ -14,17 +11,13 @@ import { userRoute } from './routes/userRouter';
 const app: Application = express();
 const port: string | undefined = env.apiPort;
 
-supertokensInit();
-
 app.use(
   cors({
     origin: env.websiteDomain,
-    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    allowedHeaders: ['content-type'],
     credentials: true,
   })
 );
-
-app.use(middleware());
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 

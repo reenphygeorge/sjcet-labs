@@ -132,9 +132,6 @@ dist
 # SQLite database file
 prisma/dev.db
 
-# SuperTokens
-supertokens-frontend
-
 + .turbo
 .DS_Store
 tmp
