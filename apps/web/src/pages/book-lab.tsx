@@ -174,6 +174,7 @@ const BookLab: FC = () => {
       <TopHeading
         heading="Book Lab"
         subText={bookingStep === 1 ? 'Select the periods' : 'Select the venue'}
+        arrow
       />
       {bookingStep === 1 ? (
         <>

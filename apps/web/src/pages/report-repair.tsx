@@ -59,7 +59,7 @@ const ReportRepair: FC = () => {
   const addTodo = () => {};
   return (
     <>
-      <TopHeading heading="Report & Repairs" subText="Reported Error" />
+      <TopHeading heading="Report & Repairs" subText="Reported Error" arrow />
       {reportList.map(({ id, staffName, date, status, systemNo }, key) =>
         status === Status.Pending ? (
           <CustomCard

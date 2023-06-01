@@ -134,7 +134,7 @@ const Reports: FC = () => {
 
   return (
     <>
-      <TopHeading heading="Report System" subText="Reported system errors" />
+      <TopHeading heading="Report System" subText="Reported system errors" arrow />
       {reportList.map(({ id, venue, date, status }, key) => (
         <ElementCard
           onClick={() => {

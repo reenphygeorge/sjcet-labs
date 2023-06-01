@@ -33,7 +33,7 @@ const VenueSelect: FC = () => {
   };
   return (
     <>
-      <TopHeading heading="Book Venue" subText="Choose the venue" />
+      <TopHeading heading="Book Venue" subText="Choose the venue" arrow />
       {venues.map(({ id, value, route }, key) => (
         <ElementCard
           key={id}

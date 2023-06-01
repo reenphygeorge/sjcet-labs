@@ -75,7 +75,7 @@ const Requests: FC = () => {
 
   return (
     <>
-      <TopHeading heading="Lab Requests" subText="Accept/Decline" />
+      <TopHeading heading="Lab Requests" subText="Accept/Decline" arrow />
       {requestList.map(({ id, staffName, dateOfRequest, status }, key) =>
         status === Status.Requested ? (
           <CustomCard

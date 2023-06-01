@@ -131,7 +131,7 @@ const Attendance: FC = () => {
   };
   return (
     <>
-      <TopHeading heading="Attendance" subText="Tap to mark/unmark" />
+      <TopHeading arrow heading="Attendance" subText="Tap to mark/unmark" />
 
       {attendanceStep === 1 ? (
         <>

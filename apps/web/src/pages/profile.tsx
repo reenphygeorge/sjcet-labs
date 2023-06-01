@@ -3,6 +3,7 @@ import {
   Box,
   FormControl,
   FormLabel,
+  HStack,
   IconButton,
   Image,
   Input,
@@ -15,8 +16,18 @@ import { ChangeEvent, FC, useState } from 'react';
 import { Repeat } from 'react-feather';
 import CustomButton from '@/components/CustomButton';
 import { Department, Gender, ProfileData, Role } from '@/types/Profile.d';
+import supabase from '../config/supabase.config';
 
 const Profile: FC = () => {
+  const signOut = async () => {
+    // console.log('Over here');
+
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      // console.error(error);
+    }
+  };
   const departments: Department[] = [
     { id: 'D0', name: 'Computer Sci & Engg' },
     { id: 'D1', name: 'Artificial Inteligence & Data Sci' },
@@ -151,12 +162,15 @@ const Profile: FC = () => {
           mb="7"
           rounded="12px"
         />
-        <CustomButton
-          innerText={editMode ? 'Save' : 'Edit'}
-          onClick={() => (editMode ? saveProfile() : setEditMode(!editMode))}
-          type="regular"
-          disabled={false}
-        />
+        <HStack justify="center">
+          <CustomButton
+            innerText={editMode ? 'Save' : 'Edit'}
+            onClick={() => (editMode ? saveProfile() : setEditMode(!editMode))}
+            type="mini"
+            disabled={false}
+          />
+          <CustomButton innerText="Logout" onClick={signOut} type="mini" disabled={false} />
+        </HStack>
       </FormControl>
     </VStack>
   );

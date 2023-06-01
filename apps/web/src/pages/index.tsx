@@ -3,16 +3,27 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/router';
+import { Session } from '@supabase/supabase-js';
 import TimetableCard from '@/components/TimetableCard';
 import CustomCard from '@/components/CustomCard';
 // Required data
 import { RouteOptions } from '@/types/Home.d';
 import { Gender, ProfileData, Role } from '@/types/Profile.d';
 import teacherTimetable from '../../util/teacherTimetable';
+import LoginPage from '@/components/LoginPage';
+import supabase from '../config/supabase.config';
 
 const Home: FC = () => {
+  const [appSession, setAppSession] = useState<null | Session>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAppSession(session);
+    });
+  }, []);
+
   // Required data
   const profileData: ProfileData = {
     collegeID: '',
@@ -53,48 +64,52 @@ const Home: FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box pb="40">
-        <Box my="20px">
-          <Text fontSize="lg" lineHeight="0.5" fontWeight="black" color="black.50">
-            Welcome
-            <br />
-          </Text>
-          <Text fontSize="4xl" fontWeight="bold" color="black.50">
-            {`Prof. ${profileData.name.split(' ')[0]}`}
-          </Text>
-        </Box>
-        <Box my="20px">
-          <TimetableCard timetable={teacherTimetable} />
-        </Box>
-        <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-          {options.map(({ id, value, route }, key) => (
-            <CustomCard
-              key={id}
-              onClick={() => {
-                changeOption(key, route);
-              }}
-              cardProps={{
-                height: '130px',
-                bg: selectOption !== key ? '#F0F2F5' : 'black.50',
-              }}
-              properties={[
-                {
-                  id: nanoid(),
-                  value,
-                  textProps: {
-                    color: selectOption !== key ? 'black.25' : 'white',
-                    fontSize: 'md',
-                    fontWeight: 'bold',
-                    position: 'relative',
-                    top: '7',
+      {appSession === null ? (
+        <LoginPage />
+      ) : (
+        <Box pb="40">
+          <Box my="20px">
+            <Text fontSize="lg" lineHeight="0.5" fontWeight="black" color="black.50">
+              Welcome
+              <br />
+            </Text>
+            <Text fontSize="4xl" fontWeight="bold" color="black.50">
+              {`Prof. ${profileData.name.split(' ')[0]}`}
+            </Text>
+          </Box>
+          <Box my="20px">
+            <TimetableCard timetable={teacherTimetable} />
+          </Box>
+          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+            {options.map(({ id, value, route }, key) => (
+              <CustomCard
+                key={id}
+                onClick={() => {
+                  changeOption(key, route);
+                }}
+                cardProps={{
+                  height: '130px',
+                  bg: selectOption !== key ? '#F0F2F5' : 'black.50',
+                }}
+                properties={[
+                  {
+                    id: nanoid(),
+                    value,
+                    textProps: {
+                      color: selectOption !== key ? 'black.25' : 'white',
+                      fontSize: 'md',
+                      fontWeight: 'bold',
+                      position: 'relative',
+                      top: '7',
+                    },
                   },
-                },
-              ]}
-              circleComponent
-            />
-          ))}
-        </Grid>
-      </Box>
+                ]}
+                circleComponent
+              />
+            ))}
+          </Grid>
+        </Box>
+      )}
     </>
   );
 };

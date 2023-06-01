@@ -133,7 +133,7 @@ const Todo: FC = () => {
 
   return (
     <>
-      <TopHeading heading="Todo List" subText="Add/View tasks" />
+      <TopHeading heading="Todo List" subText="Add/View tasks" arrow />
       {todoList.map(({ id, date, type }, key) => (
         <CustomCard
           onClick={() => {

@@ -8,7 +8,7 @@ const CustomButton: FC<CustomButtonProps> = ({ onClick, innerText, type, disable
   <Flex justify="center">
     <Button
       mb={5}
-      width={type === 'modal' ? '70vw' : type === 'mini' ? '33vw' : '85vw'}
+      width={type === 'modal' ? '70vw' : type === 'mini' ? '35vw' : '85vw'}
       height="50px"
       rounded="12px"
       bg="black.50"

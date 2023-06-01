@@ -69,7 +69,7 @@ const ViewBookings: FC = () => {
   };
   return (
     <>
-      <TopHeading heading="My Bookings" subText="View my bookings" />
+      <TopHeading heading="My Bookings" subText="View my bookings" arrow />
       {requestList.map(({ id, venue, dateOfRequest, status }, key) => (
         <ElementCard
           onClick={() => {

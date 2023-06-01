@@ -86,7 +86,7 @@ const Logs: FC = () => {
 
   return (
     <>
-      <TopHeading heading="Logs" subText="Users Log" />
+      <TopHeading heading="Logs" subText="Users Log" arrow />
       {logStep === 1 ? (
         <FormControl>
           <FormLabel htmlFor="name" pl="1">
