@@ -4,10 +4,11 @@ import { ChangeEvent, useState } from 'react';
 import { Box, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import TopHeading from './TopHeading';
 import CustomButton from './CustomButton';
-import supabase from '../config/supabase.config';
 import { LoginData } from '@/types/LoginData';
+import { useAuth } from '@/context/AuthContext';
 
 const LoginPage = () => {
+  const { signIn } = useAuth();
   const toast = useToast();
 
   const [loginData, setLoginData] = useState<LoginData>({
@@ -15,28 +16,23 @@ const LoginPage = () => {
     password: '',
   });
 
-  const signIn = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: loginData.email,
-        password: loginData.password,
-      });
-      if (error) {
-        toast({
-          position: 'bottom',
-          render: () => (
-            <Box color="white" p={3} rounded="12px" bg="red.50">
-              Invalid Credentials
-            </Box>
-          ),
-        });
-      }
-    } catch (error) {
+  const login = async () => {
+    const error = await signIn(loginData.email, loginData.password);
+    if (error) {
       toast({
         position: 'bottom',
         render: () => (
           <Box color="white" p={3} rounded="12px" bg="red.50">
-            Unexpected Error
+            Invalid Credentials
+          </Box>
+        ),
+      });
+    } else {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="green.50">
+            Welcome!!
           </Box>
         ),
       });
@@ -74,7 +70,7 @@ const LoginPage = () => {
           mb="7"
           rounded="12px"
         />
-        <CustomButton innerText="login" onClick={() => signIn()} type="regular" disabled={false} />
+        <CustomButton innerText="login" onClick={() => login()} type="regular" disabled={false} />
       </FormControl>
     </Box>
   );

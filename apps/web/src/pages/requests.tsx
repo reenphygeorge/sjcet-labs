@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
   HStack,
   IconButton,
@@ -13,13 +13,15 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import { Check, X } from 'react-feather';
 import TopHeading from '@/components/TopHeading';
 import CustomCard from '@/components/CustomCard';
 import { RequestData, Status } from '@/types/LabRequests.d';
+import authGuard from '../../util/AuthGuard';
 
-const Requests: FC = () => {
+const Requests: NextPage = () => {
   const [selectedRequest, setSelectedRequest] = useState<RequestData>({
     id: '',
     staffName: '',
@@ -161,4 +163,4 @@ const Requests: FC = () => {
   );
 };
 
-export default Requests;
+export default authGuard(Requests);

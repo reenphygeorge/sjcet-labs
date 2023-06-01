@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
+import { NextPage } from 'next';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
@@ -10,8 +11,9 @@ import { NumberOptions } from '@/types/ReactSelect';
 import { LogPayLoad } from '@/types/Logs';
 import { AttendanceStatus, StudentAttendanceData } from '@/types/Attendance.d';
 import ElementCard from '@/components/ElementCard';
+import authGuard from '../../util/AuthGuard';
 
-const Logs: FC = () => {
+const Logs: NextPage = () => {
   const [logPayLoad, setLogPayLoad] = useState<LogPayLoad>({
     dateTime: '',
     systemNo: [],
@@ -152,4 +154,4 @@ const Logs: FC = () => {
   );
 };
 
-export default Logs;
+export default authGuard(Logs);

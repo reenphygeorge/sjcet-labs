@@ -18,8 +18,9 @@ import {
   useToast,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { nanoid } from 'nanoid';
+import { NextPage } from 'next';
 import CustomCard from '@/components/CustomCard';
 import CustomButton from '@/components/CustomButton';
 import teacherTimetable from '../../util/teacherTimetable';
@@ -34,8 +35,9 @@ import {
   ReservationInfo,
   Status,
 } from '@/types/BookLab.d';
+import authGuard from '../../util/AuthGuard';
 
-const BookLab: FC = () => {
+const BookLab: NextPage = () => {
   const [dayNumber, setDayNumber] = useState<number>(0);
   const days: Options[] = [
     { id: nanoid(), value: 'M' },
@@ -488,4 +490,4 @@ const BookLab: FC = () => {
   );
 };
 
-export default BookLab;
+export default authGuard(BookLab);

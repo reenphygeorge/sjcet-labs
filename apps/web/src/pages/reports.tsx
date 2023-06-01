@@ -16,7 +16,8 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
@@ -25,8 +26,9 @@ import ReactSelect from '@/components/ReactSelect';
 import { Data, LabList, NewReportData } from '@/types/Reports.d';
 import { NumberOptions } from '@/types/ReactSelect';
 import reportList from '../../util/reportData';
+import authGuard from '../../util/AuthGuard';
 
-const Reports: FC = () => {
+const Reports: NextPage = () => {
   const labList: LabList[] = [
     {
       id: 'L0',
@@ -278,4 +280,4 @@ const Reports: FC = () => {
   );
 };
 
-export default Reports;
+export default authGuard(Reports);

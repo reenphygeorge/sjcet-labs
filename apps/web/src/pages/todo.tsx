@@ -17,8 +17,9 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { nanoid } from 'nanoid';
+import { NextPage } from 'next';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
@@ -26,8 +27,9 @@ import { Data, NewTodoData, Priority, ResolveInfo, Type } from '@/types/Todo.d';
 import { NumberOptions } from '@/types/ReactSelect';
 import todoList from '../../util/todoList';
 import CustomCard from '@/components/CustomCard';
+import authGuard from '../../util/AuthGuard';
 
-const Todo: FC = () => {
+const Todo: NextPage = () => {
   const [selectedTodo, setSelectedTodo] = useState<Data>({
     id: '',
     date: '',
@@ -284,4 +286,4 @@ const Todo: FC = () => {
   );
 };
 
-export default Todo;
+export default authGuard(Todo);

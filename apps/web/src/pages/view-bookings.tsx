@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
   Modal,
   ModalBody,
@@ -11,13 +11,15 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import { RequestData, Status } from '@/types/LabRequests.d';
+import authGuard from '../../util/AuthGuard';
 
-const ViewBookings: FC = () => {
+const ViewBookings: NextPage = () => {
   const [selectedBooking, setSelectedBooking] = useState<RequestData>({
     id: '',
     staffName: '',
@@ -167,4 +169,4 @@ const ViewBookings: FC = () => {
   );
 };
 
-export default ViewBookings;
+export default authGuard(ViewBookings);

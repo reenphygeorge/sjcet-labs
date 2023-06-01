@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/extensions */
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { nanoid } from 'nanoid';
 import {
   FormControl,
@@ -17,13 +17,15 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { NextPage } from 'next';
 import TopHeading from '@/components/TopHeading';
 import { Data, ResolveInfo, Status } from '@/types/Reports.d';
 import CustomCard from '@/components/CustomCard';
 import reportList from '../../util/reportData';
 import CustomButton from '@/components/CustomButton';
+import authGuard from '../../util/AuthGuard';
 
-const ReportRepair: FC = () => {
+const ReportRepair: NextPage = () => {
   const [selectedReport, setSelectedReport] = useState<Data>({
     id: '',
     date: '',
@@ -161,4 +163,4 @@ const ReportRepair: FC = () => {
   );
 };
 
-export default ReportRepair;
+export default authGuard(ReportRepair);

@@ -3,9 +3,9 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { FC, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { NextPage } from 'next';
 import Link from 'next/router';
-import { Session } from '@supabase/supabase-js';
 import TimetableCard from '@/components/TimetableCard';
 import CustomCard from '@/components/CustomCard';
 // Required data
@@ -13,16 +13,10 @@ import { RouteOptions } from '@/types/Home.d';
 import { Gender, ProfileData, Role } from '@/types/Profile.d';
 import teacherTimetable from '../../util/teacherTimetable';
 import LoginPage from '@/components/LoginPage';
-import supabase from '../config/supabase.config';
+import { useAuth } from '@/context/AuthContext';
 
-const Home: FC = () => {
-  const [appSession, setAppSession] = useState<null | Session>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setAppSession(session);
-    });
-  }, []);
+const Home: NextPage = () => {
+  const { appSession } = useAuth();
 
   // Required data
   const profileData: ProfileData = {

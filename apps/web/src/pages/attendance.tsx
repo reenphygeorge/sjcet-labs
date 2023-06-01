@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -16,6 +16,7 @@ import {
   Select,
   useDisclosure,
 } from '@chakra-ui/react';
+import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
@@ -27,8 +28,9 @@ import {
   FreeSystems,
   AttendanceStatus,
 } from '@/types/Attendance.d';
+import authGuard from '../../util/AuthGuard';
 
-const Attendance: FC = () => {
+const Attendance: NextPage = () => {
   const [attendanceStep, setAttendanceStep] = useState<number>(1);
 
   const studentList: StudentAttendanceData[] = [
@@ -265,4 +267,4 @@ const Attendance: FC = () => {
   );
 };
 
-export default Attendance;
+export default authGuard(Attendance);

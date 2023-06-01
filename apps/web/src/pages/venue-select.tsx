@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
-import { FC, useState } from 'react';
+import { useState } from 'react';
+import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import Link from 'next/router';
 import { Box, useToast } from '@chakra-ui/react';
@@ -8,8 +9,9 @@ import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
 // Required data
 import { RouteOptions } from '@/types/SelectVenue';
+import authGuard from '../../util/AuthGuard';
 
-const VenueSelect: FC = () => {
+const VenueSelect: NextPage = () => {
   const venues: Array<RouteOptions> = [
     { id: nanoid(), value: 'Conference Hall', route: '' },
     { id: nanoid(), value: 'Laboratory', route: 'book-lab' },
@@ -59,4 +61,4 @@ const VenueSelect: FC = () => {
   );
 };
 
-export default VenueSelect;
+export default authGuard(VenueSelect);

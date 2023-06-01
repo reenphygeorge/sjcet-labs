@@ -12,22 +12,16 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Repeat } from 'react-feather';
+import { NextPage } from 'next';
 import CustomButton from '@/components/CustomButton';
 import { Department, Gender, ProfileData, Role } from '@/types/Profile.d';
-import supabase from '../config/supabase.config';
+import { useAuth } from '@/context/AuthContext';
+import authGuard from '../../util/AuthGuard';
 
-const Profile: FC = () => {
-  const signOut = async () => {
-    // console.log('Over here');
-
-    try {
-      await supabase.auth.signOut();
-    } catch (error) {
-      // console.error(error);
-    }
-  };
+const Profile: NextPage = () => {
+  const { signOut } = useAuth();
   const departments: Department[] = [
     { id: 'D0', name: 'Computer Sci & Engg' },
     { id: 'D1', name: 'Artificial Inteligence & Data Sci' },
@@ -72,6 +66,19 @@ const Profile: FC = () => {
       ),
     });
   };
+
+  const logout = () => {
+    signOut();
+    toast({
+      position: 'bottom',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="purple.25">
+          Adios!
+        </Box>
+      ),
+    });
+  };
+
   return (
     <VStack pb="40" mx="5">
       <Text fontSize="2xl" fontWeight="semibold" color="black.50">
@@ -169,11 +176,11 @@ const Profile: FC = () => {
             type="mini"
             disabled={false}
           />
-          <CustomButton innerText="Logout" onClick={signOut} type="mini" disabled={false} />
+          <CustomButton innerText="Logout" onClick={logout} type="mini" disabled={false} />
         </HStack>
       </FormControl>
     </VStack>
   );
 };
 
-export default Profile;
+export default authGuard(Profile);
