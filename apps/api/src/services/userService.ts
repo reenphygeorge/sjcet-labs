@@ -31,31 +31,37 @@ const getUserService = async (id: string) => {
     console.log(data)
     return data
   } else {
-    const professor = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         authId: id
+      },
+      include: {
+        timeTable: true,
+        reservation: true,
+        notifications: true,
+        report: true,
+
       }
     })
-    console.log(professor)
-    const data = {
-      id: professor?.id,
-      name: professor?.name
-    }
-    return data;
+    // const data = {
+    //   id: professor?.id,
+    //   name: professor?.name
+    // }
+    return user;
   }
 };
 
-const postUserData = async (name: string, batches: number) => {
-  const professor = await prisma.departments.create({
-    data: {
-      name: name,
-      batches: batches
+// const postUserData = async (name: string, batches: number) => {
+//   const professor = await prisma.departments.create({
+//     data: {
+//       name: name,
+//       batches: batches
 
-    }
-  })
-  console.log(professor)
-}
-// getUserService()
+//     }
+//   })
+//   console.log(professor)
+// }
+// getUserService(id)
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })
@@ -68,4 +74,4 @@ const postUserData = async (name: string, batches: number) => {
 //     process.exit(1);
 //   });
 
-export { getUserService, postUserData };
+export { getUserService };
