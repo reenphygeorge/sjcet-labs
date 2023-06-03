@@ -11,27 +11,27 @@ datasource db {
 }
 
 model User {
-  id             String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  authId         String        @unique
+  id             String          @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  authId         String          @unique
   registerNumber String
   name           String
-  email          String        @unique
-  phoneNumber    String        @unique
-  department     Departments   @relation("EachProfessor", fields: [departmentId], references: [id])
+  email          String          @unique
+  phoneNumber    String          @unique
+  department     Departments     @relation("EachProfessor", fields: [departmentId], references: [id])
   departmentId   String
   reservation    Reservation[]
-  // notifications  Notifications[]
+  notifications  Notifications[]
   report         Report[]
   role           Roles
-  labIncharge    Boolean       @default(false)
+  labIncharge    Boolean         @default(false)
   timeTable      TimeTable[]
-  lab            Lab?          @relation(fields: [labId], references: [id])
+  lab            Lab?            @relation(fields: [labId], references: [id])
   labId          String?
 }
 
 model Departments {
   id          String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  name        String
+  name        String        @unique
   professors  User[]        @relation("EachProfessor")
   Reservation Reservation[]
   batches     Int
@@ -64,41 +64,46 @@ model Lab {
   report           Report[]
   timeTable        TimeTable[]
   AttendanceRecord AttendanceRecord[]
+  Reservation      Reservation[]
 }
 
 model Reservation {
-  id            String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  professor     User        @relation(fields: [professorId], references: [id])
-  professorId   String
-  date          DateTime    @db.Date
-  startTime     DateTime    @db.Time()
-  endTime       DateTime    @db.Time()
-  negotiable    Boolean
-  purpose       String?
-  // course      Courses  @relation(fields: [coursesId], references: [id])
-  // coursesId   String
-  semester      Semester
-  department    Departments @relation(fields: [departmentsId], references: [id])
-  departmentsId String
-  batch         Batch
+  id                    String            @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor             User              @relation(fields: [professorId], references: [id])
+  professorId           String
+  date                  DateTime          @db.Date
+  day                   Days
+  negotiable            Boolean
+  purpose               String?
+  course                Courses           @relation(fields: [coursesId], references: [courseCode])
+  coursesId             String
+  semester              Semester
+  period                PeriodNumber
+  teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [id])
+  teachingDepartmentsId String
+  lab                   Lab               @relation(fields: [labId], references: [id])
+  labId                 String
+  batch                 Batch
+  status                ReservationStatus
+
+  @@unique([date, day, labId, period])
 }
 
 model TimeTable {
-  id                   String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  course               Courses            @relation(fields: [coursesId], references: [courseCode])
+  id                   String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  course               Courses      @relation(fields: [coursesId], references: [courseCode])
   coursesId            String
   batch                Batch
-  user                 User               @relation(fields: [userId], references: [id])
+  user                 User         @relation(fields: [userId], references: [id])
   userId               String
-  teachingDepartment   Departments        @relation(fields: [teachingDepartmentId], references: [id])
+  teachingDepartment   Departments  @relation(fields: [teachingDepartmentId], references: [id])
   teachingDepartmentId String
-  time                 DateTime           @db.Time()
   periodNumber         PeriodNumber
   day                  Days
-  lab                  Lab?               @relation(fields: [labId], references: [id])
+  lab                  Lab?         @relation(fields: [labId], references: [id])
   labId                String?
-  labBatch             LabBatch?
-  attendanceRecord     AttendanceRecord[]
+
+  @@unique([userId, teachingDepartmentId, periodNumber, day])
 }
 
 model AttendanceRecord {
@@ -108,8 +113,6 @@ model AttendanceRecord {
   labName          String
   periods          PeriodNumber[]
   absentStudents   Student[]
-  timeTable        TimeTable          @relation(fields: [timeTableId], references: [id])
-  timeTableId      String
   StudentPositions StudentPositions[]
 
   @@unique([date, labName, periods])
@@ -126,33 +129,49 @@ model StudentPositions {
   @@unique([studentId, systemNumber])
 }
 
-model Courses {
-  courseCode String        @id @unique
-  courseName String
-  semester   Semester
-  department Departments[]
-  // reservation Reservation[]
-  timeTable  TimeTable[]
+model Experiments {
+  id                String  @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  experimentNumber  Int
+  experimentName    String
+  course            Courses @relation(fields: [coursesCourseCode], references: [courseCode])
+  coursesCourseCode String
+
+  @@unique([experimentNumber, experimentName])
 }
 
-// model Notifications {
-//   id                    String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-//   professor             User     @relation(fields: [professorsProfessorId], references: [id])
-//   professorsProfessorId String
-//   message               String?
-//   timeStamp             DateTime
-// }
+model Courses {
+  courseCode  String        @id @unique
+  courseName  String
+  semester    Semester
+  department  Departments[]
+  reservation Reservation[]
+  timeTable   TimeTable[]
+  type        CourseType
+  Experiments Experiments[]
+}
+
+model Notifications {
+  id                    String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor             User             @relation(fields: [professorsProfessorId], references: [id])
+  professorsProfessorId String
+  heading               String
+  message               String?
+  type                  NotificationType
+  seen                  Boolean          @default(false)
+  timeStamp             DateTime         @default(now())
+}
 
 model Report {
-  id                String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  lab               Lab      @relation(fields: [labId], references: [id])
-  labId             String
-  professor         User     @relation(fields: [professorId], references: [id])
-  professorId       String
-  date              DateTime @db.Date
-  issue_type        String
-  issue_description String?
-  status            String
+  id               String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  lab              Lab          @relation(fields: [labId], references: [id])
+  labId            String
+  professor        User         @relation(fields: [professorId], references: [id])
+  professorId      String
+  systems          Int[]
+  date             DateTime     @default(now())
+  issueType        String
+  issueDescription String?
+  status           ReportStatus
 }
 
 enum Roles {
@@ -199,4 +218,26 @@ enum PeriodNumber {
   Period5
   Period6
   Period7
+}
+
+enum NotificationType {
+  RESERVATION_APPROVED
+  RESERVATION_REJECTED
+  REPORT
+}
+
+enum CourseType {
+  THEORY
+  PRACTICAL
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  SOLVED
+}
+
+enum ReservationStatus {
+  APPROVED
+  REQUESTED
 }
