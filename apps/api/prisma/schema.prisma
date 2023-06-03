@@ -68,40 +68,40 @@ model Lab {
 }
 
 model Reservation {
-  id            String         @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  professor     User           @relation(fields: [professorId], references: [id])
-  professorId   String
-  date          DateTime       @db.Date
-  negotiable    Boolean
-  purpose       String?
-  course        Courses        @relation(fields: [coursesId], references: [courseCode])
-  coursesId     String
-  semester      Semester
-  periods       PeriodNumber[]
-  department    Departments    @relation(fields: [departmentsId], references: [id])
-  departmentsId String
-  lab           Lab            @relation(fields: [labId], references: [id])
-  labId         String
-  batch         Batch
+  id                    String            @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor             User              @relation(fields: [professorId], references: [id])
+  professorId           String
+  date                  DateTime          @db.Date
+  day                   Days
+  negotiable            Boolean
+  purpose               String?
+  course                Courses           @relation(fields: [coursesId], references: [courseCode])
+  coursesId             String
+  semester              Semester
+  period                PeriodNumber
+  teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [id])
+  teachingDepartmentsId String
+  lab                   Lab               @relation(fields: [labId], references: [id])
+  labId                 String
+  batch                 Batch
+  status                ReservationStatus
 
-  @@unique([date, labId, periods])
+  @@unique([date, day, labId, period])
 }
 
 model TimeTable {
-  id                   String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  course               Courses            @relation(fields: [coursesId], references: [courseCode])
+  id                   String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  course               Courses      @relation(fields: [coursesId], references: [courseCode])
   coursesId            String
   batch                Batch
-  user                 User               @relation(fields: [userId], references: [id])
+  user                 User         @relation(fields: [userId], references: [id])
   userId               String
-  teachingDepartment   Departments        @relation(fields: [teachingDepartmentId], references: [id])
+  teachingDepartment   Departments  @relation(fields: [teachingDepartmentId], references: [id])
   teachingDepartmentId String
   periodNumber         PeriodNumber
   day                  Days
-  lab                  Lab?               @relation(fields: [labId], references: [id])
+  lab                  Lab?         @relation(fields: [labId], references: [id])
   labId                String?
-  labBatch             LabBatch?
-  attendanceRecord     AttendanceRecord[]
 
   @@unique([userId, teachingDepartmentId, periodNumber, day])
 }
@@ -113,8 +113,6 @@ model AttendanceRecord {
   labName          String
   periods          PeriodNumber[]
   absentStudents   Student[]
-  timeTable        TimeTable          @relation(fields: [timeTableId], references: [id])
-  timeTableId      String
   StudentPositions StudentPositions[]
 
   @@unique([date, labName, periods])
@@ -237,4 +235,9 @@ enum ReportStatus {
   PENDING
   IN_PROGRESS
   SOLVED
+}
+
+enum ReservationStatus {
+  APPROVED
+  REQUESTED
 }
