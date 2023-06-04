@@ -115,6 +115,7 @@ model AttendanceRecord {
   periods          PeriodNumber[]
   absentStudents   Student[]
   StudentPositions StudentPositions[]
+  expreiments      Experiments[]
 
   @@unique([date, labName, periods])
 }
@@ -131,11 +132,12 @@ model StudentPositions {
 }
 
 model Experiments {
-  id                String  @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  id                String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   experimentNumber  Int
   experimentName    String
-  course            Courses @relation(fields: [coursesCourseCode], references: [courseCode])
+  course            Courses            @relation(fields: [coursesCourseCode], references: [courseCode])
   coursesCourseCode String
+  AttendanceRecord  AttendanceRecord[]
 
   @@unique([experimentNumber, experimentName])
 }
