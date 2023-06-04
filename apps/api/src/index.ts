@@ -1,11 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import express, { Application } from 'express';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJSDoc from 'swagger-jsdoc';
 import env from './helpers/env';
 import logger from './helpers/logger/logger.init';
-import swaggerOptions from './helpers/swagger/config';
 import { userRoute } from './routes/userRouter';
 
 const app: Application = express();
@@ -18,10 +15,6 @@ app.use(
     credentials: true,
   })
 );
-
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Add the route here
 app.use('/users', userRoute);

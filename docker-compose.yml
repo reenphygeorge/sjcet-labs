@@ -1,5 +1,27 @@
 version: '3.8'
 services:
+  nocodb:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: 'nocodb/nocodb:latest'
+    ports:
+      - '8080:8080'
+    restart: always
+    volumes:
+      - ./tmp/pg:/var/lib/postgresql/data
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - API_PORT=${API_PORT}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - 8000:8000
   db:
     image: postgres:14
     container_name: lab-db
@@ -16,20 +38,6 @@ services:
       retries: 5
     ports:
       - 5435:5432
-  nocodb:
-    depends_on:
-      db:
-        condition: service_healthy
-    image: nocodb/nocodb:latest
-    container_name: lab-noco
-    ports:
-      - '8080:8080'
-    restart: always
-    networks:
-      - app_network
-      - default
-    volumes:
-      - './tmp/noco:/usr/app/data'
 networks:
   app_network:
     driver: bridge
