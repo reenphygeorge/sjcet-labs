@@ -172,8 +172,7 @@ model Report {
   professorId      String
   systems          Int[]
   date             DateTime     @default(now())
-  issueType        String
-  issueDescription String?
+  issueDescription String
   status           ReportStatus
 }
 
