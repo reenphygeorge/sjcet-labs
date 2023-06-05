@@ -174,7 +174,7 @@ const LoginPage = () => {
               rounded="12px"
             />
             <CustomButton
-              innerText="Sent Email"
+              innerText="Send Email"
               onClick={() => passwordReset()}
               type="login"
               disabled={false}
