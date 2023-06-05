@@ -5,4 +5,5 @@ export interface CustomButtonProps {
   innerText: String;
   type: String;
   disabled: boolean;
+  isLoading?: boolean;
 }
