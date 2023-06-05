@@ -22,6 +22,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     ports:
       - 8000:8000
+      - 5555:5555
   db:
     image: postgres:14
     container_name: lab-db
