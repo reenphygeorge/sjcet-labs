@@ -1,32 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { PrismaClient } from '@prisma/client';
-import logger from '../helpers/logger/logger.init';
 import { PatchUserData } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
-// const getUserService = async () => {
-  // Get data from prisma with prisma queries
-//   const data = {
-//     data: [
-//       {
-//         id: '001',
-//         name: 'Kishore Sebastian',
-//       },
-//       {
-//         id: '002',
-//         name: 'Sarju S',
-//       },
-//     ],
-//   };
-//   return data;
-// };
-
-const getUserService = async (id: string) => {
-  // Get data from prisma with prisma queries
+const getUserService = async (authId: string) => {
   const user = await prisma.user.findUnique({
     where: {
-      authId: id
+      authId
     },
     include: {
       timeTable: true,
@@ -34,21 +15,21 @@ const getUserService = async (id: string) => {
       notifications: true,
       report: true,
     }
-  })
+  })  
   return user;
 }
 
-const patchUserData = async (updates: PatchUserData) => {
+const patchUserData = async ({authId, registerNumber, name, departmentId, email, phoneNumber}: PatchUserData) => {
   await prisma.user.update({
     data: {
-      registerNumber: updates.registerNumber,
-      name: updates.name,
-      departmentId: updates.departmentId,
-      email: updates.email,
-      phoneNumber: updates.phoneNumber
+      registerNumber,
+      name,
+      departmentId,
+      email,
+      phoneNumber
     },
     where: {
-      authId: updates.authId
+      authId
     }
   })
 }

@@ -4,5 +4,5 @@ export interface PatchUserData {
 	name: string;
 	departmentId: string;
 	email: string;
-	phoneNumber: string
+	phoneNumber: string;
 }
