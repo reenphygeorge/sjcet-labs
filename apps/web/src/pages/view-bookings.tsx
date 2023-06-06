@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import { useState } from 'react';
 import {
+  Box,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -10,8 +11,10 @@ import {
   Tag,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
+import Link from 'next/router';
 import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
@@ -20,13 +23,15 @@ import { RequestData, Status } from '@/types/LabRequests.d';
 import authGuard from '../../util/AuthGuard';
 
 const ViewBookings: NextPage = () => {
+  const toast = useToast();
+
   const [selectedBooking, setSelectedBooking] = useState<RequestData>({
     id: '',
     staffName: '',
     semester: '',
     departmentWithBatch: '',
     dateOfRequest: '',
-    timings: [],
+    periods: [],
     purpose: '',
     venue: '',
     status: '',
@@ -44,9 +49,9 @@ const ViewBookings: NextPage = () => {
       semester: 'S6',
       departmentWithBatch: 'CSE-B',
       dateOfRequest: 'April 22, 2023',
-      timings: [
-        { id: nanoid(), time: '9:00 - 11:00', date: 'April 22, 2023' },
-        { id: nanoid(), time: '11:00 - 12:45', date: 'April 22, 2023' },
+      periods: [
+        { id: nanoid(), periodNo: '2', date: 'April 22, 2023' },
+        { id: nanoid(), periodNo: '3', date: 'April 22, 2023' },
       ],
       venue: 'Software Computing Lab',
       purpose: '',
@@ -58,7 +63,7 @@ const ViewBookings: NextPage = () => {
       semester: 'S4',
       departmentWithBatch: 'CSE-A',
       dateOfRequest: 'April 22, 2023',
-      timings: [{ id: nanoid(), time: '01:35 - 03:30', date: 'April 28, 2023' }],
+      periods: [{ id: nanoid(), periodNo: '5', date: 'April 28, 2023' }],
       venue: 'Programming Lab',
       purpose: '',
       status: 'Approved',
@@ -68,6 +73,18 @@ const ViewBookings: NextPage = () => {
   const openModal = (key: number) => {
     setSelectedBooking(requestList[key]);
     onOpenBookingModal();
+  };
+
+  const cancelNow = () => {
+    toast({
+      position: 'bottom',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="green.50">
+          Booking Cancelled
+        </Box>
+      ),
+    });
+    Link.push('/');
   };
   return (
     <>
@@ -136,11 +153,14 @@ const ViewBookings: NextPage = () => {
               fontWeight="semibold"
             >{`Date:  ${selectedBooking.dateOfRequest}`}</Text>
             <Text fontSize="md" mb={4} fontWeight="semibold">
-              Timing:
+              Periods:
               <br />
               <br />
-              {selectedBooking.timings.map(({ id, time, date }) => (
-                <Tag key={id} mb={2}>{`${date} ${time}`}</Tag>
+              {selectedBooking.periods.map(({ id, periodNo, date }) => (
+                <>
+                  <Tag key={id} mb={2}>{`Period No: ${periodNo}, ${date}`}</Tag>
+                  <br />
+                </>
               ))}
             </Text>
             <Text
@@ -155,7 +175,7 @@ const ViewBookings: NextPage = () => {
             >{`Purpose:  ${selectedBooking.purpose}`}</Text>
             <CustomButton
               onClick={
-                () => null
+                () => cancelNow()
                 //   selectedBooking.negotiable === true ? contactStaff(selectedBooking.phone) : null
               }
               innerText="Cancel Now"
