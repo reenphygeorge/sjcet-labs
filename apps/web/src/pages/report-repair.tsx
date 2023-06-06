@@ -58,7 +58,6 @@ const ReportRepair: NextPage = () => {
 
   const resolve = () => {};
 
-  const addTodo = () => {};
   return (
     <>
       <TopHeading heading="Report & Repairs" subText="Reported Error" arrow />
@@ -143,15 +142,7 @@ const ReportRepair: NextPage = () => {
                     resolve();
                   }}
                   innerText="Resolve"
-                  type="mini"
-                  disabled={false}
-                />
-                <CustomButton
-                  onClick={() => {
-                    addTodo();
-                  }}
-                  innerText="Todo"
-                  type="mini"
+                  type="modal"
                   disabled={false}
                 />
               </HStack>

@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import { ChangeEvent, useState } from 'react';
 import {
+  Box,
   FormControl,
   FormLabel,
   HStack,
@@ -15,22 +16,18 @@ import {
   RadioGroup,
   Select,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
 import CustomButton from '@/components/CustomButton';
-import CustomCard from '@/components/CustomCard';
-import {
-  LabDetails,
-  StudentAttendanceData,
-  FreeSystems,
-  AttendanceStatus,
-} from '@/types/Attendance.d';
+import { StudentAttendanceData, FreeSystems, AttendanceStatus } from '@/types/Attendance.d';
 import authGuard from '../../util/AuthGuard';
 
 const Attendance: NextPage = () => {
+  const toast = useToast();
   const [attendanceStep, setAttendanceStep] = useState<number>(1);
 
   const studentList: StudentAttendanceData[] = [
@@ -77,31 +74,6 @@ const Attendance: NextPage = () => {
     });
   };
 
-  const labDetails: LabDetails = {
-    data: [
-      {
-        id: 'L0',
-        name: 'Software Computing Lab',
-        roomNo: 'MTB 101',
-      },
-      {
-        id: 'L1',
-        name: 'Network Lab',
-        roomNo: 'MTB 101',
-      },
-      {
-        id: 'L2',
-        name: 'Research Lab',
-        roomNo: 'MTB 101',
-      },
-      {
-        id: 'L3',
-        name: 'Testing Lab',
-        roomNo: 'MTB 101',
-      },
-    ],
-  };
-
   const freeSystems: FreeSystems[] = [
     {
       id: 'FS0',
@@ -129,6 +101,15 @@ const Attendance: NextPage = () => {
   };
 
   const saveAttendance = () => {
+    toast({
+      position: 'bottom',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="green.50">
+          Data Updated
+        </Box>
+      ),
+    });
+    onCloseAttendanceModal();
     // console.log(selectedStudentDetails);
   };
   return (
@@ -136,41 +117,31 @@ const Attendance: NextPage = () => {
       <TopHeading arrow heading="Attendance" subText="Tap to mark/unmark" />
 
       {attendanceStep === 1 ? (
-        <>
-          {labDetails.data.map(({ id, name, roomNo }, key) => {
-            const labNameHeading: string = `${key + 1}. ${name}`;
-            return (
-              <CustomCard
-                key={id}
-                onClick={() => {
-                  setAttendanceStep(2);
-                }}
-                properties={[
-                  {
-                    id: nanoid(),
-                    value: labNameHeading,
-                    textProps: {
-                      color: 'black.25',
-                      fontSize: 'lg',
-                      fontWeight: 'bold',
-                    },
-                  },
-                  {
-                    id: nanoid(),
-                    value: roomNo,
-                    textProps: {
-                      color: 'black.25',
-                      fontSize: '15',
-                      fontWeight: 'medium',
-                      ml: '5',
-                    },
-                  },
-                ]}
-                circleComponent={false}
-              />
-            );
-          })}
-        </>
+        <FormControl pt={28}>
+          <FormLabel htmlFor="email" pl="1">
+            Select the Period
+          </FormLabel>
+          <Select
+            id="negotiable"
+            bg="gray.50"
+            mb="7"
+            rounded="12px"
+            onChange={handleFormChange}
+            // value={bookingDetails.negotiable.toString()}
+          >
+            <option value="Period 1">1</option>
+            <option value="Period 2">2</option>
+          </Select>
+          <CustomButton
+            onClick={() => {
+              setAttendanceStep(2);
+              // fetchLog();
+            }}
+            innerText="Next"
+            type="regular"
+            disabled={false}
+          />
+        </FormControl>
       ) : (
         studentList.map(({ id, rollNo, name, systemNo, attendanceStatus }, key) => (
           <ElementCard

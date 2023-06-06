@@ -18,7 +18,7 @@ const reportList: Data[] = [
     timing: '09:45 AM',
     venue: 'Programming Lab',
     issue: '',
-    status: Status.InProgress,
+    status: Status.Resolved,
     systemNo: [12],
   },
   {

@@ -23,7 +23,6 @@ interface SystemNos {
 
 enum Status {
   Pending = 'Pending',
-  InProgress = 'In Progress',
   Resolved = 'Resolved',
 }
 
