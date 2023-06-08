@@ -5,7 +5,8 @@ import env from './helpers/env';
 import logger from './helpers/logger/logger.init';
 import { userGet, userPatch } from './routes/userRouter';
 import { departmentGet } from './routes/departmentRouter';
-import { generalDataGet } from './routes/generalDataRoute';
+import { generalDataGet } from './routes/generalDataRouter';
+import { experimentRouter } from './routes/experimentRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -26,5 +27,7 @@ app.use('/', generalDataGet)
 app.use('/user', userGet, userPatch);
 
 app.use('/department', departmentGet)
+
+app.use('/experiment', experimentRouter)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

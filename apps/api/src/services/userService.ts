@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { PrismaClient } from '@prisma/client';
 import { PatchUserData } from '../helpers/types/user';
+import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const prisma = new PrismaClient();
 
@@ -37,20 +38,9 @@ const getUserService = async (authId: string) => {
 
         return newData
       }
-    } 
-    // else if (user?.labIncharge) {
-    //   const labId = user.labId
-    //   if (labId !== null) {
-    //     const labData = getLabData(labId)
-    //     const newData = {
-    //       ...user,
-    //       labData
-    //     }
-
-    //     return newData
-    //   }
-    // }
-
+    }
+  } else {
+    return null
   }
 }
 

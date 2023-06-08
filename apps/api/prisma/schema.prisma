@@ -160,12 +160,12 @@ model AbsentStudents {
 }
 
 model Experiments {
-  id                String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  experimentNumber  Int
-  experimentName    String
-  course            Courses            @relation(fields: [coursesCourseCode], references: [courseCode])
-  coursesCourseCode String
-  attendanceRecord  AttendanceRecord[]
+  id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  experimentNumber Int
+  experimentName   String
+  course           Courses            @relation(fields: [courseCode], references: [courseCode])
+  courseCode       String
+  attendanceRecord AttendanceRecord[]
 
   @@unique([experimentNumber, experimentName])
 }
