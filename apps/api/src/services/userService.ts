@@ -5,42 +5,67 @@ import { PatchUserData } from '../helpers/types/user';
 const prisma = new PrismaClient();
 
 const getUserService = async (authId: string) => {
-  const userTemp = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       authId
+    },
+    include: {
+      timeTable: true,
+      reservation: true,
+      notifications: true,
+      report: true,
+      labTimeTable: {
+        include: {
+          teachingStaff: true
+        }
+      }
     }
   })
 
-  if (!userTemp?.labAdmin && !userTemp?.labIncharge) {
-    const user = await prisma.user.findUnique({
-      where: {
-        authId
-      },
-      include: {
-        timeTable: true,
-        reservation: true,
-        notifications: true,
-        report: true,
-      }
-    })  
-    return user;
-  } else if (userTemp?.labAdmin) {
-    const labId = userTemp?.labId
-    if (labId !== null) {
-      const labData = await prisma.lab.findUnique({
-        where: {
-          id: labId
-        },
-        include: {
-          report: true,
-          reservation: true
+  if (user !== null) {
+    if (!user?.labAdmin && !user?.labIncharge) {
+      return user;
+    } else if (user?.labAdmin || user?.labIncharge) {
+      const labId = user.labId
+      if (labId !== null) {
+        const labData = await getLabData(labId)
+
+        const newData = {
+          ...user,
+          labData
         }
-      })
 
-      const labTimeTable = await prisma
-    }
+        return newData
+      }
+    } 
+    // else if (user?.labIncharge) {
+    //   const labId = user.labId
+    //   if (labId !== null) {
+    //     const labData = getLabData(labId)
+    //     const newData = {
+    //       ...user,
+    //       labData
+    //     }
+
+    //     return newData
+    //   }
+    // }
+
   }
+}
 
+const getLabData = async (labId: string) => {
+  const labData = await prisma.lab.findUnique({
+    where: {
+      id: labId
+    },
+    include: {
+      report: true,
+      reservation: true
+    }
+  })
+
+  return labData
 }
 
 const patchUserData = async ({authId, registerNumber, name, departmentId, email, phoneNumber}: PatchUserData) => {
