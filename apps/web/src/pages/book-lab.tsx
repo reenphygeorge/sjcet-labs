@@ -18,6 +18,7 @@ import {
   useToast,
   useDisclosure,
 } from '@chakra-ui/react';
+import Link from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { NextPage } from 'next';
@@ -31,8 +32,8 @@ import ReactSelect from '@/components/ReactSelect';
 import {
   LabBookingDetails,
   Options,
-  PeriodTiming,
   ReservationInfo,
+  SelectedPeriod,
   Status,
 } from '@/types/BookLab.d';
 import authGuard from '../../util/AuthGuard';
@@ -71,7 +72,7 @@ const BookLab: NextPage = () => {
   ];
 
   const [bookingStep, setBookingStep] = useState<number>(1);
-  const [selectedPeriods, setSelectedPeriods] = useState<PeriodTiming[]>([]);
+  const [selectedPeriods, setSelectedPeriods] = useState<SelectedPeriod[]>([]);
   const [labName, setLabName] = useState<string>('');
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
@@ -79,11 +80,11 @@ const BookLab: NextPage = () => {
     semester: '',
     departmentWithBatch: '',
     venue: '',
-    timings: [
+    periods: [
       {
         id: '',
+        periodNo: '',
         day: '',
-        timing: '',
       },
     ],
     negotiable: false,
@@ -95,7 +96,7 @@ const BookLab: NextPage = () => {
     semester: 'S6',
     departmentWithBatch: 'CSE-B',
     date: 'April 22, 2023',
-    timing: '9:00 - 11:00',
+    timing: '',
     venue: 'Programming Lab',
     purpose: '',
     negotiable: true,
@@ -136,10 +137,10 @@ const BookLab: NextPage = () => {
     setSelectedPeriods(newPeriods);
   };
 
-  const togglePeriods = (id: string, timing: string, day: string) => {
+  const togglePeriods = (id: string, periodNo: string, day: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectedPeriods.some((period) => period.id.includes(id)) === false
-      ? setSelectedPeriods((prevElements) => [...prevElements, { id, timing, day }])
+      ? setSelectedPeriods((prevElements) => [...prevElements, { id, periodNo, day }])
       : removePeriod(id);
   };
 
@@ -157,7 +158,7 @@ const BookLab: NextPage = () => {
       });
     } else {
       setBookingStep(2);
-      setBookingDetails({ ...bookingDetails, timings: selectedPeriods });
+      setBookingDetails({ ...bookingDetails, periods: selectedPeriods });
     }
   };
 
@@ -168,6 +169,15 @@ const BookLab: NextPage = () => {
   };
 
   const bookNow = () => {
+    toast({
+      position: 'bottom',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="green.50">
+          Booking Success
+        </Box>
+      ),
+    });
+    Link.push('/');
     // console.log(bookingDetails);
   };
 
@@ -203,12 +213,12 @@ const BookLab: NextPage = () => {
             </>
           </Grid>
           {teacherTimetable.days[dayNumber].periods.map(
-            ({ id, periodName, semester, branch, timing }, key) => {
+            ({ id, periodName, semester, branch, periodNo }, key) => {
               const periodHeading: string = `${key + 1}. ${periodName}`;
               const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : ``;
               return (
                 <CustomCard
-                  onClick={() => togglePeriods(id, timing, teacherTimetable.days[dayNumber].day)}
+                  onClick={() => togglePeriods(id, periodNo, teacherTimetable.days[dayNumber].day)}
                   cardProps={{
                     bg:
                       selectedPeriods.some((period) => period.id.includes(id)) === false
@@ -384,8 +394,8 @@ const BookLab: NextPage = () => {
                 </>
               ) : (
                 <>
-                  <FormLabel htmlFor="timing" pl="1">
-                    Timing
+                  <FormLabel htmlFor="periodNo" pl="1">
+                    Periods
                   </FormLabel>
                   <ReactSelect options={selectedPeriods} values={selectedPeriods} disabled />
 

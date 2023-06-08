@@ -22,13 +22,13 @@ const ReactSelect: FC<ReactSelectProps> = ({
 }) => {
   let updatedValues = values;
   if (values !== undefined && values !== null) {
-    if (values.some((value) => value.timing !== undefined)) {
-      updatedValues = values.map(({ timing, day }) => ({
+    if (values.some((value) => value.periodNo !== undefined)) {
+      updatedValues = values.map(({ periodNo, day }) => ({
         value: {
-          timing,
+          periodNo,
           day,
         },
-        label: `${day} ${timing}`,
+        label: `Period: ${periodNo}, ${day}`,
       }));
     }
     return (

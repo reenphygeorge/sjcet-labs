@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/extensions */
 import {
+  Box,
   FormControl,
   FormLabel,
   HStack,
@@ -15,6 +16,7 @@ import {
   Tag,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { NextPage } from 'next';
@@ -29,6 +31,7 @@ import reportList from '../../util/reportData';
 import authGuard from '../../util/AuthGuard';
 
 const Reports: NextPage = () => {
+  const toast = useToast();
   const labList: LabList[] = [
     {
       id: 'L0',
@@ -131,6 +134,15 @@ const Reports: NextPage = () => {
   };
 
   const reportNow = () => {
+    toast({
+      position: 'bottom',
+      render: () => (
+        <Box color="white" p={3} rounded="12px" bg="green.50">
+          Reported
+        </Box>
+      ),
+    });
+    onCloseNewReportModal();
     // console.log(newReportData);
   };
 
@@ -147,8 +159,7 @@ const Reports: NextPage = () => {
             borderRadius: '12px',
             w: '90px',
             h: '30px',
-            bg:
-              status === 'Pending' ? 'red.50' : status === 'In Progress' ? 'yellow.50' : 'green.50',
+            bg: status === 'Pending' ? 'red.50' : 'green.50',
           }}
           circleInnerText={status}
           properties={[
@@ -191,7 +202,7 @@ const Reports: NextPage = () => {
       >
         <ModalOverlay bg="rgba(255, 255, 255, 0.15)" backdropFilter="blur(20px)" />
         <ModalContent>
-          <ModalHeader>Reservation Info</ModalHeader>
+          <ModalHeader>Report Info</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <HStack mb={4}>
@@ -215,15 +226,7 @@ const Reports: NextPage = () => {
             </Text>
             <Text fontSize="md" mb={4} fontWeight="semibold">
               Status:&nbsp;&nbsp;
-              <Tag
-                bg={
-                  selectedReportDetails.status === 'Pending'
-                    ? 'red.200'
-                    : selectedReportDetails.status === 'In Progress'
-                    ? 'yellow.200'
-                    : 'green.200'
-                }
-              >
+              <Tag bg={selectedReportDetails.status === 'Pending' ? 'red.200' : 'green.200'}>
                 {selectedReportDetails.status}
               </Tag>
             </Text>
@@ -243,7 +246,7 @@ const Reports: NextPage = () => {
       >
         <ModalOverlay bg="rgba(255, 255, 255, 0.15)" backdropFilter="blur(20px)" />
         <ModalContent>
-          <ModalHeader>Reservation Info</ModalHeader>
+          <ModalHeader>New Report</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>

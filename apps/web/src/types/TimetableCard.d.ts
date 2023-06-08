@@ -3,7 +3,7 @@ interface TeacherPeriod {
   periodName: string;
   semester: string;
   branch: string;
-  timing: string;
+  periodNo: string;
   venue: string;
   roomNo: string;
 }
@@ -14,7 +14,7 @@ interface LabAdminPeriod {
   inCharge: string;
   semester: string;
   branch: string;
-  timing: string;
+  periodNo: string;
 }
 
 interface Day {

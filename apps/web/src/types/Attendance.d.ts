@@ -17,13 +17,9 @@ interface Data {
   roomNo: string;
 }
 
-interface LabDetails {
-  data: Data[];
-}
-
 interface FreeSystems {
   id: string;
   systemNo: number;
 }
 
-export { StudentAttendanceData, LabDetails, FreeSystems, AttendanceStatus };
+export { StudentAttendanceData, FreeSystems, AttendanceStatus };

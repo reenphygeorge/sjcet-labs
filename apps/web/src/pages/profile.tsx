@@ -33,7 +33,7 @@ const Profile: NextPage = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
     collegeID: '05CS007',
     name: 'Kishore Sebastian',
-    department: 'Artificial Inteligence & Data Sci',
+    department: 'Computer Sci & Engg',
     email: 'kishoresebastian@sjcetpalai.ac.in',
     phone: '+919012345678',
     gender: Gender.Male,

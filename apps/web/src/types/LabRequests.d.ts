@@ -4,7 +4,7 @@ interface RequestData {
   semester: string;
   departmentWithBatch: string;
   dateOfRequest: string;
-  timings: Timings[];
+  periods: Period[];
   venue: string;
   purpose: string;
   status: string;
@@ -15,9 +15,9 @@ enum Status {
   Requested = 'Requested',
 }
 
-interface Timings {
+interface Period {
   id: string;
-  time: string;
+  periodNo: string;
   date: string;
 }
 

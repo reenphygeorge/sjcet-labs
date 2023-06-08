@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     email: '',
     phone: '',
     gender: Gender.Male,
-    role: Role.Teacher,
+    role: Role.Administrator,
     labInCharge: false,
   };
 
@@ -41,7 +41,6 @@ const Home: NextPage = () => {
       : [
           { id: nanoid(), value: 'Requests', route: 'requests' },
           { id: nanoid(), value: 'Report & Repair', route: 'report-repair' },
-          { id: nanoid(), value: 'Todo List', route: 'todo' },
           { id: nanoid(), value: 'Logs', route: 'logs' },
         ];
   const [selectOption, setSelectOption] = useState<number>(-1);

@@ -3,9 +3,9 @@ interface Options {
   value: string;
 }
 
-interface PeriodTiming {
+interface SelectedPeriod {
   id: string;
-  timing: string;
+  periodNo: string;
   day: string;
 }
 
@@ -36,8 +36,8 @@ interface LabDetails {
 interface LabBookingDetails {
   semester: string;
   departmentWithBatch: string;
-  timings: PeriodTiming[] | string[];
   venue: string;
+  periods: SelectedPeriod[] | string[];
   negotiable: boolean;
   purpose: string;
 }
@@ -48,4 +48,4 @@ enum Status {
   ClassTime = 'ClassTime',
 }
 
-export { Options, PeriodTiming, ReservationInfo, LabData, LabDetails, LabBookingDetails, Status };
+export { Options, SelectedPeriod, ReservationInfo, LabData, LabDetails, LabBookingDetails, Status };
