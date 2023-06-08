@@ -1,37 +1,76 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { PrismaClient } from '@prisma/client';
-import logger from '../helpers/logger/logger.init';
+import { PatchUserData } from '../helpers/types/user';
+import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const prisma = new PrismaClient();
 
-const getUserService = async () => {
-  // Get data from prisma with prisma queries
-  const data = {
-    data: [
-      {
-        id: '001',
-        name: 'Kishore Sebastian',
-      },
-      {
-        id: '002',
-        name: 'Sarju S',
-      },
-    ],
-  };
-  return data;
-};
-
-getUserService()
-  .then(async () => {
-    await prisma.$disconnect();
+const getUserService = async (authId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      authId
+    },
+    include: {
+      timeTable: true,
+      reservation: true,
+      notifications: true,
+      report: true,
+      labTimeTable: {
+        include: {
+          teachingStaff: true
+        }
+      }
+    }
   })
 
-  .catch(async (error: Error) => {
-    logger.error(error);
+  if (user !== null) {
+    if (!user?.labAdmin && !user?.labIncharge) {
+      return user;
+    } else if (user?.labAdmin || user?.labIncharge) {
+      const labId = user.labId
+      if (labId !== null) {
+        const labData = await getLabData(labId)
 
-    await prisma.$disconnect();
+        const newData = {
+          ...user,
+          labData
+        }
 
-    process.exit(1);
-  });
+        return newData
+      }
+    }
+  } else {
+    return null
+  }
+}
 
-export { getUserService };
+const getLabData = async (labId: string) => {
+  const labData = await prisma.lab.findUnique({
+    where: {
+      id: labId
+    },
+    include: {
+      report: true,
+      reservation: true
+    }
+  })
+
+  return labData
+}
+
+const patchUserData = async ({authId, registerNumber, name, departmentId, email, phoneNumber}: PatchUserData) => {
+  await prisma.user.update({
+    data: {
+      registerNumber,
+      name,
+      departmentId,
+      email,
+      phoneNumber
+    },
+    where: {
+      authId
+    }
+  })
+}
+
+export { getUserService, patchUserData };

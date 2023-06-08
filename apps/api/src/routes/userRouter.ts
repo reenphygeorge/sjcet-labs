@@ -1,24 +1,36 @@
 import express, { Request, Response } from 'express';
 import responseHandler from '../helpers/handlers/ResponseHandler';
-import { getUserService } from '../services/userService';
+import { getUserService, patchUserData } from '../services/userService';
 import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const router = express.Router();
 
-// Sample route handler
-const userRoute = router.get('/', async (request: Request, response: Response) => {
+const userGet = router.get('/', async (request: Request, response: Response) => {
   try {
-    //   Geting Sample Data
-    const data = await getUserService();
-    // Call the responsehandler to send the response instead of response.json({})
+    const authId = request.body.authId;
+    const data = await getUserService(authId);
+
+    if (data === null) {
+      const message = "User Not Found"
+      const error = new Error(message)
+      errorHandler(error, request, response)
+    }
     responseHandler(data, request, response);
   } catch (error: Error | any) {
-    // Overwrite the error message if required
     const message = 'Failed to retrieve user data';
     error.message = message;
-    // call the errorHandler
+    errorHandler(error, request, response);
+  }
+});
+const userPatch = router.patch('/', async (request: Request, response: Response) => {
+  try {
+    const returnedData = await patchUserData(request.body);
+    responseHandler(returnedData, request, response);
+  } catch (error: Error | any) {
+    const message = 'Failed to patch user data';
+    error.message = message;
     errorHandler(error, request, response);
   }
 });
 
-export { userRoute };
+export { userGet, userPatch };
