@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { AttendanceInfo } from '../helpers/types/user';
+import { AttendanceInfo, StudentPositions } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
@@ -41,4 +41,10 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 	}
 }
 
-export{recordCreate}
+const addStudentPositions = async (studentPositions: StudentPositions[]) => {
+	await prisma.studentPositions.createMany({
+		data: studentPositions
+	})
+}
+
+export{ recordCreate, addStudentPositions }

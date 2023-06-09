@@ -8,7 +8,7 @@ import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
 import { studentRouter } from './routes/studentRouter';
-import { createRecord } from './routes/attendanceRouter';
+import { createRecord, studentPositions } from './routes/attendanceRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -34,6 +34,6 @@ app.use('/experiment', experimentRouter)
 
 app.use('/student', studentRouter)
 
-app.use('/attendance', createRecord)
+app.use('/attendance', createRecord, studentPositions)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));
