@@ -1,4 +1,4 @@
-import { Genders, LabTimeTable, Report, Reservation, TimeTable } from "@prisma/client";
+import { Experiments, Genders, LabTimeTable, Report, Reservation, TimeTable } from "@prisma/client";
 
 export interface PatchUserData {
 	authId: string;
@@ -34,4 +34,23 @@ export interface StudentInfo {
 	semester: number;
 	batch: string;
 	labBatch: number?;
+}
+
+export interface AttendanceInfo {
+	date: Date;
+	labName: string;
+	periods: number[];
+	courseCode: string;
+	experimentIds: string[];
+}
+
+export interface StudentPositions {
+	studentId: string;
+	systemNumber: number;
+	attendanceRecordId: string;
+}
+
+export interface AbsentStudents {
+	studentId: string;
+	attendanceRecordId: string;
 }

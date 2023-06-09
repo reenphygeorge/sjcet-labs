@@ -7,7 +7,6 @@ import { StudentInfo } from '../helpers/types/user';
 const router = express.Router()
 
 const studentRouter = router.get('/', async (request: Request, response: Response) => {
-	console.log(request.body)
 	try {
 		const studentInfo: StudentInfo = {
 			departmentId: request.body.departmentId,
