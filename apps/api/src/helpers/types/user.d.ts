@@ -28,3 +28,10 @@ export interface PatchUserData {
 // 	labTimeTable: LabTimeTable[]?;
 // 	teachingAtLab: LabTimeTable[]?
 // }
+
+export interface StudentInfo {
+	departmentId: string;
+	semester: number;
+	batch: string;
+	labBatch: number?;
+}

@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { PrismaClient } from '@prisma/client';
 import { PatchUserData } from '../helpers/types/user';
-import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const prisma = new PrismaClient();
 
