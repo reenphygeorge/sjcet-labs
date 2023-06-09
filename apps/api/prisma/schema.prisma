@@ -15,33 +15,34 @@ model User {
   authId         String          @unique
   registerNumber String          @unique
   name           String
-  gender         Genders         @relation(fields: [genderId], references: [gender])
-  genderId       String
+  gender         Genders         @relation(fields: [genderName], references: [gender])
+  genderName     String
   email          String          @unique
   phoneNumber    String          @unique
   department     Departments     @relation(fields: [departmentId], references: [id])
   departmentId   String
+  labAdmin       Boolean         @default(false)
+  labIncharge    Boolean         @default(false)
+  lab            Lab?            @relation(fields: [labId], references: [id])
+  labId          String?
   reservation    Reservation[]
   notifications  Notifications[]
   report         Report[]
-  labAdmin       Boolean         @default(false)
-  labIncharge    Boolean         @default(false)
   timeTable      TimeTable[]
-  lab            Lab?            @relation(fields: [labId], references: [id])
-  labId          String?
   labTimeTable   LabTimeTable[]  @relation("admin")
   teachingAtLab  LabTimeTable[]
 }
 
 model Departments {
-  id              String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  name            String        @unique
+  id              String         @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  name            String         @unique
+  numberOfBatches Int
   professors      User[]
   reservation     Reservation[]
-  numberOfBatches Int
   student         Student[]
   timeTable       TimeTable[]
   courses         Courses[]
+  labTimeTable    LabTimeTable[]
 }
 
 model Student {
@@ -60,10 +61,10 @@ model Student {
 model Lab {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   labName          String             @unique
-  labAdmins        User[]
   capacity         Int
   roomNumber       String
-  venue            String?
+  venue            String
+  labAdmins        User[]
   report           Report[]
   timeTable        TimeTable[]
   attendanceRecord AttendanceRecord[]
@@ -95,17 +96,17 @@ model Reservation {
 
 model TimeTable {
   id                   String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  course               Courses     @relation(fields: [coursesId], references: [courseCode])
-  coursesId            String
-  batch                String
   user                 User        @relation(fields: [userId], references: [registerNumber])
   userId               String
-  teachingDepartment   Departments @relation(fields: [teachingDepartmentId], references: [id])
-  teachingDepartmentId String
+  course               Courses     @relation(fields: [coursesId], references: [courseCode])
+  coursesId            String
   semester             Int
+  batch                String
   periodNumber         Int
   day                  Days        @relation(fields: [dayId], references: [day])
   dayId                String
+  teachingDepartment   Departments @relation(fields: [teachingDepartmentId], references: [id])
+  teachingDepartmentId String
   lab                  Lab?        @relation(fields: [labId], references: [id])
   labId                String?
 
@@ -113,15 +114,18 @@ model TimeTable {
 }
 
 model LabTimeTable {
-  id            String  @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  user          User    @relation("admin", fields: [userId], references: [registerNumber])
+  id            String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  user          User        @relation("admin", fields: [userId], references: [registerNumber])
   userId        String
-  course        Courses @relation(fields: [courseCode], references: [courseCode])
+  course        Courses     @relation(fields: [courseCode], references: [courseCode])
   courseCode    String
-  periodNumber  Int
-  day           Days    @relation(fields: [dayId], references: [day])
-  dayId         String
+  department    Departments @relation(fields: [departmentId], references: [id])
+  departmentId  String
   semester      Int
+  batch         String
+  periodNumber  Int
+  day           Days        @relation(fields: [dayId], references: [day])
+  dayId         String
   teachingStaff User[]
 }
 
@@ -173,13 +177,13 @@ model Experiments {
 model Courses {
   courseCode       String             @id @unique
   courseName       String
+  isPractical      Boolean            @default(false)
   department       Departments[]
   reservation      Reservation[]
   timeTable        TimeTable[]
-  isPractical      Boolean            @default(false)
   experiments      Experiments[]
-  LabTimeTable     LabTimeTable[]
-  AttendanceRecord AttendanceRecord[]
+  labTimeTable     LabTimeTable[]
+  attendanceRecord AttendanceRecord[]
 }
 
 model Notifications {
@@ -209,7 +213,7 @@ model Days {
   day          String         @id @unique
   reservation  Reservation[]
   timeTable    TimeTable[]
-  LabTimeTable LabTimeTable[]
+  labTimeTable LabTimeTable[]
 }
 
 model Genders {
