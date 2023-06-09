@@ -98,8 +98,8 @@ model TimeTable {
   id                   String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   user                 User        @relation(fields: [userId], references: [registerNumber])
   userId               String
-  course               Courses     @relation(fields: [coursesId], references: [courseCode])
-  coursesId            String
+  course               Courses?    @relation(fields: [coursesId], references: [courseCode])
+  coursesId            String?
   semester             Int
   batch                String
   periodNumber         Int
@@ -117,8 +117,8 @@ model LabTimeTable {
   id            String      @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   user          User        @relation("admin", fields: [userId], references: [registerNumber])
   userId        String
-  course        Courses     @relation(fields: [courseCode], references: [courseCode])
-  courseCode    String
+  course        Courses?    @relation(fields: [courseCode], references: [courseCode])
+  courseCode    String?
   department    Departments @relation(fields: [departmentId], references: [id])
   departmentId  String
   semester      Int
