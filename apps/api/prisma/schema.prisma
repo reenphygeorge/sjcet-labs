@@ -227,6 +227,7 @@ model Genders {
 enum NotificationType {
   RESERVATION_APPROVED
   RESERVATION_REJECTED
+  RESERVATION_REQUEST
   REPORT
 }
 
