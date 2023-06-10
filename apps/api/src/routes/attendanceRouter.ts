@@ -17,11 +17,11 @@ const createRecord = router.post('/create', async (request: Request, response: R
 		}
 		const data = await recordCreate(attendanceInfo)
 		responseHandler(data, request, response);	
-	  } catch (error: Error | any) {
+	} catch (error: Error | any) {
 		const message = 'Failed to create attendance record';
 		error.message = message;
 		errorHandler(error, request, response);
-	  }
+	}
 })
 
 const studentPositions = router.post('/studentPositions', async (request: Request, response: Response) => {

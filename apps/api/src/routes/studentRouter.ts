@@ -16,11 +16,11 @@ const studentRouter = router.get('/', async (request: Request, response: Respons
 		}
 		const data = await getStudentService(studentInfo);
 		responseHandler(data, request, response);	
-	  } catch (error: Error | any) {
+	} catch (error: Error | any) {
 		const message = 'Failed to retrieve student data';
 		error.message = message;
 		errorHandler(error, request, response);
-	  }
+	}
 })
 
 export { studentRouter }

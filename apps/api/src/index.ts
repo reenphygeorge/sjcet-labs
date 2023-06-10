@@ -10,6 +10,7 @@ import { experimentRouter } from './routes/experimentRouter';
 import { studentRouter } from './routes/studentRouter';
 import { createRecord, studentPositions } from './routes/attendanceRouter';
 import { createReservation, reviewReservation } from './routes/reservationRouter';
+import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -38,5 +39,7 @@ app.use('/student', studentRouter)
 app.use('/attendance', createRecord, studentPositions)
 
 app.use('/reservation', createReservation, reviewReservation)
+
+app.use('/notification', notificationViewRoute, notificationDeleteRoute)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));
