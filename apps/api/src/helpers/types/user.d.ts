@@ -69,3 +69,8 @@ export interface ReservationInfo {
 	labId: string;
 	status: ReservationStatus | undefined;
 }
+
+export interface ReviewInfo {
+	reservationId: string;
+	status: string;
+}

@@ -9,7 +9,7 @@ import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
 import { studentRouter } from './routes/studentRouter';
 import { createRecord, studentPositions } from './routes/attendanceRouter';
-import { createReservation } from './routes/reservationRouter';
+import { createReservation, reviewReservation } from './routes/reservationRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -37,6 +37,6 @@ app.use('/student', studentRouter)
 
 app.use('/attendance', createRecord, studentPositions)
 
-app.use('/reservation', createReservation)
+app.use('/reservation', createReservation, reviewReservation)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

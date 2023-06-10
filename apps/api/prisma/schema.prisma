@@ -238,4 +238,5 @@ enum ReportStatus {
 enum ReservationStatus {
   APPROVED
   REQUESTED
+  REJECTED
 }
