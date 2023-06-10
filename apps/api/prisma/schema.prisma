@@ -49,6 +49,8 @@ model Student {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   registerNumber   String             @unique
   name             String
+  gender           Genders            @relation(fields: [genderName], references: [gender])
+  genderName       String
   department       Departments        @relation(fields: [departmentsId], references: [id])
   departmentsId    String
   semester         Int
@@ -84,12 +86,12 @@ model Reservation {
   coursesId             String
   semester              Int
   period                Int
-  teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [id])
+  teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [name])
   teachingDepartmentsId String
-  lab                   Lab               @relation(fields: [labId], references: [id])
+  lab                   Lab               @relation(fields: [labId], references: [labName])
   labId                 String
   batch                 String
-  status                ReservationStatus
+  status                ReservationStatus @default(REQUESTED)
 
   @@unique([date, labId, period])
 }
@@ -107,7 +109,7 @@ model TimeTable {
   dayId                String
   teachingDepartment   Departments @relation(fields: [teachingDepartmentId], references: [id])
   teachingDepartmentId String
-  lab                  Lab?        @relation(fields: [labId], references: [id])
+  lab                  Lab?        @relation(fields: [labId], references: [labName])
   labId                String?
 
   @@unique([userId, teachingDepartmentId, periodNumber])
@@ -138,7 +140,7 @@ model AttendanceRecord {
   studentPositions StudentPositions[]
   course           Courses            @relation(fields: [courseCode], references: [courseCode])
   courseCode       String
-  expreiments      Experiments[]
+  experiments      Experiments[]
   absentStudents   AbsentStudents[]
 
   @@unique([date, labName, periods])
@@ -146,7 +148,7 @@ model AttendanceRecord {
 
 model StudentPositions {
   id                 String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  student            Student          @relation(fields: [studentId], references: [id])
+  student            Student          @relation(fields: [studentId], references: [registerNumber])
   studentId          String
   systemNumber       Int
   attendanceRecord   AttendanceRecord @relation(fields: [attendanceRecordId], references: [id])
@@ -157,7 +159,7 @@ model StudentPositions {
 
 model AbsentStudents {
   id                 String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  student            Student          @relation(fields: [studentId], references: [id])
+  student            Student          @relation(fields: [studentId], references: [registerNumber])
   studentId          String
   attendanceRecord   AttendanceRecord @relation(fields: [attendanceRecordId], references: [id])
   attendanceRecordId String
@@ -199,14 +201,14 @@ model Notifications {
 
 model Report {
   id               String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  lab              Lab          @relation(fields: [labId], references: [id])
+  lab              Lab          @relation(fields: [labId], references: [labName])
   labId            String
   professor        User         @relation(fields: [professorId], references: [registerNumber])
   professorId      String
   systems          Int[]
   date             DateTime     @default(now())
   issueDescription String
-  status           ReportStatus
+  status           ReportStatus @default(PENDING)
 }
 
 model Days {
@@ -217,13 +219,15 @@ model Days {
 }
 
 model Genders {
-  gender String @id @unique
-  user   User[]
+  gender  String    @id @unique
+  user    User[]
+  student Student[]
 }
 
 enum NotificationType {
   RESERVATION_APPROVED
   RESERVATION_REJECTED
+  RESERVATION_REQUEST
   REPORT
 }
 
@@ -235,4 +239,5 @@ enum ReportStatus {
 enum ReservationStatus {
   APPROVED
   REQUESTED
+  REJECTED
 }

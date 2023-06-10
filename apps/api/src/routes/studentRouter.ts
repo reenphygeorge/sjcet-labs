@@ -7,7 +7,6 @@ import { StudentInfo } from '../helpers/types/user';
 const router = express.Router()
 
 const studentRouter = router.get('/', async (request: Request, response: Response) => {
-	console.log(request.body)
 	try {
 		const studentInfo: StudentInfo = {
 			departmentId: request.body.departmentId,
@@ -17,11 +16,11 @@ const studentRouter = router.get('/', async (request: Request, response: Respons
 		}
 		const data = await getStudentService(studentInfo);
 		responseHandler(data, request, response);	
-	  } catch (error: Error | any) {
+	} catch (error: Error | any) {
 		const message = 'Failed to retrieve student data';
 		error.message = message;
 		errorHandler(error, request, response);
-	  }
+	}
 })
 
 export { studentRouter }

@@ -5,7 +5,14 @@ import {getGeneralData} from '../services/generalDataService'
 
 const router = express.Router()
 
-const generalDataGet = router.get('/', async (request: Request, response: Response) => {
+const testRoute = router.get('/', (request: Request, response: Response) => {
+	const data = {
+		message: "API Running Successfully"
+	}
+	responseHandler(data, request, response)
+})
+
+const generalDataGet = router.get('/generalData', async (request: Request, response: Response) => {
 	try {
 		const data = await getGeneralData();
 		responseHandler(data, request, response);
@@ -16,4 +23,4 @@ const generalDataGet = router.get('/', async (request: Request, response: Respon
 	}
 })
 
-export {generalDataGet}
+export { generalDataGet, testRoute }
