@@ -42,9 +42,11 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 }
 
 const addStudentPositions = async (studentPositions: StudentPositions[]) => {
-	await prisma.studentPositions.createMany({
+	const data = await prisma.studentPositions.createMany({
 		data: studentPositions
 	})
+
+	return data
 }
 
 export{ recordCreate, addStudentPositions }
