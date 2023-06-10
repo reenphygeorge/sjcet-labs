@@ -49,6 +49,8 @@ model Student {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   registerNumber   String             @unique
   name             String
+  gender           Genders            @relation(fields: [genderName], references: [gender])
+  genderName       String
   department       Departments        @relation(fields: [departmentsId], references: [id])
   departmentsId    String
   semester         Int
@@ -217,8 +219,9 @@ model Days {
 }
 
 model Genders {
-  gender String @id @unique
-  user   User[]
+  gender  String    @id @unique
+  user    User[]
+  student Student[]
 }
 
 enum NotificationType {
