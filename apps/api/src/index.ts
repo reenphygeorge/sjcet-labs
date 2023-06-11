@@ -7,8 +7,7 @@ import { userGet, userPatch } from './routes/userRouter';
 import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
-import { studentRouter } from './routes/studentRouter';
-import { createRecord, studentPositions } from './routes/attendanceRouter';
+import { createRecord, studentPositions, studentDetailsRouter } from './routes/attendanceRouter';
 import { createReservation, reviewReservation } from './routes/reservationRouter';
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
 
@@ -34,9 +33,7 @@ app.use('/department', departmentGet)
 
 app.use('/experiment', experimentRouter)
 
-app.use('/student', studentRouter)
-
-app.use('/attendance', createRecord, studentPositions)
+app.use('/attendance', createRecord, studentDetailsRouter, studentPositions)
 
 app.use('/reservation', createReservation, reviewReservation)
 
