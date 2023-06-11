@@ -74,3 +74,16 @@ export interface ReviewInfo {
 	reservationId: string;
 	status: string;
 }
+
+export interface LogData {
+	date: Date;
+	labName: string;
+	periods: number[];
+}
+
+export interface ReportData {
+	labId: string;
+	professorId: string;
+	systems: number[];
+	issueDescription: string;
+}

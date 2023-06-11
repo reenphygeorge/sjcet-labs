@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import responseHandler from '../helpers/handlers/ResponseHandler';
 import errorHandler from '../helpers/handlers/ErrorHandler';
-import {getGeneralData} from '../services/generalDataService'
+import { getGeneralData } from '../services/generalDataService'
 
 const router = express.Router()
 

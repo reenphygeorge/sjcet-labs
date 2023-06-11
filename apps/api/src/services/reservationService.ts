@@ -91,4 +91,16 @@ const reservationReview = async (reviewInfo: ReviewInfo[]) => {
 	return count
 }
 
-export { reservationCreate, reservationReview }
+const reservationDelete = async (reservationInfo: string[]) => {
+	const data = await prisma.reservation.deleteMany({
+		where: {
+			id: {
+				in: reservationInfo
+			}
+		}
+	})
+
+	return data
+}
+
+export { reservationCreate, reservationReview, reservationDelete }

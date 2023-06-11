@@ -7,10 +7,11 @@ import { userGet, userPatch } from './routes/userRouter';
 import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
-import { studentRouter } from './routes/studentRouter';
-import { createRecord, studentPositions } from './routes/attendanceRouter';
-import { createReservation, reviewReservation } from './routes/reservationRouter';
+import { createRecord, studentPositions, studentDetailsRouter, absentStudents } from './routes/attendanceRouter';
+import { createReservation, reviewReservation, deleteReservation } from './routes/reservationRouter';
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
+import { getLog } from './routes/logRouter';
+import { reportCreateRouter, reportDeleteRouter, reportReviewRouter } from './routes/reportRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -34,12 +35,14 @@ app.use('/department', departmentGet)
 
 app.use('/experiment', experimentRouter)
 
-app.use('/student', studentRouter)
+app.use('/attendance', createRecord, studentDetailsRouter, studentPositions, absentStudents)
 
-app.use('/attendance', createRecord, studentPositions)
-
-app.use('/reservation', createReservation, reviewReservation)
+app.use('/reservation', createReservation, reviewReservation, deleteReservation)
 
 app.use('/notification', notificationViewRoute, notificationDeleteRoute)
+
+app.use('/logs', getLog)
+
+app.use('/report', reportCreateRouter, reportReviewRouter, reportDeleteRouter)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

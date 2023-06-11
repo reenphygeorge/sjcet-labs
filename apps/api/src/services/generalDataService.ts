@@ -18,4 +18,4 @@ const getGeneralData = async () => {
 	return data
 }
 
-export {getGeneralData}
+export { getGeneralData }

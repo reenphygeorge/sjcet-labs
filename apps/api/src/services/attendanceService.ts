@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { AttendanceInfo, StudentPositions } from '../helpers/types/user';
+import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
+import { StudentInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
@@ -41,6 +42,31 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 	}
 }
 
+const getStudentDetails = async (studentinfo: StudentInfo) => {
+	if (studentinfo.labBatch !== null) {
+		const data = await prisma.student.findMany({
+			where: {
+				departmentsId: studentinfo.departmentId,
+				semester: studentinfo.semester,
+				batch: studentinfo.batch,
+				labBatch: studentinfo.labBatch
+			}
+		})
+
+		return data
+	} else {
+		const data = await prisma.student.findMany({
+			where: {
+				departmentsId: studentinfo.departmentId,
+				semester: studentinfo.semester,
+				batch: studentinfo.batch
+			}
+		})
+
+		return data
+	}
+}
+
 const addStudentPositions = async (studentPositions: StudentPositions[]) => {
 	const data = await prisma.studentPositions.createMany({
 		data: studentPositions
@@ -49,4 +75,12 @@ const addStudentPositions = async (studentPositions: StudentPositions[]) => {
 	return data
 }
 
-export{ recordCreate, addStudentPositions }
+const addAbsentStudents = async (studentData: AbsentStudents[]) => {
+	const data = await prisma.absentStudents.createMany({
+		data: studentData
+	})
+
+	return data
+}
+
+export{ recordCreate, addStudentPositions, getStudentDetails, addAbsentStudents }
