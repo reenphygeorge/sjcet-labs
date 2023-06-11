@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { AttendanceInfo, StudentPositions } from '../helpers/types/user';
+import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
 import { StudentInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
@@ -75,4 +75,12 @@ const addStudentPositions = async (studentPositions: StudentPositions[]) => {
 	return data
 }
 
-export{ recordCreate, addStudentPositions, getStudentDetails }
+const addAbsentStudents = async (studentData: AbsentStudents[]) => {
+	const data = await prisma.absentStudents.createMany({
+		data: studentData
+	})
+
+	return data
+}
+
+export{ recordCreate, addStudentPositions, getStudentDetails, addAbsentStudents }

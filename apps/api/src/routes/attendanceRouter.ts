@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import responseHandler from '../helpers/handlers/ResponseHandler';
 import errorHandler from '../helpers/handlers/ErrorHandler';
-import { recordCreate, addStudentPositions, getStudentDetails } from '../services/attendanceService';
-import { AttendanceInfo, StudentPositions } from '../helpers/types/user';
+import { recordCreate, addStudentPositions, getStudentDetails, addAbsentStudents } from '../services/attendanceService';
+import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
 import { StudentInfo } from '../helpers/types/user';
 
 const router = express.Router()
@@ -48,10 +48,22 @@ const studentPositions = router.post('/studentPositions', async (request: Reques
 		const data = await addStudentPositions(studentPositions)
 		responseHandler(data, request, response);	
 	} catch (error: Error | any) {
-		const message = 'Failed to insert student data';
+		const message = 'Failed to insert student positions data';
 		error.message = message;
 		errorHandler(error, request, response);
 	}
 })
 
-export { createRecord, studentPositions, studentDetailsRouter }
+const absentStudents = router.post('/absentStudents', async (request: Request, response: Response) => {
+	try {
+		const absentStudents: AbsentStudents[] = request.body.absentStudents
+		const data = await addAbsentStudents(absentStudents)
+		responseHandler(data, request, response)
+	} catch (error: Error | any) {
+		const message = 'Failed to insert absent students data';
+		error.message = message;
+		errorHandler(error, request, response);
+	}
+})
+
+export { createRecord, studentPositions, studentDetailsRouter, absentStudents }

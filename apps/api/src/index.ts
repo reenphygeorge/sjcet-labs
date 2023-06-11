@@ -7,9 +7,10 @@ import { userGet, userPatch } from './routes/userRouter';
 import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
-import { createRecord, studentPositions, studentDetailsRouter } from './routes/attendanceRouter';
+import { createRecord, studentPositions, studentDetailsRouter, absentStudents } from './routes/attendanceRouter';
 import { createReservation, reviewReservation, deleteReservation } from './routes/reservationRouter';
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
+import { getLog } from './routes/logRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -33,10 +34,12 @@ app.use('/department', departmentGet)
 
 app.use('/experiment', experimentRouter)
 
-app.use('/attendance', createRecord, studentDetailsRouter, studentPositions)
+app.use('/attendance', createRecord, studentDetailsRouter, studentPositions, absentStudents)
 
 app.use('/reservation', createReservation, reviewReservation, deleteReservation)
 
 app.use('/notification', notificationViewRoute, notificationDeleteRoute)
+
+app.use('/logs', getLog)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));
