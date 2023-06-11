@@ -8,7 +8,7 @@ import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
 import { createRecord, studentPositions, studentDetailsRouter } from './routes/attendanceRouter';
-import { createReservation, reviewReservation } from './routes/reservationRouter';
+import { createReservation, reviewReservation, deleteReservation } from './routes/reservationRouter';
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
 
 const app: Application = express();
@@ -35,7 +35,7 @@ app.use('/experiment', experimentRouter)
 
 app.use('/attendance', createRecord, studentDetailsRouter, studentPositions)
 
-app.use('/reservation', createReservation, reviewReservation)
+app.use('/reservation', createReservation, reviewReservation, deleteReservation)
 
 app.use('/notification', notificationViewRoute, notificationDeleteRoute)
 
