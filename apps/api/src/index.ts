@@ -11,6 +11,7 @@ import { createRecord, studentPositions, studentDetailsRouter, absentStudents } 
 import { createReservation, reviewReservation, deleteReservation } from './routes/reservationRouter';
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
 import { getLog } from './routes/logRouter';
+import { reportCreateRouter, reportDeleteRouter, reportReviewRouter } from './routes/reportRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -41,5 +42,7 @@ app.use('/reservation', createReservation, reviewReservation, deleteReservation)
 app.use('/notification', notificationViewRoute, notificationDeleteRoute)
 
 app.use('/logs', getLog)
+
+app.use('/report', reportCreateRouter, reportReviewRouter, reportDeleteRouter)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

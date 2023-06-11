@@ -80,3 +80,10 @@ export interface LogData {
 	labName: string;
 	periods: number[];
 }
+
+export interface ReportData {
+	labId: string;
+	professorId: string;
+	systems: number[];
+	issueDescription: string;
+}
