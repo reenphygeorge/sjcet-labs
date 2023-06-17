@@ -39,13 +39,13 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 const reservationReview = async (reviewInfo: ReviewInfo[]) => {
 	let count = 0
 
-	for (const x of reviewInfo) {
+	for (const review of reviewInfo) {
 		const reservation = await prisma.reservation.update({
 			data: {
-				status: x.status
+				status: review.status
 			},
 			where: {
-				id: x.reservationId
+				id: review.reservationId
 			}
 		})
 
