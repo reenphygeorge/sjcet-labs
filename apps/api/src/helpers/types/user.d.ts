@@ -9,26 +9,6 @@ export interface PatchUserData {
 	phoneNumber: string;
 }
 
-// export interface GetUserData {
-// 	id: string;
-// 	authId: string;
-// 	registerNumber: string;
-// 	name: string;
-// 	gender: Genders;
-// 	email: string;
-// 	phoneNumber: string;
-// 	departmentId: string;
-// 	reservations: Reservation[]?;
-// 	notifications: Notification[]?;
-// 	reports: Report[]?;
-// 	labAdmin: boolean;
-// 	labIncharge: boolean;
-// 	timeTable: TimeTable[]?;
-// 	labId: string;
-// 	labTimeTable: LabTimeTable[]?;
-// 	teachingAtLab: LabTimeTable[]?
-// }
-
 export interface StudentInfo {
 	departmentId: string;
 	semester: number;
@@ -57,14 +37,13 @@ export interface AbsentStudents {
 
 export interface ReservationInfo {
 	professorId: string;
-	date: Date;
 	dayId: string;
 	negotiable: boolean;
 	purpose: string?;
 	coursesId: string;
 	semester: number;
 	batch: string;
-	period: number;
+	periods: number[];
 	teachingDepartmentsId: string;
 	labId: string;
 	status: ReservationStatus | undefined;

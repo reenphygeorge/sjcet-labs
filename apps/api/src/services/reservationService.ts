@@ -1,12 +1,27 @@
-import { NotificationType, PrismaClient, ReservationStatus } from '@prisma/client';
+import { NotificationType, PrismaClient } from '@prisma/client';
 import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
 const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
-	const data = await prisma.reservation.createMany({
-		data: reservationInfo
-	})
+	for (const reservation of reservationInfo) {
+		for (const period of reservation.periods) {
+			await prisma.reservation.create({
+				data: {
+					dayId: reservation.dayId,
+					teachingDepartmentsId: reservation.teachingDepartmentsId,
+					semester: reservation.semester,
+					batch: reservation.batch,
+					coursesId: reservation.coursesId,
+					period,
+					professorId: reservation.professorId,
+					labId: reservation.labId,
+					negotiable: reservation.negotiable,
+					purpose: reservation.purpose
+				}
+			})
+		}
+	}
 
 	for (const reservation of reservationInfo) {
 		const labAdmins = await prisma.lab.findUnique({
@@ -31,9 +46,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 				})
 			}
 		}		
-	} 
-
-	return data
+	}
 }
 
 const reservationReview = async (reviewInfo: ReviewInfo[]) => {
