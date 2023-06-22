@@ -1,4 +1,4 @@
-import { Experiments, Genders, LabTimeTable, Report, Reservation, ReservationStatus, TimeTable } from "@prisma/client";
+import { Days, Experiments, Genders, LabTimeTable, Report, Reservation, ReservationStatus, TimeTable } from "@prisma/client";
 
 export interface PatchUserData {
 	authId: string;
@@ -86,4 +86,9 @@ export interface ReportData {
 	professorId: string;
 	systems: number[];
 	issueDescription: string;
+}
+
+export interface FreeLabInfo {
+	day: string;
+	periods: number[];
 }
