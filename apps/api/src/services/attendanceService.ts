@@ -13,6 +13,7 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 		}
 	})
 
+	// Creating the attendance record to map the student positions to
 	if (experiments !== null) {
 		const recordInfo = await prisma.attendanceRecord.create({
 			data: {
@@ -23,6 +24,7 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 			},
 		})
 
+		// Mapping the experiment details to the attendance record
 		for (const expreimentId of experimentIds) {
 			await prisma.attendanceRecord.update({
 				data: {
@@ -43,6 +45,7 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 }
 
 const getStudentDetails = async (studentinfo: StudentInfo) => {
+	// Retreiving the details of the student according to the data provided
 	if (studentinfo.labBatch !== null) {
 		const data = await prisma.student.findMany({
 			where: {
@@ -68,6 +71,7 @@ const getStudentDetails = async (studentinfo: StudentInfo) => {
 }
 
 const addStudentPositions = async (studentPositions: StudentPositions[]) => {
+	// Mapping student positions to the attendance record
 	const data = await prisma.studentPositions.createMany({
 		data: studentPositions
 	})
@@ -76,6 +80,7 @@ const addStudentPositions = async (studentPositions: StudentPositions[]) => {
 }
 
 const addAbsentStudents = async (studentData: AbsentStudents[]) => {
+	// Mapping the details of the absent students to the attendance record
 	const data = await prisma.absentStudents.createMany({
 		data: studentData
 	})

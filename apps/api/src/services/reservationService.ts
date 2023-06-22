@@ -4,6 +4,8 @@ import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 const prisma = new PrismaClient()
 
 const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
+
+	// Creating reservation requests
 	for (const reservation of reservationInfo) {
 		for (const period of reservation.periods) {
 			await prisma.reservation.create({
@@ -21,9 +23,8 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 				}
 			})
 		}
-	}
 
-	for (const reservation of reservationInfo) {
+		// Creating Notifications for the lab administrators
 		const labAdmins = await prisma.lab.findUnique({
 			where: {
 				labName: reservation.labId
@@ -32,7 +33,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 				labAdmins: true
 			}
 		})
-
+	
 		if (labAdmins !== null) {
 			for (const admin of labAdmins.labAdmins) {
 				const heading = `${reservation.labId} Reservation Request`
@@ -66,6 +67,7 @@ const reservationReview = async (reviewInfo: ReviewInfo[]) => {
 		
 		const professorId = reservation.professorId
 
+		// Assigning notification type enum for each notification
 		let notificationType: NotificationType
 		if (reservation.status === 'APPROVED') {
 			notificationType = NotificationType.RESERVATION_APPROVED

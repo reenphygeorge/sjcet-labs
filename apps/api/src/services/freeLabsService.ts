@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 const getFreeLabsInfo = async (labInfo: FreeLabInfo) => {
 
+	// Getting the details of the labs that are free during the specified day and periods
 	const data = await prisma.lab.findMany({
 		where: {
 			timeTable: {
