@@ -4,7 +4,6 @@ import cors from 'cors';
 import env from './helpers/env';
 import logger from './helpers/logger/logger.init';
 import { userGet, userPatch } from './routes/userRouter';
-import { departmentGet } from './routes/departmentRouter';
 import { generalDataGet, testRoute } from './routes/generalDataRouter';
 import { experimentRouter } from './routes/experimentRouter';
 import { createRecord, studentPositions, studentDetailsRouter, absentStudents } from './routes/attendanceRouter';
@@ -30,8 +29,6 @@ app.use(json())
 app.use('/', generalDataGet, testRoute)
 
 app.use('/user', userGet, userPatch)
-
-app.use('/department', departmentGet)
 
 app.use('/experiment', experimentRouter)
 

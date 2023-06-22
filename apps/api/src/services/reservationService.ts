@@ -8,14 +8,10 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 		data: reservationInfo
 	})
 
-	const labNames = reservationInfo.map((reservation) => {
-		return reservation.labId
-	})
-
-	for (const labName of labNames) {
+	for (const reservation of reservationInfo) {
 		const labAdmins = await prisma.lab.findUnique({
 			where: {
-				labName
+				labName: reservation.labId
 			},
 			select: {
 				labAdmins: true
@@ -24,47 +20,32 @@ const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
 
 		if (labAdmins !== null) {
 			for (const admin of labAdmins.labAdmins) {
-				const heading = "Request For Lab Reservation"
+				const heading = `${reservation.labId} Reservation Request`
 				await prisma.notifications.create({
 					data: {
 						professorsProfessorId: admin.registerNumber,
 						type: NotificationType.RESERVATION_REQUEST,
-						heading
+						heading,
+						message: reservation.purpose
 					}
 				})
 			}
-		}
+		}		
 	} 
 
 	return data
 }
 
 const reservationReview = async (reviewInfo: ReviewInfo[]) => {
-	const reservationIds = reviewInfo.map((reservation) => {
-		return reservation.reservationId
-	})
-
-	const reservationStatus = reviewInfo.map((reservation) => {
-		let status: ReservationStatus
-		if (reservation.status === 'APPROVED') {
-			status = ReservationStatus.APPROVED
-		} else if (reservation.status === 'REJECTED') {
-			status = ReservationStatus.REJECTED
-		} else {
-			status = ReservationStatus.REQUESTED
-		}
-		return status
-	})
-
 	let count = 0
 
-	for (let i = 0; i < reviewInfo.length; ++i) {
+	for (const review of reviewInfo) {
 		const reservation = await prisma.reservation.update({
 			data: {
-				status: reservationStatus[i]
+				status: review.status
 			},
 			where: {
-				id: reservationIds[i]
+				id: review.reservationId
 			}
 		})
 
@@ -84,7 +65,8 @@ const reservationReview = async (reviewInfo: ReviewInfo[]) => {
 			data: {
 				professorsProfessorId: professorId,
 				type: notificationType,
-				heading
+				heading,
+				message: reservation.purpose
 			}
 		})
 	}

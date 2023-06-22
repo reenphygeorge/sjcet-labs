@@ -72,7 +72,7 @@ export interface ReservationInfo {
 
 export interface ReviewInfo {
 	reservationId: string;
-	status: string;
+	status: ReservationStatus;
 }
 
 export interface LogData {

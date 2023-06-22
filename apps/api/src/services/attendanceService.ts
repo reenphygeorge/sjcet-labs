@@ -23,12 +23,12 @@ const recordCreate = async ({date, courseCode, experimentIds, labName, periods}:
 			},
 		})
 
-		for (let i = 0; i < experimentIds.length; ++i) {
+		for (const expreimentId of experimentIds) {
 			await prisma.attendanceRecord.update({
 				data: {
 					experiments: {
 						connect: {
-							id: experimentIds[i]
+							id: expreimentId
 						}
 					}
 				},
