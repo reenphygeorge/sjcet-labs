@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "AttendanceRecord" ALTER COLUMN "date" SET DEFAULT CURRENT_TIMESTAMP;

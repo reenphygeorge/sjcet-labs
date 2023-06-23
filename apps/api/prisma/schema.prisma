@@ -135,7 +135,7 @@ model LabTimeTable {
 
 model AttendanceRecord {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  date             DateTime           @db.Date
+  date             DateTime           @default(now()) @db.Date
   lab              Lab                @relation(fields: [labName], references: [labName])
   labName          String
   periods          Int[]

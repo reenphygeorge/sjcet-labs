@@ -358,3 +358,164 @@
 			"count": 2
 		}
 	}
+
+### /notification/delete
+#### Method: DELETE
+	Payload:
+	{
+		"notificationIds": [
+			"a1349f98-02f6-4296-b41c-3760fce6efc9",
+			"a6fb8f59-227e-4823-ad04-7368317cee0b"
+		]
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": {
+			"count": 2
+		}
+	}
+
+### /logs
+#### Method: GET
+	Payload:
+	{
+		"date": "2023-06-03T00:00:00.000Z",
+		"labName": "Software Computing Lab",
+		"periods": [1, 2, 3]
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": {
+			"id": "93b0ae95-4acd-4f1c-90de-b9803050b09a",
+			"date": "2023-06-03T00:00:00.000Z",
+			"labName": "Software Computing Lab",
+			"periods": [
+				1,
+				2,
+				3
+			],
+			"courseCode": "CSL300",
+			"studentPositions": [
+				{
+					"studentId": "20CS040",
+					"systemNumber": 3,
+					"student": {
+					"name": "Ashik David Roy"
+					}
+				},
+				{
+					"studentId": "20CS073",
+					"systemNumber": 7,
+					"student": {
+					"name": "Nithin V James"
+					}
+				},
+				...
+			],
+			"absentStudents": [
+				{
+					"studentId": "20CS104",
+					"student": {
+					"name": "Reenphy George"
+					}
+				},
+				{
+					"studentId": "20CS069",
+					"student": {
+					"name": "Jithin Jerome"
+					}
+				},
+				...
+			]
+		}
+	}
+
+### /report/create
+#### Method: POST
+	Payload:
+	{
+		"labId": "Software Computing Lab",
+		"professorId": "CSE103",
+		"systems": [13, 21, 25],
+		"issueDescription": "Unable to power on"
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": {
+			"id": "bc8bee45-160b-47d2-8df2-03274143c91d",
+			"labId": "Software Computing Lab",
+			"professorId": "CSE103",
+			"systems": [
+				13,
+				21,
+				25
+			],
+			"date": "2023-06-23T16:06:49.959Z",
+			"issueDescription": "Unable to power on",
+			"status": "PENDING"
+		}
+	}
+
+### /report/review
+#### Method: PATCH
+	Payload:
+	{
+		"reviewIds": [
+			"bc8bee45-160b-47d2-8df2-03274143c91d",
+			...
+		]
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": {
+			"count": 1
+		}
+	}
+
+### /report/delete
+#### Method: DELETE
+	Payload:
+	{
+		"reportIds": [
+			"bc8bee45-160b-47d2-8df2-03274143c91d",
+			...
+		]
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": {
+			"count": 1
+		}
+	}
+
+### /freeLabs
+#### Method: GET
+	Payload:
+	{
+		"day": "Wednesday",
+		"periods": [5, 6]
+	}
+
+	Response:
+	{
+		"success": true,
+		"data": [
+			{
+				"labName": "Software Computing Lab"
+			},
+			{
+				"labName": "Networks Lab"
+			},
+			...
+		]
+	}
