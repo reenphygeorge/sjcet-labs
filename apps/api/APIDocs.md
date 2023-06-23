@@ -267,38 +267,26 @@
 #### Method: POST
 ##### Payload:
 	{
-		"reservationInfo": [
-			{
-				"professorId": "CSE102",
-				"dayId": "Monday",
-				"negotiable": false,
-				"purpose": "I need this to teach Computer Networks",
-				"coursesId": "CSL302",
-				"semester": 6,
-				"batch": "B",
-				"periods": [5, 6, 7],
-				"teachingDepartmentsId": "CSE",
-				"labId": "Networks Lab"
-			},
-			{
-				"professorId": "CSE211",
-				"dayId": "Tuesday",
-				"negotiable": false,
-				"purpose": "Need to teach Data Structures",
-				"coursesId": "CSL202",
-				"semester": 6,
-				"batch": "B",
-				"periods": [6, 7],
-				"teachingDepartmentsId": "CSE",
-				"labId": "Software Computing Lab"
-			},
-			...
-		]
+		"reservationInfo": {
+			"professorId": "CSE102",
+			"dayId": "Monday",
+			"negotiable": false,
+			"purpose": "I need this to teach Computer Networks",
+			"coursesId": "CSL302",
+			"semester": 6,
+			"batch": "B",
+			"periods": [5, 6, 7],
+			"teachingDepartmentsId": "CSE",
+			"labId": "Networks Lab"
+		}
 	}
 
 ##### Response:
 	{
-		"success": true
+		"success": true,
+		"data": {
+			"count": 3
+		}
 	}
 
 ### /reservation/review

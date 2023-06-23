@@ -1,53 +1,58 @@
-import { NotificationType, PrismaClient } from '@prisma/client';
+import { NotificationType, PrismaClient, Reservation } from '@prisma/client';
 import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
-const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
+const reservationCreate = async (reservationInfo: ReservationInfo) => {
 
-	// Creating reservation requests
-	for (const reservation of reservationInfo) {
-		for (const period of reservation.periods) {
-			await prisma.reservation.create({
+	let reservations = []
+	for (const period of reservationInfo.periods) {
+		const data = {
+			professorId: reservationInfo.professorId,
+			teachingDepartmentsId: reservationInfo.teachingDepartmentsId,
+			semester: reservationInfo.semester,
+			batch: reservationInfo.batch,
+			dayId: reservationInfo.dayId,
+			coursesId: reservationInfo.coursesId,
+			labId: reservationInfo.labId,
+			negotiable: reservationInfo.negotiable,
+			period: period,
+			purpose: reservationInfo.purpose
+		}
+
+		reservations.push(data)
+	}
+
+	const data = await prisma.reservation.createMany({
+		data: reservations
+	})
+
+
+	// Creating Notifications for the lab administrators
+	const labAdmins = await prisma.lab.findUnique({
+		where: {
+			labName: reservationInfo.labId
+		},
+		select: {
+			labAdmins: true
+		}
+	})
+	
+	if (labAdmins !== null) {
+		for (const admin of labAdmins.labAdmins) {
+			const heading = `${reservationInfo.labId} Reservation Request`
+			await prisma.notifications.create({
 				data: {
-					dayId: reservation.dayId,
-					teachingDepartmentsId: reservation.teachingDepartmentsId,
-					semester: reservation.semester,
-					batch: reservation.batch,
-					coursesId: reservation.coursesId,
-					period,
-					professorId: reservation.professorId,
-					labId: reservation.labId,
-					negotiable: reservation.negotiable,
-					purpose: reservation.purpose
+					professorsProfessorId: admin.registerNumber,
+					type: NotificationType.RESERVATION_REQUEST,
+					heading,
+					message: reservationInfo.purpose
 				}
 			})
 		}
-
-		// Creating Notifications for the lab administrators
-		const labAdmins = await prisma.lab.findUnique({
-			where: {
-				labName: reservation.labId
-			},
-			select: {
-				labAdmins: true
-			}
-		})
+	}		
 	
-		if (labAdmins !== null) {
-			for (const admin of labAdmins.labAdmins) {
-				const heading = `${reservation.labId} Reservation Request`
-				await prisma.notifications.create({
-					data: {
-						professorsProfessorId: admin.registerNumber,
-						type: NotificationType.RESERVATION_REQUEST,
-						heading,
-						message: reservation.purpose
-					}
-				})
-			}
-		}		
-	}
+	return data
 }
 
 const reservationReview = async (reviewInfo: ReviewInfo[]) => {
