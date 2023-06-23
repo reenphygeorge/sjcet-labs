@@ -140,7 +140,7 @@
 
 ##### Response:
 	{
-	"success": true,
+		"success": true,
 		"data": [
 			{
 				"id": "b704bd8e-0112-41b1-afc5-1f73015b6869",
