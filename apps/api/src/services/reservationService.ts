@@ -1,4 +1,4 @@
-import { NotificationType, PrismaClient, Reservation } from '@prisma/client';
+import { NotificationType, PrismaClient } from '@prisma/client';
 import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
@@ -51,7 +51,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
 			})
 		}
 	}		
-	
+
 	return data
 }
 
