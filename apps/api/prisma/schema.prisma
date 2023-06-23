@@ -93,7 +93,7 @@ model Reservation {
   batch                 String
   status                ReservationStatus @default(REQUESTED)
 
-  @@unique([dayId, labId, period, semester, batch])
+  @@unique([dayId, labId, period, semester, batch, teachingDepartmentsId, professorId])
 }
 
 model TimeTable {
