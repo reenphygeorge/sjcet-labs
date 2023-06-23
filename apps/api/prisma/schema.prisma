@@ -93,7 +93,7 @@ model Reservation {
   batch                 String
   status                ReservationStatus @default(REQUESTED)
 
-  @@unique([date, labId, period])
+  @@unique([dayId, labId, period, semester, batch])
 }
 
 model TimeTable {
@@ -112,7 +112,7 @@ model TimeTable {
   lab                  Lab?        @relation(fields: [labId], references: [labName])
   labId                String?
 
-  @@unique([userId, teachingDepartmentId, periodNumber])
+  @@unique([userId, teachingDepartmentId, periodNumber, batch, semester, dayId])
 }
 
 model LabTimeTable {
@@ -129,6 +129,8 @@ model LabTimeTable {
   day           Days        @relation(fields: [dayId], references: [day])
   dayId         String
   teachingStaff User[]
+
+  @@unique([userId, departmentId, semester, batch, periodNumber, dayId])
 }
 
 model AttendanceRecord {
