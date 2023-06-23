@@ -11,6 +11,7 @@ import { createReservation, reviewReservation, deleteReservation } from './route
 import { notificationViewRoute, notificationDeleteRoute } from './routes/notificationRouter';
 import { getLog } from './routes/logRouter';
 import { reportCreateRouter, reportDeleteRouter, reportReviewRouter } from './routes/reportRouter';
+import { freeLabsRouter } from './routes/freeLabsRouter';
 
 const app: Application = express();
 const port: string | undefined = env.apiPort;
@@ -41,5 +42,7 @@ app.use('/notification', notificationViewRoute, notificationDeleteRoute)
 app.use('/logs', getLog)
 
 app.use('/report', reportCreateRouter, reportReviewRouter, reportDeleteRouter)
+
+app.use('/freeLabs', freeLabsRouter)
 
 app.listen(port, () => logger.info(`Server Listening on ${port}`));

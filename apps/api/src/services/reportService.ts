@@ -21,6 +21,7 @@ const createReport = async (reportData: ReportData) => {
 		}
 	})
 
+	// Creating notifications for the lab administrators
 	if (labAdmins !== null) {
 		for (const id of labAdmins.labAdmins) {
 			await prisma.notifications.create({

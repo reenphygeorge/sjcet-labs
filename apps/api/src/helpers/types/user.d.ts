@@ -1,4 +1,4 @@
-import { Experiments, Genders, LabTimeTable, Report, Reservation, ReservationStatus, TimeTable } from "@prisma/client";
+import { Days, Experiments, Genders, LabTimeTable, Report, Reservation, ReservationStatus, TimeTable } from "@prisma/client";
 
 export interface PatchUserData {
 	authId: string;
@@ -8,26 +8,6 @@ export interface PatchUserData {
 	email: string;
 	phoneNumber: string;
 }
-
-// export interface GetUserData {
-// 	id: string;
-// 	authId: string;
-// 	registerNumber: string;
-// 	name: string;
-// 	gender: Genders;
-// 	email: string;
-// 	phoneNumber: string;
-// 	departmentId: string;
-// 	reservations: Reservation[]?;
-// 	notifications: Notification[]?;
-// 	reports: Report[]?;
-// 	labAdmin: boolean;
-// 	labIncharge: boolean;
-// 	timeTable: TimeTable[]?;
-// 	labId: string;
-// 	labTimeTable: LabTimeTable[]?;
-// 	teachingAtLab: LabTimeTable[]?
-// }
 
 export interface StudentInfo {
 	departmentId: string;
@@ -57,14 +37,13 @@ export interface AbsentStudents {
 
 export interface ReservationInfo {
 	professorId: string;
-	date: Date;
 	dayId: string;
 	negotiable: boolean;
 	purpose: string?;
 	coursesId: string;
 	semester: number;
 	batch: string;
-	period: number;
+	periods: number[];
 	teachingDepartmentsId: string;
 	labId: string;
 	status: ReservationStatus | undefined;
@@ -86,4 +65,9 @@ export interface ReportData {
 	professorId: string;
 	systems: number[];
 	issueDescription: string;
+}
+
+export interface FreeLabInfo {
+	day: string;
+	periods: number[];
 }

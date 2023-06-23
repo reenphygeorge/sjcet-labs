@@ -77,7 +77,7 @@ model Reservation {
   id                    String            @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   professor             User              @relation(fields: [professorId], references: [registerNumber])
   professorId           String
-  date                  DateTime          @db.Date
+  date                  DateTime          @default(now()) @db.Date
   day                   Days              @relation(fields: [dayId], references: [day])
   dayId                 String
   negotiable            Boolean
