@@ -2,9 +2,9 @@
 
 ### /generalData
 
-    Payload: N/A
+##### Payload: N/A
 
-    Response:
+##### Response:
     {
         "success": true,
         "data": {
@@ -39,12 +39,12 @@
 
 ### /user
 #### Method: GET
-	Payload:
+##### Payload:
 	{
   		"authId": "smithajacob"
 	}
 
-	Response:
+##### Response:
 	{
   		"success": true,
   		"data": {
@@ -114,8 +114,9 @@
 		}
 	}
 
+### /user
 #### Method: PATCH
-	Payload:
+##### Payload:
 	{
 		"authId": "kishoreseb",
 		"registerNumber": "iwefownf",
@@ -125,19 +126,19 @@
 		"phoneNumber": "9278267212"
 	}
 
-	Response:
+##### Response:
 	{
   		"success": true
 	}
 
 ### /experiment
 #### Method: GET
-	Payload:
+##### Payload:
 	{
   		"courseCode": "CSL300"
 	}
 
-	Response:
+##### Response:
 	{
 	"success": true,
 		"data": [
@@ -153,7 +154,7 @@
 
 ### /attendance/create
 #### Method: POST
-	Payload:
+##### Payload:
 	{
 		"date": "2023-06-03",
 		"courseCode": "CSL300",
@@ -166,7 +167,7 @@
 		"periods": [1, 2, 3]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -184,7 +185,7 @@
 
 ### /attendance/studentDetails
 #### Method: GET
-	Payload:
+##### Payload:
 	{
 		"departmentId": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
 		"semester": 6,
@@ -192,7 +193,7 @@
 		"labBatch": 2
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": [
@@ -212,7 +213,7 @@
 
 ### /attendance/studentPositions
 #### Method: POST
-	Payload:
+##### Payload:
 	{
 		"studentPositions": [
 			{
@@ -229,7 +230,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -239,7 +240,7 @@
 
 ### /attendance/absentStudents
 #### Method: POST
-	Payload:
+##### Payload:
 	{
 		"absentStudents": [
 			{
@@ -254,7 +255,7 @@
 		]
 	}
 
-	Response;
+##### Response;
 	{
 		"success": true,
 		"data": {
@@ -264,7 +265,7 @@
 
 ### /reservation/create
 #### Method: POST
-	Payload:
+##### Payload:
 	{
 		"reservationInfo": [
 			{
@@ -295,14 +296,14 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true
 	}
 
 ### /reservation/review
 #### Method: PATCH
-	Payload:
+##### Payload:
 	{
 		"reviewInfo": [
 			{
@@ -317,7 +318,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": 2
@@ -325,7 +326,7 @@
 
 ### /reservation/delete
 #### Method: DELETE
-	Payload:
+##### Payload:
 	{
 		"reservationInfo": [
 			"ab5fabb6-447d-4c73-91cd-f4f0c5ea6f4f",
@@ -333,7 +334,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -343,7 +344,7 @@
 
 ### /notification/view
 #### Method: PATCH
-	Payload:
+##### Payload:
 	{
 		"notificationIds": [
 			"84eaafd9-0fce-4cd4-92fb-7ebe566561b0",
@@ -351,7 +352,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -361,7 +362,7 @@
 
 ### /notification/delete
 #### Method: DELETE
-	Payload:
+##### Payload:
 	{
 		"notificationIds": [
 			"a1349f98-02f6-4296-b41c-3760fce6efc9",
@@ -369,7 +370,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -379,14 +380,14 @@
 
 ### /logs
 #### Method: GET
-	Payload:
+##### Payload:
 	{
 		"date": "2023-06-03T00:00:00.000Z",
 		"labName": "Software Computing Lab",
 		"periods": [1, 2, 3]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -436,7 +437,7 @@
 
 ### /report/create
 #### Method: POST
-	Payload:
+##### Payload:
 	{
 		"labId": "Software Computing Lab",
 		"professorId": "CSE103",
@@ -444,7 +445,7 @@
 		"issueDescription": "Unable to power on"
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -464,7 +465,7 @@
 
 ### /report/review
 #### Method: PATCH
-	Payload:
+##### Payload:
 	{
 		"reviewIds": [
 			"bc8bee45-160b-47d2-8df2-03274143c91d",
@@ -472,7 +473,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -482,7 +483,7 @@
 
 ### /report/delete
 #### Method: DELETE
-	Payload:
+##### Payload:
 	{
 		"reportIds": [
 			"bc8bee45-160b-47d2-8df2-03274143c91d",
@@ -490,7 +491,7 @@
 		]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": {
@@ -500,13 +501,13 @@
 
 ### /freeLabs
 #### Method: GET
-	Payload:
+##### Payload:
 	{
 		"day": "Wednesday",
 		"periods": [5, 6]
 	}
 
-	Response:
+##### Response:
 	{
 		"success": true,
 		"data": [
