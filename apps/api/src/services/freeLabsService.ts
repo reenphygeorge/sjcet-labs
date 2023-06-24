@@ -1,51 +1,81 @@
 import { PrismaClient } from '@prisma/client';
-import { FreeLabInfo } from '../helpers/types/user';
+import { FreeLabRequestInfo, FreeLabResponseInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
-const getFreeLabsInfo = async (labInfo: FreeLabInfo) => {
-
+const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 	// Getting the details of the labs that are free during the specified day and periods
-	const data = await prisma.lab.findMany({
-		where: {
-			timeTable: {
-				none: {
-					dayId: labInfo.day,
-					periodNumber: {
-						in: labInfo.periods
-					}
-				}
-			},
-			reservation: {
-				none: {
-					dayId: labInfo.day,
-					period: {
-						in: labInfo.periods
-					},
-					status: 'APPROVED',
-					negotiable: false
-				}
-			}
-		},
+	const labData = await prisma.lab.findMany({
 		select: {
 			labName: true,
 			reservation: {
-				select: {
+				include: {
 					professor: {
 						select: {
 							registerNumber: true,
 							name: true
 						}
-					},
-					negotiable: true,
-					status: true
+					}
 				},
 				where: {
 					status: 'APPROVED'
 				}
+			},
+			timeTable: {
+				select: {
+					periodNumber: true,
+					dayId: true
+				}
 			}
 		}
 	})
+
+	const data: FreeLabResponseInfo[] = []
+
+	for (const lab of labData) {
+		let flag1 = false
+		for (const period of lab.timeTable) {
+			if (period.dayId === labInfo.day) {
+				let flag2 = false
+				for (const periodNumber of labInfo.periods) {
+					if (periodNumber === period.periodNumber && lab.reservation !== null) {
+						const freeLab: FreeLabResponseInfo = {
+							labName: lab.labName,
+							reservation: lab.reservation[0],
+							freeOfTimeTable: false
+						}
+
+						data.push(freeLab)
+						flag2 = true
+						break
+					}
+				}
+
+				if (flag2 === false) {
+					const freeLab: FreeLabResponseInfo = {
+						labName: lab.labName,
+						reservation: lab.reservation[0],
+						freeOfTimeTable: true
+					}
+
+					data.push(freeLab)
+				}
+
+				flag1 = true
+				break
+			}
+		}
+
+		if (flag1 === false) {
+			const freeLab: FreeLabResponseInfo = {
+				labName: lab.labName,
+				reservation: lab.reservation[0],
+				freeOfTimeTable: true
+			}
+
+			data.push(freeLab)
+		}
+	}
 
 	return data
 }

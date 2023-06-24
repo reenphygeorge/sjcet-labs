@@ -85,7 +85,7 @@ model Reservation {
   course                Courses           @relation(fields: [coursesId], references: [courseCode])
   coursesId             String
   semester              Int
-  period                Int
+  periods               Int[]
   teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [name])
   teachingDepartmentsId String
   lab                   Lab               @relation(fields: [labId], references: [labName])
@@ -93,7 +93,7 @@ model Reservation {
   batch                 String
   status                ReservationStatus @default(REQUESTED)
 
-  @@unique([dayId, labId, period, semester, batch, teachingDepartmentsId, professorId])
+  @@unique([dayId, labId, periods, semester, batch, teachingDepartmentsId, professorId])
 }
 
 model TimeTable {

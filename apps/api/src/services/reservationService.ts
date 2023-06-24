@@ -4,27 +4,8 @@ import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 const prisma = new PrismaClient()
 
 const reservationCreate = async (reservationInfo: ReservationInfo) => {
-
-	let reservations = []
-	for (const period of reservationInfo.periods) {
-		const data = {
-			professorId: reservationInfo.professorId,
-			teachingDepartmentsId: reservationInfo.teachingDepartmentsId,
-			semester: reservationInfo.semester,
-			batch: reservationInfo.batch,
-			dayId: reservationInfo.dayId,
-			coursesId: reservationInfo.coursesId,
-			labId: reservationInfo.labId,
-			negotiable: reservationInfo.negotiable,
-			period: period,
-			purpose: reservationInfo.purpose
-		}
-
-		reservations.push(data)
-	}
-
 	const data = await prisma.reservation.createMany({
-		data: reservations
+		data: reservationInfo
 	})
 
 

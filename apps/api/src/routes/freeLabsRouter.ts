@@ -2,13 +2,13 @@ import express, { Request, Response } from 'express';
 import responseHandler from '../helpers/handlers/ResponseHandler';
 import errorHandler from '../helpers/handlers/ErrorHandler';
 import { getFreeLabsInfo } from '../services/freeLabsService';
-import { FreeLabInfo } from '../helpers/types/user';
+import { FreeLabRequestInfo } from '../helpers/types/user';
 
 const router = express.Router()
 
 const freeLabsRouter = router.get('/', async (request: Request, response: Response) => {
 	try {
-		let labInfo: FreeLabInfo = {
+		let labInfo: FreeLabRequestInfo = {
 			day: request.body.day,
 			periods: request.body.periods
 		}
