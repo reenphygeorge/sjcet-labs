@@ -38,7 +38,7 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 			if (period.dayId === labInfo.day) {
 				let flag2 = false
 				for (const periodNumber of labInfo.periods) {
-					if (periodNumber === period.periodNumber && lab.reservation !== null) {
+					if (periodNumber === period.periodNumber) {
 						const freeLab: FreeLabResponseInfo = {
 							labName: lab.labName,
 							reservation: lab.reservation[0],
