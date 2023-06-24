@@ -492,7 +492,7 @@
 ##### Payload:
 	{
 		"day": "Wednesday",
-		"periods": [5, 6]
+		"periods": [2, 3, 5, 6, 7]
 	}
 
 ##### Response:
@@ -501,24 +501,61 @@
 		"data": [
 			{
 				"labName": "Software Computing Lab",
-				"reservation": []
+				"reservation": {
+					"id": "5ce3bbdb-a3e4-4fdf-bc64-81a89c3e3fe0",
+					"professorId": "CSE102",
+					"date": "2023-06-24T00:00:00.000Z",
+					"dayId": "Monday",
+					"negotiable": false,
+					"purpose": "I need this to teach Computer Networks",
+					"coursesId": "CSL302",
+					"semester": 6,
+					"periods": [
+						5,
+						6,
+						7
+					],
+					"teachingDepartmentsId": "CSE",
+					"labId": "Software Computing Lab",
+					"batch": "B",
+					"status": "APPROVED",
+					"professor": {
+						"registerNumber": "CSE102",
+						"name": "Kishore Sebastian"
+					}
+				},
+				"freeOfTimeTable": true
 			},
 			{
 				"labName": "Networks Lab",
-				"reservation": []
+				"reservation": {
+					"id": "f9da0a17-1b70-4cf1-a32d-a4cea14923f5",
+					"professorId": "CSE102",
+					"date": "2023-06-24T00:00:00.000Z",
+					"dayId": "Monday",
+					"negotiable": false,
+					"purpose": "I need this to teach Computer Networks",
+					"coursesId": "CSL302",
+					"semester": 6,
+					"periods": [
+						5,
+						6,
+						7
+					],
+					"teachingDepartmentsId": "CSE",
+					"labId": "Networks Lab",
+					"batch": "B",
+					"status": "APPROVED",
+					"professor": {
+						"registerNumber": "CSE102",
+						"name": "Kishore Sebastian"
+					}
+				},
+				"freeOfTimeTable": false
 			},
 			{
 				"labName": "Programming Lab",
-				"reservation": [
-					{
-						"professor": {
-							"registerNumber": "CSE102",
-							"name": "Kishore Sebastian"
-						},
-						"negotiable": true,
-						"status": "APPROVED"
-					}
-				]
+				"freeOfTimeTable": true
 			}
 		]
 	}
