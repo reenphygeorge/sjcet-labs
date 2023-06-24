@@ -500,11 +500,22 @@
 		"success": true,
 		"data": [
 			{
-				"labName": "Software Computing Lab"
+				"labName": "Networks Lab",
+				"reservation": [
+					{
+						"negotiable": true,
+						"status": "REQUESTED"
+					}
+				]
 			},
 			{
-				"labName": "Networks Lab"
-			},
-			...
+				"labName": "Programming Lab",
+				"reservation": [
+					{
+						"negotiable": true,
+						"status": "APPROVED"
+					}
+				]
+			}
 		]
 	}

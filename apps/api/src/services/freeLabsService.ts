@@ -21,15 +21,23 @@ const getFreeLabsInfo = async (labInfo: FreeLabInfo) => {
 					dayId: labInfo.day,
 					period: {
 						in: labInfo.periods
-					}
+					},
+					status: 'APPROVED',
+					negotiable: false
 				}
 			}
 		},
 		select: {
-			labName: true
+			labName: true,
+			reservation: {
+				select: {
+					negotiable: true,
+					status: true
+				}
+			}
 		}
 	})
-	console.log(data)
+
 	return data
 }
 
