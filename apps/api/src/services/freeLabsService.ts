@@ -31,8 +31,17 @@ const getFreeLabsInfo = async (labInfo: FreeLabInfo) => {
 			labName: true,
 			reservation: {
 				select: {
+					professor: {
+						select: {
+							registerNumber: true,
+							name: true
+						}
+					},
 					negotiable: true,
 					status: true
+				},
+				where: {
+					status: 'APPROVED'
 				}
 			}
 		}

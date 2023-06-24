@@ -500,18 +500,21 @@
 		"success": true,
 		"data": [
 			{
+				"labName": "Software Computing Lab",
+				"reservation": []
+			},
+			{
 				"labName": "Networks Lab",
-				"reservation": [
-					{
-						"negotiable": true,
-						"status": "REQUESTED"
-					}
-				]
+				"reservation": []
 			},
 			{
 				"labName": "Programming Lab",
 				"reservation": [
 					{
+						"professor": {
+							"registerNumber": "CSE102",
+							"name": "Kishore Sebastian"
+						},
 						"negotiable": true,
 						"status": "APPROVED"
 					}
