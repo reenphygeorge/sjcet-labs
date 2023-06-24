@@ -5,43 +5,29 @@ import { StudentInfo } from '../helpers/types/user';
 const prisma = new PrismaClient()
 
 const recordCreate = async ({date, courseCode, experimentIds, labName, periods}: AttendanceInfo) => { 
-	let experiments = await prisma.experiments.findMany({
-		where: {
-			id: {
-				in: experimentIds
-			}
+
+	const experimentIdObjects = experimentIds.map(id => {
+		let data = {
+			id
 		}
+
+		return data
 	})
 
-	// Creating the attendance record to map the student positions to
-	if (experiments !== null) {
-		const recordInfo = await prisma.attendanceRecord.create({
-			data: {
-				date,
-				courseCode,
-				labName,
-				periods
-			},
-		})
+	// Creating the attendance record and mapping the student positions to it
+	const recordInfo = await prisma.attendanceRecord.create({
+		data: {
+			date,
+			courseCode,
+			labName,
+			periods,
+			experiments: {
+				connect: experimentIdObjects
+			}
+		},
+	})
 
-		// Mapping the experiment details to the attendance record
-		for (const expreimentId of experimentIds) {
-			await prisma.attendanceRecord.update({
-				data: {
-					experiments: {
-						connect: {
-							id: expreimentId
-						}
-					}
-				},
-				where: {
-					id: recordInfo.id
-				}
-			})
-		}
-
-		return recordInfo
-	}
+	return recordInfo
 }
 
 const getStudentDetails = async (studentinfo: StudentInfo) => {
