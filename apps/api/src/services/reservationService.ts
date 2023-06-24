@@ -39,18 +39,22 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
 	})
 	
 	if (labAdmins !== null) {
-		for (const admin of labAdmins.labAdmins) {
-			const heading = `${reservationInfo.labId} Reservation Request`
-			await prisma.notifications.create({
-				data: {
-					professorsProfessorId: admin.registerNumber,
-					type: NotificationType.RESERVATION_REQUEST,
-					heading,
-					message: reservationInfo.purpose
-				}
-			})
+		let notificationData = []
+		for (const id of labAdmins.labAdmins) {
+			const adminId = {
+				professorsProfessorId: id.registerNumber,
+				heading: `Reservation Request For ${reservationInfo.labId}`,
+				message: reservationInfo.purpose,
+				type: NotificationType.REPORT
+			}
+
+			notificationData.push(adminId)
 		}
-	}		
+
+		await prisma.notifications.createMany({
+			data: notificationData
+		})
+	}
 
 	return data
 }
