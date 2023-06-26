@@ -3,51 +3,41 @@ import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
-const reservationCreate = async (reservationInfo: ReservationInfo[]) => {
+const reservationCreate = async (reservationInfo: ReservationInfo) => {
+	const data = await prisma.reservation.createMany({
+		data: reservationInfo
+	})
 
-	// Creating reservation requests
-	for (const reservation of reservationInfo) {
-		for (const period of reservation.periods) {
-			await prisma.reservation.create({
-				data: {
-					dayId: reservation.dayId,
-					teachingDepartmentsId: reservation.teachingDepartmentsId,
-					semester: reservation.semester,
-					batch: reservation.batch,
-					coursesId: reservation.coursesId,
-					period,
-					professorId: reservation.professorId,
-					labId: reservation.labId,
-					negotiable: reservation.negotiable,
-					purpose: reservation.purpose
-				}
-			})
+
+	// Creating Notifications for the lab administrators
+	const labAdmins = await prisma.lab.findUnique({
+		where: {
+			labName: reservationInfo.labId
+		},
+		select: {
+			labAdmins: true
+		}
+	})
+	
+	if (labAdmins !== null) {
+		let notificationData = []
+		for (const id of labAdmins.labAdmins) {
+			const adminId = {
+				professorsProfessorId: id.registerNumber,
+				heading: `Reservation Request For ${reservationInfo.labId}`,
+				message: reservationInfo.purpose,
+				type: NotificationType.REPORT
+			}
+
+			notificationData.push(adminId)
 		}
 
-		// Creating Notifications for the lab administrators
-		const labAdmins = await prisma.lab.findUnique({
-			where: {
-				labName: reservation.labId
-			},
-			select: {
-				labAdmins: true
-			}
+		await prisma.notifications.createMany({
+			data: notificationData
 		})
-	
-		if (labAdmins !== null) {
-			for (const admin of labAdmins.labAdmins) {
-				const heading = `${reservation.labId} Reservation Request`
-				await prisma.notifications.create({
-					data: {
-						professorsProfessorId: admin.registerNumber,
-						type: NotificationType.RESERVATION_REQUEST,
-						heading,
-						message: reservation.purpose
-					}
-				})
-			}
-		}		
 	}
+
+	return data
 }
 
 const reservationReview = async (reviewInfo: ReviewInfo[]) => {

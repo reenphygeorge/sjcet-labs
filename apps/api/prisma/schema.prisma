@@ -85,7 +85,7 @@ model Reservation {
   course                Courses           @relation(fields: [coursesId], references: [courseCode])
   coursesId             String
   semester              Int
-  period                Int
+  periods               Int[]
   teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [name])
   teachingDepartmentsId String
   lab                   Lab               @relation(fields: [labId], references: [labName])
@@ -93,7 +93,7 @@ model Reservation {
   batch                 String
   status                ReservationStatus @default(REQUESTED)
 
-  @@unique([date, labId, period])
+  @@unique([dayId, labId, periods, semester, batch, teachingDepartmentsId, professorId])
 }
 
 model TimeTable {
@@ -112,7 +112,7 @@ model TimeTable {
   lab                  Lab?        @relation(fields: [labId], references: [labName])
   labId                String?
 
-  @@unique([userId, teachingDepartmentId, periodNumber])
+  @@unique([userId, teachingDepartmentId, periodNumber, batch, semester, dayId])
 }
 
 model LabTimeTable {
@@ -129,11 +129,13 @@ model LabTimeTable {
   day           Days        @relation(fields: [dayId], references: [day])
   dayId         String
   teachingStaff User[]
+
+  @@unique([userId, departmentId, semester, batch, periodNumber, dayId])
 }
 
 model AttendanceRecord {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  date             DateTime           @db.Date
+  date             DateTime           @default(now()) @db.Date
   lab              Lab                @relation(fields: [labName], references: [labName])
   labName          String
   periods          Int[]

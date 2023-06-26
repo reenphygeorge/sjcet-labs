@@ -8,7 +8,7 @@ const router = express.Router()
 
 const createReservation = router.post('/create', async (request: Request, response: Response) => {
 	try {
-		let reservationInfo: ReservationInfo[] = request.body.reservationInfo
+		let reservationInfo: ReservationInfo = request.body.reservationInfo
 		const data = await reservationCreate(reservationInfo)
 		responseHandler(data, request, response);	
 	} catch (error: Error | any) {

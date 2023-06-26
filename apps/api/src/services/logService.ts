@@ -4,12 +4,12 @@ import { LogData } from '../helpers/types/user';
 const prisma = new PrismaClient();
 
 const getLogs = async ({date, labName, periods}: LogData) => {
-	const data = await prisma.attendanceRecord.findMany({
+	const data = await prisma.attendanceRecord.findUnique({
 		where: {
-			date,
-			labName,
-			periods: {
-				hasEvery: periods
+			date_labName_periods: {
+				date,
+				labName,
+				periods
 			}
 		},
 		include: {

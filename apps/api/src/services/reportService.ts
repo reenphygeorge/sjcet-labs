@@ -23,15 +23,21 @@ const createReport = async (reportData: ReportData) => {
 
 	// Creating notifications for the lab administrators
 	if (labAdmins !== null) {
+		let notificationData = []
 		for (const id of labAdmins.labAdmins) {
-			await prisma.notifications.create({
-				data: {
-					professorsProfessorId: id.registerNumber,
-					heading: reportData.issueDescription,
-					type: NotificationType.REPORT
-				}
-			})
+			const adminId = {
+				professorsProfessorId: id.registerNumber,
+				heading: `Report For ${reportData.labId}`,
+				message: reportData.issueDescription,
+				type: NotificationType.REPORT
+			}
+
+			notificationData.push(adminId)
 		}
+		
+		await prisma.notifications.createMany({
+			data: notificationData
+		})
 	}
 
 	return data

@@ -17,11 +17,11 @@ const app: Application = express();
 const port: string | undefined = env.apiPort;
 
 app.use(
-  cors({
-    origin: env.websiteDomain,
-    allowedHeaders: ['content-type'],
-    credentials: true,
-  })
+	cors({
+		origin: env.websiteDomain,
+    	allowedHeaders: ['content-type'],
+    	credentials: true,
+  	})
 );
 
 app.use(json())

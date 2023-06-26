@@ -67,7 +67,19 @@ export interface ReportData {
 	issueDescription: string;
 }
 
-export interface FreeLabInfo {
+export interface FreeLabRequestInfo {
 	day: string;
 	periods: number[];
+}
+
+export interface FreeLabResponseInfo {
+	labName: string;
+	reservation: Reservation | null;
+	freeOfTimeTable: boolean;
+}
+
+export interface LabData {
+	labName: string;
+	reservation: Reservation[];
+	timeTable: TimeTable[];
 }
