@@ -12,16 +12,18 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { Repeat } from 'react-feather';
 import { NextPage } from 'next';
 import CustomButton from '@/components/CustomButton';
-import { Department, Gender, ProfileData, Role } from '@/types/Profile.d';
+import { Department } from '@/types/Profile.d';
 import { useAuth } from '@/context/AuthContext';
 import authGuard from '../../util/AuthGuard';
+import { UserContext } from '@/context/UserContext';
 
 const Profile: NextPage = () => {
   const { signOut } = useAuth();
+  const userContext = useContext(UserContext);
   const departments: Department[] = [
     { id: 'D0', name: 'Computer Sci & Engg' },
     { id: 'D1', name: 'Artificial Inteligence & Data Sci' },
@@ -30,38 +32,35 @@ const Profile: NextPage = () => {
 
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const [profileData, setProfileData] = useState<ProfileData>({
-    collegeID: '05CS007',
-    name: 'Kishore Sebastian',
-    department: 'Computer Sci & Engg',
-    email: 'kishoresebastian@sjcetpalai.ac.in',
-    phone: '+919012345678',
-    gender: Gender.Male,
-    role: Role.Teacher,
-    labInCharge: true,
-  });
-
   const saveProfile = () => {
     setEditMode(!editMode);
-    // console.log(profileData);
   };
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setProfileData({ ...profileData, [event.target.id]: event.target.value });
+    userContext?.setUserData({ ...userContext?.userData, [event.target.id]: event.target.value });
   };
 
   const toast = useToast();
   const switchAccount = () => {
-    const role: Role = profileData.role === Role.Administrator ? Role.Teacher : Role.Administrator;
-    setProfileData({
-      ...profileData,
-      role,
+    const labAdmin: boolean = !userContext?.userData.labAdmin;
+    userContext?.setUserData({
+      ...userContext?.userData,
+      labAdmin,
     });
+
     toast({
       position: 'top',
       render: () => (
-        <Box color="white" p={3} rounded="12px" bg="purple.25">
-          Switched to {role}!
+        <Box
+          color="white"
+          p={3}
+          rounded="12px"
+          bg="purple.25"
+          onClick={() => {
+            userContext?.setUserData({ ...userContext?.userData, labAdmin });
+          }}
+        >
+          Switched to {labAdmin ? 'Administrator' : 'Teacher'}!
         </Box>
       ),
     });
@@ -88,13 +87,13 @@ const Profile: NextPage = () => {
         borderRadius="full"
         boxSize="150px"
         src={
-          profileData.gender === Gender.Male
+          userContext?.userData.gender === 'Male'
             ? 'https://res.cloudinary.com/rxg/image/upload/v1685267888/lab-management/male-dp_luab55.png'
             : 'https://res.cloudinary.com/rxg/image/upload/v1685267888/lab-management/female-dp_cxjjle.png'
         }
         alt="profile-pic"
       />
-      {profileData.labInCharge === true ? (
+      {userContext?.userData.labIncharge === true ? (
         <IconButton
           onClick={() => switchAccount()}
           aria-label="Switch-Account"
@@ -114,7 +113,7 @@ const Profile: NextPage = () => {
         <Input
           bg="gray.50"
           id="collegeID"
-          value={profileData.collegeID}
+          value={userContext?.userData.registerNumber}
           onChange={handleFormChange}
           mb="7"
           rounded="12px"
@@ -125,7 +124,7 @@ const Profile: NextPage = () => {
         <Input
           bg="gray.50"
           id="name"
-          value={profileData.name}
+          value={userContext?.userData.name}
           onChange={handleFormChange}
           mb="7"
           rounded="12px"
@@ -138,7 +137,7 @@ const Profile: NextPage = () => {
           bg="gray.50"
           mb="7"
           rounded="12px"
-          value={profileData.department}
+          value={userContext?.userData.department}
           onChange={handleFormChange}
         >
           {departments.map(({ id, name }) => (
@@ -153,7 +152,7 @@ const Profile: NextPage = () => {
         <Input
           bg="gray.50"
           id="email"
-          value={profileData.email}
+          value={userContext?.userData.email}
           onChange={handleFormChange}
           mb="7"
           rounded="12px"
@@ -164,7 +163,7 @@ const Profile: NextPage = () => {
         <Input
           bg="gray.50"
           id="phone"
-          value={profileData.phone}
+          value={userContext?.userData.phoneNumber}
           onChange={handleFormChange}
           mb="7"
           rounded="12px"

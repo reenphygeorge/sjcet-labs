@@ -1,39 +1,33 @@
 import { NumberOptions } from './ReactSelect';
 
-interface Data {
-  id: string;
-  staffName: string;
-  date: string;
-  timing: string;
-  venue: string;
-  issue: string;
-  status: string;
-  systemNo: number[];
-}
+// type ReportData = {
+//   id: string;
+//   date: string;
+//   timing: string;
+//   venue: string;
+//   issue: string;
+//   status: string;
+//   systemNo: number[];
+// };
 
-interface LabList {
+type LabList = {
   id: string;
   labName: string;
-}
+};
 
-interface SystemNos {
+type SystemNos = {
   value: string;
   label: string;
-}
+};
 
-enum Status {
-  Pending = 'Pending',
-  Resolved = 'Resolved',
-}
-
-interface NewReportData {
+type NewReportData = {
   systemNo: NumberOptions[];
   venue: string;
   issue: string;
-}
+};
 
-interface ResolveInfo {
+type ResolveInfo = {
   comment: string;
-}
+};
 
-export { Data, Status, LabList, NewReportData, ResolveInfo };
+export { LabList, NewReportData, ResolveInfo };

@@ -35,7 +35,7 @@ interface LabDetails {
 
 interface LabBookingDetails {
   semester: string;
-  departmentWithBatch: string;
+  departmentId: string;
   venue: string;
   periods: SelectedPeriod[] | string[];
   negotiable: boolean;

@@ -3,35 +3,21 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/router';
 import TimetableCard from '@/components/TimetableCard';
 import CustomCard from '@/components/CustomCard';
-// Required data
 import { RouteOptions } from '@/types/Home.d';
-import { Gender, ProfileData, Role } from '@/types/Profile.d';
-import teacherTimetable from '../../util/teacherTimetable';
 import LoginPage from '@/components/LoginPage';
 import { useAuth } from '@/context/AuthContext';
+import { UserContext } from '@/context/UserContext';
 
 const Home: NextPage = () => {
   const { appSession } = useAuth();
-
-  // Required data
-  const profileData: ProfileData = {
-    collegeID: '',
-    name: 'Kishore Sebastian',
-    department: 'Computer Sci & Engg',
-    email: '',
-    phone: '',
-    gender: Gender.Male,
-    role: Role.Administrator,
-    labInCharge: false,
-  };
-
+  const userContext = useContext(UserContext);
   const options: RouteOptions[] =
-    profileData.role === Role.Teacher
+    userContext?.userData.labAdmin === false
       ? [
           { id: nanoid(), value: 'Book Venue', route: 'venue-select' },
           { id: nanoid(), value: 'My Bookings', route: 'view-bookings' },
@@ -49,6 +35,7 @@ const Home: NextPage = () => {
     setSelectOption(key);
     await Link.push(route);
   };
+
   return (
     <>
       <Head>
@@ -67,11 +54,11 @@ const Home: NextPage = () => {
               <br />
             </Text>
             <Text fontSize="4xl" fontWeight="bold" color="black.50">
-              {`Prof. ${profileData.name.split(' ')[0]}`}
+              {`Prof. ${userContext?.userData.name?.split(' ')[0]}`}
             </Text>
           </Box>
           <Box my="20px">
-            <TimetableCard timetable={teacherTimetable} />
+            <TimetableCard />
           </Box>
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
             {options.map(({ id, value, route }, key) => (

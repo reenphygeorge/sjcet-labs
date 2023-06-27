@@ -19,12 +19,11 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Link from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { NextPage } from 'next';
 import CustomCard from '@/components/CustomCard';
 import CustomButton from '@/components/CustomButton';
-import teacherTimetable from '../../util/teacherTimetable';
 import labDetails from '../../util/labDetails';
 import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
@@ -37,6 +36,8 @@ import {
   Status,
 } from '@/types/BookLab.d';
 import authGuard from '../../util/AuthGuard';
+import { UserContext } from '@/context/UserContext';
+import { GeneralContext } from '@/context/GeneralContext';
 
 const BookLab: NextPage = () => {
   const [dayNumber, setDayNumber] = useState<number>(0);
@@ -59,17 +60,7 @@ const BookLab: NextPage = () => {
     { id: nanoid(), value: 'S7' },
     { id: nanoid(), value: 'S8' },
   ];
-
-  const departmentWithBatch: Options[] = [
-    { id: nanoid(), value: 'CSE-A' },
-    { id: nanoid(), value: 'CSE-B' },
-    { id: nanoid(), value: 'ME-A' },
-    { id: nanoid(), value: 'ME-B' },
-    { id: nanoid(), value: 'AD' },
-    { id: nanoid(), value: 'EEE' },
-    { id: nanoid(), value: 'ECE-A' },
-    { id: nanoid(), value: 'ECE-B' },
-  ];
+  const { departments } = useContext(GeneralContext);
 
   const [bookingStep, setBookingStep] = useState<number>(1);
   const [selectedPeriods, setSelectedPeriods] = useState<SelectedPeriod[]>([]);
@@ -78,7 +69,7 @@ const BookLab: NextPage = () => {
 
   const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
     semester: '',
-    departmentWithBatch: '',
+    departmentId: '',
     venue: '',
     periods: [
       {
@@ -181,6 +172,8 @@ const BookLab: NextPage = () => {
     // console.log(bookingDetails);
   };
 
+  const userContext = useContext(UserContext);
+
   return (
     <Box pb="40">
       <TopHeading
@@ -212,13 +205,15 @@ const BookLab: NextPage = () => {
               ))}
             </>
           </Grid>
-          {teacherTimetable.days[dayNumber].periods.map(
+          {userContext?.userData.timeTable[dayNumber].periods.map(
             ({ id, periodName, semester, branch, periodNo }, key) => {
               const periodHeading: string = `${key + 1}. ${periodName}`;
               const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : ``;
               return (
                 <CustomCard
-                  onClick={() => togglePeriods(id, periodNo, teacherTimetable.days[dayNumber].day)}
+                  onClick={() =>
+                    togglePeriods(id, periodNo, userContext?.userData.timeTable[dayNumber].day)
+                  }
                   cardProps={{
                     bg:
                       selectedPeriods.some((period) => period.id.includes(id)) === false
@@ -370,20 +365,20 @@ const BookLab: NextPage = () => {
                       <option key={id}>{value}</option>
                     ))}
                   </Select>
-                  <FormLabel htmlFor="semester" pl="1">
+                  <FormLabel htmlFor="departmentId" pl="1">
                     Department & Batch
                   </FormLabel>
                   <Select
-                    id="departmentWithBatch"
+                    id="departmentId"
                     bg="gray.50"
                     mb="7"
                     rounded="12px"
                     onChange={handleFormChange}
-                    value={bookingDetails.departmentWithBatch}
+                    value={bookingDetails.departmentId}
                   >
-                    {departmentWithBatch.map(({ id, value }) => (
-                      <option key={id} value={value}>
-                        {value}
+                    {departments.map(({ id, name, batch }) => (
+                      <option key={id} value={id}>
+                        {`${name} ${batch}`}
                       </option>
                     ))}
                   </Select>

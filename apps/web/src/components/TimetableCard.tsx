@@ -1,11 +1,17 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Card, Text, CardBody, Grid, Flex, Box } from '@chakra-ui/react';
+import { Card, Text, CardBody, Grid, Flex, Box, HStack } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { FC, useState } from 'react';
-import { Options, TimetableCardProps } from '@/types/TimetableCard';
+import { FC, useContext, useState } from 'react';
+import { UserContext } from '@/context/UserContext';
 
-const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
+type Options = {
+  id: string;
+  value: string;
+};
+
+const TimetableCard: FC = () => {
+  const userContext = useContext(UserContext);
   const [day, setDay] = useState<number>(0);
   const days: Array<Options> = [
     { id: nanoid(), value: 'M' },
@@ -15,6 +21,8 @@ const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
     { id: nanoid(), value: 'F' },
     { id: nanoid(), value: 'S' },
   ];
+
+  const isAdmin: Boolean = true;
 
   return (
     <Card rounded="12px" shadow="md">
@@ -61,25 +69,54 @@ const TimetableCard: FC<TimetableCardProps> = ({ timetable }) => {
           }}
           mb="20px"
         >
-          <>
-            {timetable.days[day].periods.map(
-              ({ id, periodName, semester, branch, venue, roomNo }, key) => (
-                <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
-                  <CardBody>
-                    <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
-                      {`${key + 1}. ${periodName}`}
-                    </Text>
-                    <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                      {semester !== '' ? `${semester} ${branch} ` : ``}
-                    </Text>
-                    <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
-                      {venue ? `Venue: ${venue} (${roomNo})` : ''}
-                    </Text>
-                  </CardBody>
-                </Box>
+          {isAdmin !== true
+            ? userContext?.userData.timeTable[day].periods.map(
+                ({ id, periodName, semester, branch, venue, roomNo }, key) => (
+                  <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
+                    <CardBody>
+                      <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
+                        {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
+                      </Text>
+                      <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
+                        {semester !== null ? `${semester} ${branch} ` : ''}
+                      </Text>
+                      <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
+                        {venue !== null ? `Venue: ${venue} (${roomNo})` : ''}
+                      </Text>
+                    </CardBody>
+                  </Box>
+                )
               )
-            )}
-          </>
+            : userContext?.userData.timeTable[day].periods.map(
+                ({ id, periodName, semester, branch, inCharge }, key) => (
+                  <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
+                    <CardBody>
+                      <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
+                        {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
+                      </Text>
+                      <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
+                        {semester !== null ? `${semester} ${branch} ` : ''}
+                      </Text>
+                      <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3" mb="2">
+                        In charge:
+                      </Text>
+                      <HStack>
+                        {inCharge?.map(({ inChargeID, name }) => (
+                          <Text
+                            key={inChargeID}
+                            fontWeight="semibold"
+                            color="black.50"
+                            fontSize="15"
+                            ml="3"
+                          >
+                            {`Prof. ${name.split(' ')[0]}`}
+                          </Text>
+                        ))}
+                      </HStack>
+                    </CardBody>
+                  </Box>
+                )
+              )}
         </Grid>
       </CardBody>
     </Card>

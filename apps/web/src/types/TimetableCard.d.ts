@@ -1,38 +1,35 @@
-interface TeacherPeriod {
-  id: string;
-  periodName: string;
-  semester: string;
-  branch: string;
-  periodNo: string;
-  venue: string;
-  roomNo: string;
-}
+// // interface Period {
+// //   id: string;
+// //   periodName: string | null;
+// //   inCharge: InCharge[] | null;
+// //   semester: string | null;
+// //   branch: string | null;
+// //   periodNo: string;
+// //   venue: string | null;
+// //   roomNo: string | null;
+// // }
 
-interface LabAdminPeriod {
-  id: string;
-  periodName: string;
-  inCharge: string;
-  semester: string;
-  branch: string;
-  periodNo: string;
-}
+// // interface Day {
+// //   day: string;
+// //   periods: TeacherPeriod[];
+// // }
 
-interface Day {
-  day: string;
-  periods: TeacherPeriod[];
-}
+// // interface InCharge {
+// //   inChargeID: string;
+// //   name: string;
+// // }
 
-interface Timetable {
-  days: Day[];
-}
+// // interface Timetable {
+// //   days: Day[];
+// // }
 
-interface TimetableCardProps {
-  timetable: Timetable;
-}
+// // // interface TimetableCardProps {
+// // //   timetable: Timetable;
+// // // }
 
-interface Options {
-  id: string;
-  value: string;
-}
+// interface Options {
+//   id: string;
+//   value: string;
+// }
 
-export { TeacherPeriod, LabAdminPeriod, Day, Timetable, TimetableCardProps, Options };
+// export { Options };

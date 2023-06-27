@@ -18,17 +18,18 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
-import { Data, LabList, NewReportData } from '@/types/Reports.d';
+import { LabList, NewReportData } from '@/types/Reports.d';
 import { NumberOptions } from '@/types/ReactSelect';
-import reportList from '../../util/reportData';
 import authGuard from '../../util/AuthGuard';
+import { UserContext } from '@/context/UserContext';
+import { ReportData } from '@/types/UserData';
 
 const Reports: NextPage = () => {
   const toast = useToast();
@@ -55,10 +56,10 @@ const Reports: NextPage = () => {
     },
   ];
 
-  const [selectedReportDetails, setReportStudentDetails] = useState<Data>({
+  const [selectedReportDetails, setReportStudentDetails] = useState<ReportData>({
     id: '',
     date: '',
-    staffName: '',
+    // staffName: '',
     timing: '',
     venue: '',
     issue: '',
@@ -80,6 +81,8 @@ const Reports: NextPage = () => {
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
   };
+
+  const userContext = useContext(UserContext);
 
   const systemNos: NumberOptions[] = [
     {
@@ -129,7 +132,9 @@ const Reports: NextPage = () => {
   } = useDisclosure();
 
   const openReportModal = (key: number) => {
-    setReportStudentDetails(reportList[key]);
+    if (userContext?.userData.report[key] !== undefined) {
+      setReportStudentDetails(userContext?.userData.report[key]);
+    }
     onOpenReportModal();
   };
 
@@ -149,41 +154,47 @@ const Reports: NextPage = () => {
   return (
     <>
       <TopHeading heading="Report System" subText="Reported system errors" arrow />
-      {reportList.map(({ id, venue, date, status }, key) => (
-        <ElementCard
-          onClick={() => {
-            openReportModal(key);
-          }}
-          key={id}
-          circleProps={{
-            borderRadius: '12px',
-            w: '90px',
-            h: '30px',
-            bg: status === 'Pending' ? 'red.50' : 'green.50',
-          }}
-          circleInnerText={status}
-          properties={[
-            {
-              id: nanoid(),
-              value: venue,
-              textProps: {
-                color: 'black.25',
-                fontSize: 'md',
-                fontWeight: 'bold',
+      {userContext?.userData.report.length !== 0 ? (
+        userContext?.userData.report.map(({ id, venue, date, status }, key) => (
+          <ElementCard
+            onClick={() => {
+              openReportModal(key);
+            }}
+            key={id}
+            circleProps={{
+              borderRadius: '12px',
+              w: '90px',
+              h: '30px',
+              bg: status === 'Pending' ? 'red.50' : 'green.50',
+            }}
+            circleInnerText={status}
+            properties={[
+              {
+                id: nanoid(),
+                value: venue,
+                textProps: {
+                  color: 'black.25',
+                  fontSize: 'md',
+                  fontWeight: 'bold',
+                },
               },
-            },
-            {
-              id: nanoid(),
-              value: date,
-              textProps: {
-                color: 'black.25',
-                fontSize: '15',
-                fontWeight: 'medium',
+              {
+                id: nanoid(),
+                value: date,
+                textProps: {
+                  color: 'black.25',
+                  fontSize: '15',
+                  fontWeight: 'medium',
+                },
               },
-            },
-          ]}
-        />
-      ))}
+            ]}
+          />
+        ))
+      ) : (
+        <Text fontSize="md" mb={4} fontWeight="semibold">
+          Nothing to Show
+        </Text>
+      )}
       <CustomButton
         onClick={() => {
           onOpenNewReportModal();
