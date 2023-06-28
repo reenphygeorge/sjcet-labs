@@ -2,76 +2,80 @@ import { PrismaClient } from '@prisma/client';
 import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
 import { StudentInfo } from '../helpers/types/user';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const recordCreate = async ({date, courseCode, experimentIds, labName, periods}: AttendanceInfo) => { 
+const recordCreate = async ({
+  date,
+  courseCode,
+  experimentIds,
+  labName,
+  periods,
+}: AttendanceInfo) => {
+  const experimentIdObjects = experimentIds.map((id) => {
+    let data = {
+      id,
+    };
 
-	const experimentIdObjects = experimentIds.map(id => {
-		let data = {
-			id
-		}
+    return data;
+  });
 
-		return data
-	})
+  // Creating the attendance record and mapping the student positions to it
+  const recordInfo = await prisma.attendanceRecord.create({
+    data: {
+      date,
+      courseCode,
+      labName,
+      periods,
+      experiments: {
+        connect: experimentIdObjects,
+      },
+    },
+  });
 
-	// Creating the attendance record and mapping the student positions to it
-	const recordInfo = await prisma.attendanceRecord.create({
-		data: {
-			date,
-			courseCode,
-			labName,
-			periods,
-			experiments: {
-				connect: experimentIdObjects
-			}
-		},
-	})
-
-	return recordInfo
-}
+  return recordInfo;
+};
 
 const getStudentDetails = async (studentinfo: StudentInfo) => {
-	// Retreiving the details of the student according to the data provided
-	if (studentinfo.labBatch !== null) {
-		const data = await prisma.student.findMany({
-			where: {
-				departmentsId: studentinfo.departmentId,
-				semester: studentinfo.semester,
-				batch: studentinfo.batch,
-				labBatch: studentinfo.labBatch
-			}
-		})
+  // Retreiving the details of the student according to the data provided
+  if (studentinfo.labBatch !== null) {
+    const data = await prisma.student.findMany({
+      where: {
+        departmentsId: studentinfo.departmentId,
+        semester: studentinfo.semester,
+        batch: studentinfo.batch,
+        labBatch: studentinfo.labBatch,
+      },
+    });
+    return data;
+  } else {
+    const data = await prisma.student.findMany({
+      where: {
+        departmentsId: studentinfo.departmentId,
+        semester: studentinfo.semester,
+        batch: studentinfo.batch,
+      },
+    });
 
-		return data
-	} else {
-		const data = await prisma.student.findMany({
-			where: {
-				departmentsId: studentinfo.departmentId,
-				semester: studentinfo.semester,
-				batch: studentinfo.batch
-			}
-		})
-
-		return data
-	}
-}
+    return data;
+  }
+};
 
 const addStudentPositions = async (studentPositions: StudentPositions[]) => {
-	// Mapping student positions to the attendance record
-	const data = await prisma.studentPositions.createMany({
-		data: studentPositions
-	})
+  // Mapping student positions to the attendance record
+  const data = await prisma.studentPositions.createMany({
+    data: studentPositions,
+  });
 
-	return data
-}
+  return data;
+};
 
 const addAbsentStudents = async (studentData: AbsentStudents[]) => {
-	// Mapping the details of the absent students to the attendance record
-	const data = await prisma.absentStudents.createMany({
-		data: studentData
-	})
+  // Mapping the details of the absent students to the attendance record
+  const data = await prisma.absentStudents.createMany({
+    data: studentData,
+  });
 
-	return data
-}
+  return data;
+};
 
-export{ recordCreate, addStudentPositions, getStudentDetails, addAbsentStudents }
+export { recordCreate, addStudentPositions, getStudentDetails, addAbsentStudents };

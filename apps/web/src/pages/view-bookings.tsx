@@ -28,7 +28,7 @@ const ViewBookings: NextPage = () => {
 
   const [selectedBooking, setSelectedBooking] = useState<ReservationData>({
     id: '',
-    semester: '',
+    semester: null,
     department: {
       id: '',
       name: '',
@@ -132,7 +132,7 @@ const ViewBookings: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Semester:  ${selectedBooking.semester}`}</Text>
+            >{`Semester:  S${selectedBooking.semester}`}</Text>
             <Text
               fontSize="md"
               mb={4}

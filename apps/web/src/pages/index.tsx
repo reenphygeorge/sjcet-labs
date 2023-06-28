@@ -8,10 +8,15 @@ import { NextPage } from 'next';
 import Link from 'next/router';
 import TimetableCard from '@/components/TimetableCard';
 import CustomCard from '@/components/CustomCard';
-import { RouteOptions } from '@/types/Home.d';
 import LoginPage from '@/components/LoginPage';
 import { useAuth } from '@/context/AuthContext';
 import { UserContext } from '@/context/UserContext';
+
+type RouteOptions = {
+  id: string;
+  value: string;
+  route: string;
+};
 
 const Home: NextPage = () => {
   const { appSession } = useAuth();

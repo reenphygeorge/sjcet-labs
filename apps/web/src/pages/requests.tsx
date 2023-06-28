@@ -28,7 +28,7 @@ const Requests: NextPage = () => {
   const [selectedRequest, setSelectedRequest] = useState<LabSideReservation>({
     id: '',
     staffName: '',
-    semester: '',
+    semester: null,
     department: {
       id: '',
       name: '',
@@ -121,7 +121,7 @@ const Requests: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Semester:  ${selectedRequest.semester}`}</Text>
+            >{`Semester:  S${selectedRequest.semester}`}</Text>
             <Text fontSize="md" mb={4} fontWeight="semibold">
               Timing:
               <br />

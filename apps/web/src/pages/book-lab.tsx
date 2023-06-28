@@ -24,20 +24,14 @@ import { nanoid } from 'nanoid';
 import { NextPage } from 'next';
 import CustomCard from '@/components/CustomCard';
 import CustomButton from '@/components/CustomButton';
-import labDetails from '../../util/labDetails';
 import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
 import ReactSelect from '@/components/ReactSelect';
-import {
-  LabBookingDetails,
-  Options,
-  ReservationInfo,
-  SelectedPeriod,
-  Status,
-} from '@/types/BookLab.d';
+import { LabBookingDetails, Options, ReservationInfo, SelectedPeriod } from '@/types/BookLab.d';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
 import { GeneralContext } from '@/context/GeneralContext';
+import labDetailsforBooking from '../../util/LabDetailsForBooking';
 
 const BookLab: NextPage = () => {
   const [dayNumber, setDayNumber] = useState<number>(0);
@@ -51,48 +45,47 @@ const BookLab: NextPage = () => {
   ];
 
   const semesters: Options[] = [
-    { id: nanoid(), value: 'S1' },
-    { id: nanoid(), value: 'S2' },
-    { id: nanoid(), value: 'S3' },
-    { id: nanoid(), value: 'S4' },
-    { id: nanoid(), value: 'S5' },
-    { id: nanoid(), value: 'S6' },
-    { id: nanoid(), value: 'S7' },
-    { id: nanoid(), value: 'S8' },
+    { id: nanoid(), value: 1 },
+    { id: nanoid(), value: 2 },
+    { id: nanoid(), value: 3 },
+    { id: nanoid(), value: 4 },
+    { id: nanoid(), value: 5 },
+    { id: nanoid(), value: 6 },
+    { id: nanoid(), value: 7 },
+    { id: nanoid(), value: 8 },
   ];
   const { departments } = useContext(GeneralContext);
 
   const [bookingStep, setBookingStep] = useState<number>(1);
   const [selectedPeriods, setSelectedPeriods] = useState<SelectedPeriod[]>([]);
   const [labName, setLabName] = useState<string>('');
+  const [selectedReservationData, setSelectedReservationData] = useState<ReservationInfo>({
+    id: '',
+    staffName: '',
+    date: '',
+    venue: '',
+    departmentWithBatch: '',
+    negotiable: false,
+    phone: '',
+    purpose: '',
+    semester: 0,
+  });
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
   const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
-    semester: '',
+    semester: 1,
     departmentId: '',
     venue: '',
     periods: [
       {
         id: '',
-        periodNo: '',
+        periodNo: 0,
         day: '',
       },
     ],
     negotiable: false,
     purpose: '',
   });
-
-  const reservationInfo: ReservationInfo = {
-    staffName: 'Prof. Mereen Thomas',
-    semester: 'S6',
-    departmentWithBatch: 'CSE-B',
-    date: 'April 22, 2023',
-    timing: '',
-    venue: 'Programming Lab',
-    purpose: '',
-    negotiable: true,
-    phone: '+9190123456789',
-  };
 
   const contactStaff = (phone: string) => {
     window.open(`tel:${phone}`);
@@ -128,7 +121,7 @@ const BookLab: NextPage = () => {
     setSelectedPeriods(newPeriods);
   };
 
-  const togglePeriods = (id: string, periodNo: string, day: string) => {
+  const togglePeriods = (id: string, periodNo: number, day: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectedPeriods.some((period) => period.id.includes(id)) === false
       ? setSelectedPeriods((prevElements) => [...prevElements, { id, periodNo, day }])
@@ -148,6 +141,8 @@ const BookLab: NextPage = () => {
         ),
       });
     } else {
+      // console.log({ selectedPeriods });
+
       setBookingStep(2);
       setBookingDetails({ ...bookingDetails, periods: selectedPeriods });
     }
@@ -170,6 +165,13 @@ const BookLab: NextPage = () => {
     });
     Link.push('/');
     // console.log(bookingDetails);
+  };
+
+  const reservedLab = (reservationInfo: ReservationInfo | null) => {
+    if (reservationInfo !== null) {
+      setSelectedReservationData(reservationInfo);
+    }
+    onOpenReservationModal();
   };
 
   const userContext = useContext(UserContext);
@@ -206,9 +208,11 @@ const BookLab: NextPage = () => {
             </>
           </Grid>
           {userContext?.userData.timeTable[dayNumber].periods.map(
-            ({ id, periodName, semester, branch, periodNo }, key) => {
-              const periodHeading: string = `${key + 1}. ${periodName}`;
-              const semesterHeading: string = semester !== '' ? `${semester} ${branch} ` : ``;
+            ({ id, periodName, semester, department, periodNo }, key) => {
+              const periodHeading: string =
+                periodName !== null ? `${key + 1}. ${periodName}` : `${key + 1}. Free`;
+              const semesterHeading: string =
+                semester !== null ? `S${semester} ${department?.name}-${department?.batch} ` : ``;
               return (
                 <CustomCard
                   onClick={() =>
@@ -258,72 +262,74 @@ const BookLab: NextPage = () => {
         </>
       ) : (
         <>
-          {labDetails.data.map(({ id, name, roomNo, status }, key) => {
-            const labNameHeading: string = `${key + 1}. ${name}`;
-            return status !== Status.Reserved ? (
-              <CustomCard
-                key={id}
-                onClick={status !== Status.ClassTime ? () => saveLabName(name) : () => null}
-                properties={[
-                  {
-                    id: nanoid(),
-                    value: labNameHeading,
-                    textProps: {
-                      color: status !== Status.ClassTime ? 'black.25' : 'gray.25',
-                      fontSize: 'lg',
-                      fontWeight: 'bold',
+          {labDetailsforBooking.data.map(
+            ({ id, name, roomNo, status, reservationDetails }, key) => {
+              const labNameHeading: string = `${key + 1}. ${name}`;
+              return status !== 'Reserved' ? (
+                <CustomCard
+                  key={id}
+                  onClick={status !== 'ClassTime' ? () => saveLabName(name) : () => null}
+                  properties={[
+                    {
+                      id: nanoid(),
+                      value: labNameHeading,
+                      textProps: {
+                        color: status !== 'ClassTime' ? 'black.25' : 'gray.25',
+                        fontSize: 'lg',
+                        fontWeight: 'bold',
+                      },
                     },
-                  },
-                  {
-                    id: nanoid(),
-                    value: roomNo,
-                    textProps: {
-                      color: status === Status.ClassTime ? 'gray.25' : 'black.25',
-                      fontSize: '15',
-                      fontWeight: 'medium',
-                      ml: '5',
+                    {
+                      id: nanoid(),
+                      value: roomNo,
+                      textProps: {
+                        color: status === 'ClassTime' ? 'gray.25' : 'black.25',
+                        fontSize: '15',
+                        fontWeight: 'medium',
+                        ml: '5',
+                      },
                     },
-                  },
-                ]}
-                circleComponent={false}
-              />
-            ) : (
-              <ElementCard
-                key={id}
-                onClick={() => {
-                  onOpenReservationModal();
-                }}
-                circleProps={{
-                  borderRadius: '12px',
-                  w: '90px',
-                  h: '30px',
-                  bg: 'red.50',
-                }}
-                circleInnerText="Reserved"
-                properties={[
-                  {
-                    id: nanoid(),
-                    value: labNameHeading,
-                    textProps: {
-                      color: 'black.25',
-                      fontSize: 'lg',
-                      fontWeight: 'bold',
+                  ]}
+                  circleComponent={false}
+                />
+              ) : (
+                <ElementCard
+                  key={id}
+                  onClick={() => {
+                    reservedLab(reservationDetails);
+                  }}
+                  circleProps={{
+                    borderRadius: '12px',
+                    w: '90px',
+                    h: '30px',
+                    bg: 'red.50',
+                  }}
+                  circleInnerText="Reserved"
+                  properties={[
+                    {
+                      id: nanoid(),
+                      value: labNameHeading,
+                      textProps: {
+                        color: 'black.25',
+                        fontSize: 'lg',
+                        fontWeight: 'bold',
+                      },
                     },
-                  },
-                  {
-                    id: nanoid(),
-                    value: roomNo,
-                    textProps: {
-                      color: 'black.25',
-                      fontSize: '15',
-                      fontWeight: 'medium',
-                      ml: '5',
+                    {
+                      id: nanoid(),
+                      value: roomNo,
+                      textProps: {
+                        color: 'black.25',
+                        fontSize: '15',
+                        fontWeight: 'medium',
+                        ml: '5',
+                      },
                     },
-                  },
-                ]}
-              />
-            );
-          })}
+                  ]}
+                />
+              );
+            }
+          )}
           <CustomButton
             onClick={() => {
               setBookingStep(1);
@@ -356,7 +362,7 @@ const BookLab: NextPage = () => {
                   <Select
                     id="semester"
                     onChange={handleFormChange}
-                    value={bookingDetails.semester}
+                    value={bookingDetails.semester !== null ? bookingDetails.semester : ''}
                     bg="gray.50"
                     mb="7"
                     rounded="12px"
@@ -449,44 +455,41 @@ const BookLab: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Staff:  ${reservationInfo.staffName}`}</Text>
+            >{`Staff:  ${selectedReservationData?.staffName}`}</Text>
             <Text
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Department & Batch:  ${reservationInfo.departmentWithBatch}`}</Text>
+            >{`Department & Batch:  ${selectedReservationData?.departmentWithBatch}`}</Text>
             <Text
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Semester:  ${reservationInfo.semester}`}</Text>
+            >{`Semester:  S${selectedReservationData?.semester}`}</Text>
             <Text
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Date:  ${reservationInfo.date}`}</Text>
+            >{`Date:  ${selectedReservationData?.date}`}</Text>
             <Text
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Timing:  ${reservationInfo.timing}`}</Text>
+            >{`Venue:  ${selectedReservationData?.venue}`}</Text>
             <Text
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Venue:  ${reservationInfo.venue}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Purpose:  ${reservationInfo.purpose}`}</Text>
+            >{`Purpose:  ${selectedReservationData?.purpose}`}</Text>
             <CustomButton
               onClick={() =>
-                reservationInfo.negotiable === true ? contactStaff(reservationInfo.phone) : null
+                selectedReservationData?.negotiable === true
+                  ? contactStaff(selectedReservationData?.phone)
+                  : null
               }
               innerText="Negotiate"
               type="modal"
-              disabled={!reservationInfo.negotiable}
+              disabled={!selectedReservationData?.negotiable}
             />
           </ModalBody>
         </ModalContent>

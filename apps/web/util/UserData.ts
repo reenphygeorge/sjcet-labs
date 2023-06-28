@@ -1,5 +1,6 @@
 import { UserContextData } from '@/types/UserData.d';
 import timetableData from './TimeTableData';
+import labTimetableData from './LabTimeTable';
 
 const fetchUserData = (): UserContextData => ({
   id: 'b6b6f95d-654e-4d06-abc6-7cd66e4bb1c3',
@@ -21,7 +22,7 @@ const fetchUserData = (): UserContextData => ({
   reservation: [
     {
       id: 'fywvekuyek',
-      semester: 'S6',
+      semester: 6,
       department: {
         id: 'ewjhgvbm-8677-de34-wd66-ecwc4we3c4wed',
         name: 'CSE',
@@ -29,8 +30,8 @@ const fetchUserData = (): UserContextData => ({
       },
       dateOfRequest: 'April 22, 2023',
       periods: [
-        { id: 'R1234567', periodNo: '2', date: 'April 22, 2023' },
-        { id: 'R0987654', periodNo: '3', date: 'April 22, 2023' },
+        { id: 'R1234567', periodNo: 2, date: 'April 22, 2023' },
+        { id: 'R0987654', periodNo: 3, date: 'April 22, 2023' },
       ],
       venue: 'Software Computing Lab',
       purpose: '',
@@ -38,7 +39,7 @@ const fetchUserData = (): UserContextData => ({
     },
     {
       id: 'ejgvbkjehgka',
-      semester: 'S6',
+      semester: 6,
       department: {
         id: 'ewjhgvbm-8677-de34-wd66-ecwc4we3c4wed',
         name: 'CSE',
@@ -46,8 +47,8 @@ const fetchUserData = (): UserContextData => ({
       },
       dateOfRequest: 'April 22, 2023',
       periods: [
-        { id: 'Rkihkuykh', periodNo: '4', date: 'April 25, 2023' },
-        { id: 'Ruerliwun', periodNo: '5', date: 'April 25, 2023' },
+        { id: 'Rkihkuykh', periodNo: 4, date: 'April 25, 2023' },
+        { id: 'Ruerliwun', periodNo: 5, date: 'April 25, 2023' },
       ],
       venue: 'Software Computing Lab',
       purpose: '',
@@ -95,13 +96,30 @@ const fetchUserData = (): UserContextData => ({
         id: 'R1',
         staffName: 'Prof. Mereen',
         date: 'April 22, 2023',
-        status: 'Aproved',
+        status: 'Pending',
         timing: '09:45 AM',
         issue: '',
         systemNo: [12],
       },
     ],
-    reservation: [],
+    reservation: [
+      {
+        id: 'R0',
+        staffName: 'Prof. Mereen',
+        semester: 6,
+        department: {
+          id: 'yebcwtfxfew',
+          name: 'CSE',
+          batch: 'B',
+        },
+        dateOfRequest: 'April 22, 2023',
+        periods: [{ id: '1', periodNo: 5, date: '12-2' }],
+        venue: 'Software Computing Lab',
+        status: 'Requested',
+        purpose: '',
+      },
+    ],
+    timeTable: labTimetableData,
   },
 });
 

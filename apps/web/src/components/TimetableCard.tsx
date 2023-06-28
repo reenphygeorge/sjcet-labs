@@ -22,8 +22,6 @@ const TimetableCard: FC = () => {
     { id: nanoid(), value: 'S' },
   ];
 
-  const isAdmin: Boolean = true;
-
   return (
     <Card rounded="12px" shadow="md">
       <CardBody>
@@ -69,16 +67,18 @@ const TimetableCard: FC = () => {
           }}
           mb="20px"
         >
-          {isAdmin !== true
+          {userContext?.userData.labAdmin !== true
             ? userContext?.userData.timeTable[day].periods.map(
-                ({ id, periodName, semester, branch, venue, roomNo }, key) => (
+                ({ id, periodName, semester, department, venue, roomNo }, key) => (
                   <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                     <CardBody>
                       <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
                         {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
                       </Text>
                       <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                        {semester !== null ? `${semester} ${branch} ` : ''}
+                        {semester !== null
+                          ? `S${semester} ${department?.name}-${department?.batch}`
+                          : ''}
                       </Text>
                       <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
                         {venue !== null ? `Venue: ${venue} (${roomNo})` : ''}
@@ -87,32 +87,40 @@ const TimetableCard: FC = () => {
                   </Box>
                 )
               )
-            : userContext?.userData.timeTable[day].periods.map(
-                ({ id, periodName, semester, branch, inCharge }, key) => (
+            : userContext?.userData.labData?.timeTable[day].periods.map(
+                ({ id, periodName, semester, department, staff }, key) => (
                   <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                     <CardBody>
                       <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
                         {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
                       </Text>
                       <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                        {semester !== null ? `${semester} ${branch} ` : ''}
+                        {semester !== null
+                          ? `S${semester} ${department?.name}-${department?.batch}`
+                          : ''}
                       </Text>
-                      <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3" mb="2">
-                        In charge:
-                      </Text>
-                      <HStack>
-                        {inCharge?.map(({ inChargeID, name }) => (
-                          <Text
-                            key={inChargeID}
-                            fontWeight="semibold"
-                            color="black.50"
-                            fontSize="15"
-                            ml="3"
-                          >
-                            {`Prof. ${name.split(' ')[0]}`}
+                      {staff !== null ? (
+                        <>
+                          <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3" mb="2">
+                            In charge:
                           </Text>
-                        ))}
-                      </HStack>
+                          <HStack>
+                            {staff?.map(({ staffID, staffName }) => (
+                              <Text
+                                key={staffID}
+                                fontWeight="semibold"
+                                color="black.50"
+                                fontSize="15"
+                                ml="3"
+                              >
+                                {`Prof. ${staffName.split(' ')[0]}`}
+                              </Text>
+                            ))}
+                          </HStack>
+                        </>
+                      ) : (
+                        ''
+                      )}
                     </CardBody>
                   </Box>
                 )

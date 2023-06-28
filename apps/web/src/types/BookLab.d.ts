@@ -1,20 +1,20 @@
 interface Options {
   id: string;
-  value: string;
+  value: string | number;
 }
 
 interface SelectedPeriod {
   id: string;
-  periodNo: string;
+  periodNo: number;
   day: string;
 }
 
 interface ReservationInfo {
+  id: string;
   staffName: string;
-  semester: string;
+  semester: number;
   departmentWithBatch: string;
   date: string;
-  timing: string;
   venue: string;
   purpose: string;
   negotiable: boolean;
@@ -34,7 +34,7 @@ interface LabDetails {
 }
 
 interface LabBookingDetails {
-  semester: string;
+  semester: number | null;
   departmentId: string;
   venue: string;
   periods: SelectedPeriod[] | string[];

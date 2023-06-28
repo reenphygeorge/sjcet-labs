@@ -24,42 +24,20 @@ import { nanoid } from 'nanoid';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
-import ReactSelect from '@/components/ReactSelect';
-import { LabList, NewReportData } from '@/types/Reports.d';
-import { NumberOptions } from '@/types/ReactSelect';
+import { NewReportData } from '@/types/Reports.d';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
 import { ReportData } from '@/types/UserData';
+import { GeneralContext } from '@/context/GeneralContext';
+import { NumberOptions } from '@/types/ReactSelect';
 
 const Reports: NextPage = () => {
   const toast = useToast();
-  const labList: LabList[] = [
-    {
-      id: 'L0',
-      labName: 'Software Computing Lab',
-    },
-    {
-      id: 'L1',
-      labName: 'Programming Lab',
-    },
-    {
-      id: 'L2',
-      labName: 'Network Lab',
-    },
-    {
-      id: 'L3',
-      labName: 'Research Lab',
-    },
-    {
-      id: 'L3',
-      labName: 'Testing Lab',
-    },
-  ];
+  const { labs } = useContext(GeneralContext);
 
   const [selectedReportDetails, setReportStudentDetails] = useState<ReportData>({
     id: '',
     date: '',
-    // staffName: '',
     timing: '',
     venue: '',
     issue: '',
@@ -73,51 +51,23 @@ const Reports: NextPage = () => {
     issue: '',
   });
 
-  const handleSelectChange = (selectedOptions: NumberOptions[]) => {
-    // const selectedSystems: number[] = selectedOptions.map(({ value }) => value);
-    setNewReportData({ ...newReportData, systemNo: selectedOptions });
-  };
-
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
+    if (event.target.id === 'systemNo') {
+      const systemNo: NumberOptions[] = event.target.value.split(' ').map((value) => ({
+        value: parseInt(value, 10),
+        label: `${value}`,
+      }));
+
+      setNewReportData({
+        ...newReportData,
+        systemNo: [...systemNo],
+      });
+    } else {
+      setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
+    }
   };
 
   const userContext = useContext(UserContext);
-
-  const systemNos: NumberOptions[] = [
-    {
-      value: 1,
-      label: '01',
-    },
-    {
-      value: 2,
-      label: '02',
-    },
-    {
-      value: 3,
-      label: '03',
-    },
-    {
-      value: 4,
-      label: '04',
-    },
-    {
-      value: 5,
-      label: '05',
-    },
-    {
-      value: 6,
-      label: '06',
-    },
-    {
-      value: 7,
-      label: '07',
-    },
-    {
-      value: 8,
-      label: '08',
-    },
-  ];
 
   const {
     isOpen: isOpenNewReportModal,
@@ -148,7 +98,6 @@ const Reports: NextPage = () => {
       ),
     });
     onCloseNewReportModal();
-    // console.log(newReportData);
   };
 
   return (
@@ -261,21 +210,16 @@ const Reports: NextPage = () => {
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
-              <FormLabel pl="1">System No</FormLabel>
-              <ReactSelect
-                options={systemNos}
-                values={newReportData.systemNo}
-                disabled={false}
-                onChange={handleSelectChange}
-              />
               <FormLabel pl="1">Venue</FormLabel>
               <Select bg="gray.50" mb="7" rounded="12px" id="venue" onChange={handleFormChange}>
-                {labList.map(({ id, labName }) => (
+                {labs.map(({ id, labName }) => (
                   <option id={id} value={labName}>
                     {labName}
                   </option>
                 ))}
               </Select>
+              <FormLabel pl="1">System No</FormLabel>
+              <Input bg="gray.50" id="systemNo" mb="7" rounded="12px" onChange={handleFormChange} />
               <FormLabel pl="1">Describe the issue</FormLabel>
               <Input bg="gray.50" id="issue" mb="7" rounded="12px" onChange={handleFormChange} />
               <CustomButton

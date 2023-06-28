@@ -28,35 +28,50 @@ type Department = {
   batch: string;
 };
 
-// TimeTable
+// Teacher TimeTable
 
 type TimeTableByDay = {
   day: string;
   periods: TimeTablePeriod[];
 };
 
-type InCharge = {
-  inChargeID: string;
-  name: string;
+type Staff = {
+  staffID: string;
+  staffName: string;
 };
 
 type TimeTablePeriod = {
   id: string;
   periodName: string | null;
-  inCharge: InCharge[] | null;
-  semester: string | null;
-  branch: string | null;
-  periodNo: string;
+  staff: Staff[] | null;
+  department: Department | null;
+  semester: number | null;
+  periodNo: number;
   venue: string | null;
   roomNo: string | null;
+};
+
+// Lab TimeTable
+
+type LabTimeTableByDay = {
+  day: string;
+  periods: LabTimeTablePeriod[];
+};
+
+type LabTimeTablePeriod = {
+  id: string;
+  periodName: string | null;
+  staff: Staff[] | null;
+  semester: number | null;
+  department: Department | null;
+  periodNo: number;
 };
 
 // Reservation
 
 type ReservationData = {
   id: string;
-  // staffName: string;
-  semester: string;
+  semester: number | null;
   department: Department;
   dateOfRequest: string;
   periods: ReservationPeriod[];
@@ -68,7 +83,7 @@ type ReservationData = {
 type LabSideReservation = {
   id: string;
   staffName: string;
-  semester: string;
+  semester: number | null;
   department: Department;
   dateOfRequest: string;
   periods: ReservationPeriod[];
@@ -79,7 +94,7 @@ type LabSideReservation = {
 
 type ReservationPeriod = {
   id: string;
-  periodNo: string;
+  periodNo: number;
   date: string;
 };
 
@@ -115,12 +130,14 @@ type LabData = {
   venue: string;
   report: LabSideReport[];
   reservation: LabSideReservation[];
+  timeTable: LabTimeTableByDay[];
 };
 
 export {
   UserContextData,
   UserContextProps,
   TimeTableByDay,
+  LabTimeTableByDay,
   ReservationData,
   ReportData,
   LabSideReport,

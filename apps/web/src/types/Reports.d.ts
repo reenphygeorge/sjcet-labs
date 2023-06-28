@@ -26,8 +26,4 @@ type NewReportData = {
   issue: string;
 };
 
-type ResolveInfo = {
-  comment: string;
-};
-
-export { LabList, NewReportData, ResolveInfo };
+export { LabList, NewReportData };
