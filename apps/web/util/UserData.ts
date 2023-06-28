@@ -81,7 +81,26 @@ const fetchUserData = (): UserContextData => ({
     capacity: 32,
     roomNumber: '72',
     venue: 'SJPB',
-    report: [],
+    report: [
+      {
+        id: 'R0',
+        staffName: 'Prof. Kishore',
+        date: 'April 22, 2023',
+        timing: '09:45 AM',
+        status: 'Pending',
+        issue: '',
+        systemNo: [51, 22],
+      },
+      {
+        id: 'R1',
+        staffName: 'Prof. Mereen',
+        date: 'April 22, 2023',
+        status: 'Aproved',
+        timing: '09:45 AM',
+        issue: '',
+        systemNo: [12],
+      },
+    ],
     reservation: [],
   },
 });

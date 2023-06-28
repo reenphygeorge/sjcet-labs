@@ -65,6 +65,18 @@ type ReservationData = {
   status: string;
 };
 
+type LabSideReservation = {
+  id: string;
+  staffName: string;
+  semester: string;
+  department: Department;
+  dateOfRequest: string;
+  periods: ReservationPeriod[];
+  venue: string;
+  status: string;
+  purpose: string;
+};
+
 type ReservationPeriod = {
   id: string;
   periodNo: string;
@@ -83,6 +95,16 @@ type ReportData = {
   systemNo: number[];
 };
 
+type LabSideReport = {
+  id: string;
+  staffName: string;
+  date: string;
+  timing: string;
+  status: string;
+  issue: string;
+  systemNo: number[];
+};
+
 // Lab Data
 
 type LabData = {
@@ -91,8 +113,16 @@ type LabData = {
   capacity: number;
   roomNumber: string;
   venue: string;
-  report: string[];
-  reservation: string[];
+  report: LabSideReport[];
+  reservation: LabSideReservation[];
 };
 
-export { UserContextData, UserContextProps, TimeTableByDay, ReservationData, ReportData };
+export {
+  UserContextData,
+  UserContextProps,
+  TimeTableByDay,
+  ReservationData,
+  ReportData,
+  LabSideReport,
+  LabSideReservation,
+};

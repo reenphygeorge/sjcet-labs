@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   HStack,
   IconButton,
@@ -18,20 +18,27 @@ import { nanoid } from 'nanoid';
 import { Check, X } from 'react-feather';
 import TopHeading from '@/components/TopHeading';
 import CustomCard from '@/components/CustomCard';
-import { RequestData, Status } from '@/types/LabRequests.d';
 import authGuard from '../../util/AuthGuard';
+import { LabSideReservation } from '@/types/UserData';
+import { UserContext } from '@/context/UserContext';
 
 const Requests: NextPage = () => {
-  const [selectedRequest, setSelectedRequest] = useState<RequestData>({
+  const userContext = useContext(UserContext);
+
+  const [selectedRequest, setSelectedRequest] = useState<LabSideReservation>({
     id: '',
     staffName: '',
     semester: '',
-    departmentWithBatch: '',
+    department: {
+      id: '',
+      name: '',
+      batch: '',
+    },
     dateOfRequest: '',
-    timings: [],
+    status: '',
+    periods: [],
     purpose: '',
     venue: '',
-    status: '',
   });
   const {
     isOpen: isOpenRequestModal,
@@ -39,36 +46,11 @@ const Requests: NextPage = () => {
     onClose: onCloseRequestModal,
   } = useDisclosure();
 
-  const requestList: RequestData[] = [
-    {
-      id: '0',
-      staffName: 'Smitha Jacob',
-      semester: 'S6',
-      departmentWithBatch: 'CSE-B',
-      dateOfRequest: 'April 18, 2023',
-      timings: [
-        { id: nanoid(), time: '9:00 - 11:00', date: 'April 22, 2023' },
-        { id: nanoid(), time: '11:00 - 12:45', date: 'April 22, 2023' },
-      ],
-      venue: '',
-      purpose: '',
-      status: 'Requested',
-    },
-    {
-      id: '1',
-      semester: 'S4',
-      departmentWithBatch: 'CSE-A',
-      dateOfRequest: 'April 25, 2023',
-      staffName: 'Sarju S',
-      timings: [{ id: nanoid(), time: '01:35 - 03:30', date: 'April 28, 2023' }],
-      venue: '',
-      purpose: '',
-      status: 'Approved',
-    },
-  ];
-
   const openModal = (key: number) => {
-    setSelectedRequest(requestList[key]);
+    const reservationData = userContext?.userData.labData?.reservation;
+    if (reservationData !== undefined) {
+      setSelectedRequest(reservationData[key]);
+    }
     onOpenRequestModal();
   };
 
@@ -78,38 +60,39 @@ const Requests: NextPage = () => {
   return (
     <>
       <TopHeading heading="Lab Requests" subText="Accept/Decline" arrow />
-      {requestList.map(({ id, staffName, dateOfRequest, status }, key) =>
-        status === Status.Requested ? (
-          <CustomCard
-            onClick={() => {
-              openModal(key);
-            }}
-            circleComponent={false}
-            key={id}
-            properties={[
-              {
-                id: nanoid(),
-                value: `Prof. ${staffName}`,
-                textProps: {
-                  color: 'black.25',
-                  fontSize: 'lg',
-                  fontWeight: 'bold',
+      {userContext?.userData.labData?.reservation.map(
+        ({ id, staffName, dateOfRequest, status }, key) =>
+          status === 'Requested' ? (
+            <CustomCard
+              onClick={() => {
+                openModal(key);
+              }}
+              circleComponent={false}
+              key={id}
+              properties={[
+                {
+                  id: nanoid(),
+                  value: `Prof. ${staffName}`,
+                  textProps: {
+                    color: 'black.25',
+                    fontSize: 'lg',
+                    fontWeight: 'bold',
+                  },
                 },
-              },
-              {
-                id: nanoid(),
-                value: dateOfRequest,
-                textProps: {
-                  color: 'black.25',
-                  fontSize: '15',
-                  fontWeight: 'medium',
+                {
+                  id: nanoid(),
+                  value: dateOfRequest,
+                  textProps: {
+                    color: 'black.25',
+                    fontSize: '15',
+                    fontWeight: 'medium',
+                  },
                 },
-              },
-            ]}
-          />
-        ) : (
-          ''
-        )
+              ]}
+            />
+          ) : (
+            ''
+          )
       )}
 
       <Modal
@@ -133,7 +116,7 @@ const Requests: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Department & Batch:  ${selectedRequest.departmentWithBatch}`}</Text>
+            >{`Department & Batch:  ${selectedRequest.department}`}</Text>
             <Text
               fontSize="md"
               mb={4}
@@ -143,8 +126,10 @@ const Requests: NextPage = () => {
               Timing:
               <br />
               <br />
-              {selectedRequest.timings.map(({ id, time, date }) => (
-                <Tag key={id} mb={2}>{`${date} ${time}`}</Tag>
+              {selectedRequest.periods.map(({ id, date, periodNo }) => (
+                <Tag key={id} mb={2}>
+                  {`${date}, Period: ${periodNo} `}
+                </Tag>
               ))}
             </Text>
             <Text

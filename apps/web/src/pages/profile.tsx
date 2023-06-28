@@ -7,7 +7,6 @@ import {
   IconButton,
   Image,
   Input,
-  Select,
   Text,
   VStack,
   useToast,
@@ -16,7 +15,6 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { Repeat } from 'react-feather';
 import { NextPage } from 'next';
 import CustomButton from '@/components/CustomButton';
-import { Department } from '@/types/Profile.d';
 import { useAuth } from '@/context/AuthContext';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
@@ -24,11 +22,6 @@ import { UserContext } from '@/context/UserContext';
 const Profile: NextPage = () => {
   const { signOut } = useAuth();
   const userContext = useContext(UserContext);
-  const departments: Department[] = [
-    { id: 'D0', name: 'Computer Sci & Engg' },
-    { id: 'D1', name: 'Artificial Inteligence & Data Sci' },
-    { id: 'D2', name: 'Electrical & Electronics Engg' },
-  ];
 
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -129,23 +122,6 @@ const Profile: NextPage = () => {
           mb="7"
           rounded="12px"
         />
-        <FormLabel htmlFor="name" pl="1">
-          Department
-        </FormLabel>
-        <Select
-          id="department"
-          bg="gray.50"
-          mb="7"
-          rounded="12px"
-          value={userContext?.userData.department}
-          onChange={handleFormChange}
-        >
-          {departments.map(({ id, name }) => (
-            <option key={id} value={name}>
-              {name}
-            </option>
-          ))}
-        </Select>
         <FormLabel htmlFor="name" pl="1">
           Email
         </FormLabel>

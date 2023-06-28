@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/extensions */
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
 import {
   FormControl,
@@ -19,21 +19,26 @@ import {
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import TopHeading from '@/components/TopHeading';
-import { Data, ResolveInfo, Status } from '@/types/Reports.d';
 import CustomCard from '@/components/CustomCard';
-import reportList from '../../util/reportData';
 import CustomButton from '@/components/CustomButton';
 import authGuard from '../../util/AuthGuard';
+import { LabSideReport } from '@/types/UserData';
+import { UserContext } from '@/context/UserContext';
+
+type ResolveInfo = {
+  comment: string;
+};
 
 const ReportRepair: NextPage = () => {
-  const [selectedReport, setSelectedReport] = useState<Data>({
+  const userContext = useContext(UserContext);
+
+  const [selectedReport, setSelectedReport] = useState<LabSideReport>({
     id: '',
-    date: '',
     staffName: '',
-    timing: '',
-    venue: '',
-    issue: '',
+    date: '',
     status: '',
+    timing: '',
+    issue: '',
     systemNo: [],
   });
 
@@ -44,7 +49,10 @@ const ReportRepair: NextPage = () => {
   } = useDisclosure();
 
   const openModal = (key: number) => {
-    setSelectedReport(reportList[key]);
+    const reportData = userContext?.userData.labData?.report;
+    if (reportData !== undefined) {
+      setSelectedReport(reportData[key]);
+    }
     onOpenReportModal();
   };
 
@@ -57,12 +65,11 @@ const ReportRepair: NextPage = () => {
   };
 
   const resolve = () => {};
-
   return (
     <>
       <TopHeading heading="Report & Repairs" subText="Reported Error" arrow />
-      {reportList.map(({ id, staffName, date, status, systemNo }, key) =>
-        status === Status.Pending ? (
+      {userContext?.userData.labData?.report.map(({ id, staffName, date, status, systemNo }, key) =>
+        status === 'Pending' ? (
           <CustomCard
             onClick={() => {
               openModal(key);
