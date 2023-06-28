@@ -34,6 +34,7 @@ import { NumberOptions } from '@/types/ReactSelect';
 const Reports: NextPage = () => {
   const toast = useToast();
   const { labs } = useContext(GeneralContext);
+  const userContext = useContext(UserContext);
 
   const [selectedReportDetails, setReportStudentDetails] = useState<ReportData>({
     id: '',
@@ -46,6 +47,7 @@ const Reports: NextPage = () => {
   });
 
   const [newReportData, setNewReportData] = useState<NewReportData>({
+    userId: userContext?.userData.id !== undefined ? userContext?.userData.id : null,
     systemNo: [],
     venue: 'Software Computing Lab',
     issue: '',
@@ -66,8 +68,6 @@ const Reports: NextPage = () => {
       setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
     }
   };
-
-  const userContext = useContext(UserContext);
 
   const {
     isOpen: isOpenNewReportModal,
@@ -97,6 +97,7 @@ const Reports: NextPage = () => {
         </Box>
       ),
     });
+    // console.log(newReportData);
     onCloseNewReportModal();
   };
 

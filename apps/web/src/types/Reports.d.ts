@@ -21,6 +21,7 @@ type SystemNos = {
 };
 
 type NewReportData = {
+  userId: string | null;
   systemNo: NumberOptions[];
   venue: string;
   issue: string;

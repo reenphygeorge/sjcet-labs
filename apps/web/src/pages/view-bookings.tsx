@@ -65,6 +65,10 @@ const ViewBookings: NextPage = () => {
       ),
     });
     Link.push('/');
+    // console.log({
+    //   userId: userContext?.userData.id,
+    //   reservationId: selectedBooking.id,
+    // });
   };
   return (
     <>

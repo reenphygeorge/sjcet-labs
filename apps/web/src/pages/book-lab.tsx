@@ -70,9 +70,12 @@ const BookLab: NextPage = () => {
     purpose: '',
     semester: 0,
   });
+  const userContext = useContext(UserContext);
+
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
   const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
+    userId: userContext?.userData.id !== undefined ? userContext?.userData.id : null,
     semester: 1,
     departmentId: '',
     venue: '',
@@ -173,8 +176,6 @@ const BookLab: NextPage = () => {
     }
     onOpenReservationModal();
   };
-
-  const userContext = useContext(UserContext);
 
   return (
     <Box pb="40">
