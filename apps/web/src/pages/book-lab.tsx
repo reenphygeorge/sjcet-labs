@@ -131,6 +131,11 @@ const BookLab: NextPage = () => {
       : removePeriod(id);
   };
 
+  const changeDay = (key: number) => {
+    setSelectedPeriods([]);
+    setDayNumber(key);
+  };
+
   const toast = useToast();
 
   const changePage = () => {
@@ -200,7 +205,7 @@ const BookLab: NextPage = () => {
                   align="center"
                   cursor="pointer"
                   onClick={() => {
-                    setDayNumber(key);
+                    changeDay(key);
                   }}
                 >
                   <Text fontWeight="bold">{value}</Text>
