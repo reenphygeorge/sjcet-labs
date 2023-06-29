@@ -4,6 +4,7 @@ import { StudentInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
+<<<<<<< Updated upstream
 const recordCreate = async ({
   date,
   courseCode,
@@ -15,6 +16,9 @@ const recordCreate = async ({
     let data = {
       id,
     };
+=======
+const recordCreate = async ({date, courseCode, experimentIds, labId, periods}: AttendanceInfo) => { 
+>>>>>>> Stashed changes
 
     return data;
   });
@@ -32,8 +36,26 @@ const recordCreate = async ({
     },
   });
 
+<<<<<<< Updated upstream
   return recordInfo;
 };
+=======
+	// Creating the attendance record and mapping the student positions to it
+	const recordInfo = await prisma.attendanceRecord.create({
+		data: {
+			date,
+			courseCode,
+			labId,
+			periods,
+			experiments: {
+				connect: experimentIdObjects
+			}
+		},
+	})
+
+	return recordInfo
+}
+>>>>>>> Stashed changes
 
 const getStudentDetails = async (studentinfo: StudentInfo) => {
   // Retreiving the details of the student according to the data provided

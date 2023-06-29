@@ -4,7 +4,7 @@ import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 const prisma = new PrismaClient()
 
 const reservationCreate = async (reservationInfo: ReservationInfo) => {
-	const data = await prisma.reservation.createMany({
+	const data = await prisma.reservation.create({
 		data: reservationInfo
 	})
 

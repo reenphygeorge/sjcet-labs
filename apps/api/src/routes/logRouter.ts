@@ -10,7 +10,7 @@ const getLog = router.get('/', async (request: Request, response: Response) => {
 	try {
 		const logData: LogData = {
 			date: new Date(request.body.date),
-			labName: request.body.labName,
+			labId: request.body.labId,
 			periods: request.body.periods
 		}
 		const data = await getLogs(logData);

@@ -13,6 +13,7 @@ import { StudentInfo } from '../helpers/types/user';
 const router = express.Router();
 
 const createRecord = router.post('/create', async (request: Request, response: Response) => {
+<<<<<<< Updated upstream
   try {
     const attendanceInfo: AttendanceInfo = {
       date: new Date(request.body.date),
@@ -29,6 +30,24 @@ const createRecord = router.post('/create', async (request: Request, response: R
     errorHandler(error, request, response);
   }
 });
+=======
+	try {
+		const attendanceInfo: AttendanceInfo = {
+			date: new Date(request.body.date),
+			courseCode: request.body.courseCode,
+			experimentIds: request.body.experimentIds,
+			labId: request.body.labId,
+			periods: request.body.periods
+		}
+		const data = await recordCreate(attendanceInfo)
+		responseHandler(data, request, response);	
+	} catch (error: Error | any) {
+		const message = 'Failed to create attendance record';
+		error.message = message;
+		errorHandler(error, request, response);
+	}
+})
+>>>>>>> Stashed changes
 
 const studentDetailsRouter = router.get(
   '/studentDetails',

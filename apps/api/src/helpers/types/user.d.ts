@@ -18,7 +18,7 @@ export interface StudentInfo {
 
 export interface AttendanceInfo {
 	date: Date;
-	labName: string;
+	labId: string;
 	periods: number[];
 	courseCode: string;
 	experimentIds: string[];
@@ -56,7 +56,7 @@ export interface ReviewInfo {
 
 export interface LogData {
 	date: Date;
-	labName: string;
+	labId: string;
 	periods: number[];
 }
 
@@ -69,17 +69,52 @@ export interface ReportData {
 
 export interface FreeLabRequestInfo {
 	day: string;
-	periods: number[];
+	periodNumbers: number[];
 }
 
 export interface FreeLabResponseInfo {
+	id: string;
 	labName: string;
+	roomNo: string;
+	status: LabStatus;
 	reservation: Reservation | null;
-	freeOfTimeTable: boolean;
+}
+	
+export interface ReservationNew {
+	id: string;
+	staffName: string;
+	semester: number;
+	department: Department;
+	dateOfRequest: string;
+	periods: number[];
+	venue: string;
+	status: string;
+	purpose: string | null;
+}
+
+export interface ReportNew {
+	id: string;
+	staffName: string;
+	date: string;
+	timing: string;
+	status: string;
+	issue: string;
+	systemNo: number[];
+}
+	
+export interface DepartmentNew {
+	id: string;
+	name: string;
+	batch: string | null;
 }
 
 export interface LabData {
+	id: string;
 	labName: string;
-	reservation: Reservation[];
-	timeTable: TimeTable[];
+	capacity: number;
+	roomNumber: string;
+	venue: string;
+	report: ReportNew[];
+	reservation: ReservationNew[];
+	timeTable: LabTimeTable[];
 }
