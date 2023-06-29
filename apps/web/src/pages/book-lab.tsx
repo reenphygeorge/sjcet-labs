@@ -75,7 +75,10 @@ const BookLab: NextPage = () => {
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
   const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
-    userId: userContext?.userData.id !== undefined ? userContext?.userData.id : null,
+    registerNumber:
+      userContext?.userData.registerNumber !== undefined
+        ? userContext?.userData.registerNumber
+        : null,
     semester: 1,
     departmentId: '',
     venue: '',

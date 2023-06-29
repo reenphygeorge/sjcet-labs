@@ -34,7 +34,7 @@ interface LabDetails {
 }
 
 interface LabBookingDetails {
-  userId: string | null;
+  registerNumber: string | null;
   semester: number | null;
   departmentId: string;
   venue: string;

@@ -66,7 +66,7 @@ const ViewBookings: NextPage = () => {
     });
     Link.push('/');
     // console.log({
-    //   userId: userContext?.userData.id,
+    //   registerNumber: userContext?.userData.registerNumber,
     //   reservationId: selectedBooking.id,
     // });
   };

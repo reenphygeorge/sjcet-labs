@@ -47,7 +47,10 @@ const Reports: NextPage = () => {
   });
 
   const [newReportData, setNewReportData] = useState<NewReportData>({
-    userId: userContext?.userData.id !== undefined ? userContext?.userData.id : null,
+    registerNumber:
+      userContext?.userData.registerNumber !== undefined
+        ? userContext?.userData.registerNumber
+        : null,
     systemNo: [],
     venue: 'Software Computing Lab',
     issue: '',
