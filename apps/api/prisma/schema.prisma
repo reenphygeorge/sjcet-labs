@@ -192,14 +192,14 @@ model Courses {
 }
 
 model Notifications {
-  id                    String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  professor             User             @relation(fields: [professorsProfessorId], references: [registerNumber])
-  professorsProfessorId String
-  heading               String
-  message               String?
-  type                  NotificationType
-  seen                  Boolean          @default(false)
-  timeStamp             DateTime         @default(now())
+  id          String           @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  professor   User             @relation(fields: [professorId], references: [registerNumber])
+  professorId String
+  heading     String
+  message     String?
+  type        NotificationType
+  seen        Boolean          @default(false)
+  timeStamp   DateTime         @default(now())
 }
 
 model Report {
