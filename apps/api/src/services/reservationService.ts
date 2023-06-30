@@ -40,42 +40,38 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
 	return data
 }
 
-const reservationReview = async (reviewInfo: ReviewInfo[]) => {
-	let count = 0
+const reservationReview = async (reviewInfo: ReviewInfo) => {
 
-	for (const review of reviewInfo) {
-		const reservation = await prisma.reservation.update({
-			data: {
-				status: review.status
-			},
-			where: {
-				id: review.reservationId
-			}
-		})
-
-		count += 1
-		
-		const professorId = reservation.professorId
-
-		// Assigning notification type enum for each notification
-		let notificationType: NotificationType
-		if (reservation.status === 'APPROVED') {
-			notificationType = NotificationType.RESERVATION_APPROVED
-		} else {
-			notificationType = NotificationType.RESERVATION_REJECTED
+	const reservation = await prisma.reservation.update({
+		data: {
+			status: reviewInfo.status
+		},
+		where: {
+			id: reviewInfo.reservationId
 		}
+	})
+		
+	const professorId = reservation.professorId
 
-		const heading = "Reservation " + reservation.status 
-		await prisma.notifications.create({
-			data: {
-				professorId: professorId,
-				type: notificationType,
-				heading,
-				message: reservation.purpose
-			}
-		})
+	// Assigning notification type enum for each notification
+	let notificationType: NotificationType
+	if (reservation.status === 'APPROVED') {
+		notificationType = NotificationType.RESERVATION_APPROVED
+	} else {
+		notificationType = NotificationType.RESERVATION_REJECTED
 	}
-	return count
+
+	const heading = "Reservation " + reservation.status 
+	await prisma.notifications.create({
+		data: {
+			professorId: professorId,
+			type: notificationType,
+			heading,
+			message: reservation.purpose
+		}
+	})
+
+	return reservation
 }
 
 const reservationDelete = async (reservationInfo: string[]) => {

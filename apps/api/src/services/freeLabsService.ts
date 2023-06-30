@@ -15,8 +15,6 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 		select: {
 			id: true,
 			labName: true,
-			roomNumber: true,
-			venue: true,
 			reservation: {
 				include: {
 					professor: {
@@ -115,7 +113,6 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 						const freeLab: FreeLabResponseInfo = {
 							id: lab.id,
 							labName: lab.labName,
-							roomNo: lab.venue + " " + lab.roomNumber,
 							status: LabStatus.CLASSTIME,
 							reservation: null
 						}
@@ -131,7 +128,6 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 						const freeLab: FreeLabResponseInfo = {
 							id: lab.id,
 							labName: lab.labName,
-							roomNo: lab.venue + " " + lab.roomNumber,
 							status: LabStatus.RESERVED,
 							reservation: lab.reservation[0]
 						}
@@ -141,7 +137,6 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 						const freeLab: FreeLabResponseInfo = {
 							id: lab.id,
 							labName: lab.labName,
-							roomNo: lab.venue + " " + lab.roomNumber,
 							status: LabStatus.AVAILABLE,
 							reservation: null
 						}
@@ -159,7 +154,6 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 			const freeLab: FreeLabResponseInfo = {
 				id: lab.id,
 				labName: lab.labName,
-				roomNo: lab.venue + " " + lab.roomNumber,
 				status: LabStatus.AVAILABLE,
 				reservation: lab.reservation[0]
 			}

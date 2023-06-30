@@ -17,7 +17,8 @@ const createReport = async (reportData: ReportData) => {
 				select: {
 					registerNumber: true
 				}
-			}
+			},
+			labName: true
 		}
 	})
 
@@ -27,7 +28,7 @@ const createReport = async (reportData: ReportData) => {
 		for (const id of labAdmins.labAdmins) {
 			const adminId = {
 				professorId: id.registerNumber,
-				heading: `Report For ${reportData.labId}`,
+				heading: `Report For ${labAdmins.labName}`,
 				message: reportData.issueDescription,
 				type: NotificationType.REPORT
 			}
