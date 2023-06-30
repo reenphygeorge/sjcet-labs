@@ -22,6 +22,7 @@ export interface AttendanceInfo {
 	periods: number[];
 	courseCode: string;
 	experimentIds: string[];
+	teachingStaff: string[];
 }
 
 export interface StudentPositions {

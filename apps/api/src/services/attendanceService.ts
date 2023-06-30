@@ -5,11 +5,17 @@ import { StudentInfo } from '../helpers/types/user';
 const prisma = new PrismaClient();
 
 
-const recordCreate = async ({date, courseCode, experimentIds, labId, periods}: AttendanceInfo) => {
+const recordCreate = async ({date, courseCode, experimentIds, labId, periods, teachingStaff}: AttendanceInfo) => {
 	// Converting experimentIds for mapping them 
 	const experimentIdObjects = experimentIds.map(id => {
 		return {
 			id
+		}
+	})
+
+	const staffIds = teachingStaff.map(registerNumber => {
+		return {
+			registerNumber
 		}
 	})
 
@@ -22,6 +28,9 @@ const recordCreate = async ({date, courseCode, experimentIds, labId, periods}: A
 			periods,
 			experiments: {
 				connect: experimentIdObjects
+			},
+			teachingStaff: {
+				connect: staffIds
 			}
 		},
 	})

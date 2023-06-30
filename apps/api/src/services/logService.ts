@@ -13,6 +13,12 @@ const getLogs = async ({date, labId, periods}: LogData) => {
 			}
 		},
 		include: {
+			teachingStaff: {
+				select: {
+					registerNumber: true,
+					name: true
+				}
+			},
 			studentPositions: {
 				select: {
 					studentId: true,

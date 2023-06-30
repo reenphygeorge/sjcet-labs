@@ -11,25 +11,26 @@ datasource db {
 }
 
 model User {
-  id             String          @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
-  authId         String          @unique
-  registerNumber String          @unique
-  name           String
-  Gender         Genders         @relation(fields: [gender], references: [gender])
-  gender         String
-  email          String          @unique
-  phoneNumber    String          @unique
-  department     Departments     @relation(fields: [departmentId], references: [id])
-  departmentId   String
-  labAdmin       Boolean         @default(false)
-  labIncharge    Boolean         @default(false)
-  lab            Lab?            @relation(fields: [labId], references: [id])
-  labId          String?
-  reservation    Reservation[]
-  notifications  Notifications[]
-  report         Report[]
-  timeTable      TimeTable[]
-  teachingAtLab  LabTimeTable[]
+  id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  authId           String             @unique
+  registerNumber   String             @unique
+  name             String
+  Gender           Genders            @relation(fields: [gender], references: [gender])
+  gender           String
+  email            String             @unique
+  phoneNumber      String             @unique
+  department       Departments        @relation(fields: [departmentId], references: [id])
+  departmentId     String
+  labAdmin         Boolean            @default(false)
+  labIncharge      Boolean            @default(false)
+  lab              Lab?               @relation(fields: [labId], references: [id])
+  labId            String?
+  reservation      Reservation[]
+  notifications    Notifications[]
+  report           Report[]
+  timeTable        TimeTable[]
+  teachingAtLab    LabTimeTable[]
+  AttendanceRecord AttendanceRecord[]
 }
 
 model Departments {
@@ -138,6 +139,7 @@ model AttendanceRecord {
   lab              Lab                @relation(fields: [labId], references: [id])
   labId            String
   periods          Int[]
+  teachingStaff    User[]
   studentPositions StudentPositions[]
   course           Courses            @relation(fields: [courseCode], references: [courseCode])
   courseCode       String
