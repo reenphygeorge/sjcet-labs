@@ -112,7 +112,7 @@ model TimeTable {
   lab                  Lab?         @relation(fields: [labId], references: [id])
   labId                String?
 
-  @@unique([userId, teachingDepartmentId, periodNumber, batch, semester, dayId])
+  @@unique([teachingDepartmentId, periodNumber, batch, semester, dayId])
 }
 
 model LabTimeTable {
