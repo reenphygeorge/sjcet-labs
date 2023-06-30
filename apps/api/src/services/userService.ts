@@ -24,7 +24,9 @@ const getUserService = async (authId: string) => {
 									name: true
 								}
 							},
-							labName: true
+							labName: true,
+							venue: true,
+							roomNumber: true
 						}
 					},
 					teachingDepartment: {

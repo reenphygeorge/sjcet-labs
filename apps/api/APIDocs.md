@@ -144,7 +144,9 @@
 								"name": "Thomas"
 							}
 						],
-						"labName": "Software Computing Lab"
+						"labName": "Software Computing Lab",
+						"venue": "MTB",
+						"roomNumber": "283"
 					},
 					"teachingDepartment": {
 						"name": "CSE"
