@@ -80,7 +80,7 @@ export interface FreeLabResponseInfo {
 	reservation: Reservation | null;
 }
 	
-export interface ReservationNew {
+export interface UserReservation {
 	id: string;
 	staffName: string;
 	semester: number;
@@ -92,7 +92,7 @@ export interface ReservationNew {
 	purpose: string | null;
 }
 
-export interface ReportNew {
+export interface UserReport {
 	id: string;
 	staffName: string;
 	date: string;
@@ -102,13 +102,13 @@ export interface ReportNew {
 	systemNo: number[];
 }
 	
-export interface DepartmentNew {
+export interface UserDepartment {
 	id: string;
 	name: string;
 	batch: string | null;
 }
 
-export interface LabData {
+export interface UserLabData {
 	id: string;
 	labName: string;
 	capacity: number;

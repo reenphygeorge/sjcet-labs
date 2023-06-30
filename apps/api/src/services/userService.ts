@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { PrismaClient } from '@prisma/client';
-import { DepartmentNew, LabData, PatchUserData, ReportNew, ReservationNew } from '../helpers/types/user';
+import { UserDepartment, UserLabData, PatchUserData, UserReport, UserReservation } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
@@ -130,10 +130,10 @@ const getLabData = async (labId: string) => {
 	})
 
 	if (labData !== null) {
-		let reports: ReportNew[] = []
+		let reports: UserReport[] = []
 		for (const report of labData.report) {
 			let temp = new Date(report.date)
-			const tempReport: ReportNew = {
+			const tempReport: UserReport = {
 				id: report.id,
 				staffName: report.professor.name,
 				date: temp.toLocaleDateString(undefined, {
@@ -154,15 +154,15 @@ const getLabData = async (labId: string) => {
 			reports.push(tempReport)
 		}
 
-		let reservations: ReservationNew[] = []
+		let reservations: UserReservation[] = []
 		for (const reservation of labData.reservation) {
 			let tempDate = new Date(reservation.date)
-			let tempDepartment: DepartmentNew = {
+			let tempDepartment: UserDepartment = {
 				id: reservation.teachingDepartmentsId,
 				name: reservation.teachingDepartment.name,
 				batch: reservation.batch
 			}
-			const tempReservation: ReservationNew = {
+			const tempReservation: UserReservation = {
 				id: reservation.id,
 				staffName: reservation.professor.name,
 				semester: reservation.semester,
@@ -182,7 +182,7 @@ const getLabData = async (labId: string) => {
 			reservations.push(tempReservation)
 		}
 		
-		let data: LabData = {
+		let data: UserLabData = {
 			id: labData.id,
 			labName: labData.labName,
 			capacity: labData.capacity,

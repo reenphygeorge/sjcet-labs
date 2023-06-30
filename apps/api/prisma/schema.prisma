@@ -29,7 +29,6 @@ model User {
   notifications  Notifications[]
   report         Report[]
   timeTable      TimeTable[]
-  labTimeTable   LabTimeTable[]  @relation("admin")
   teachingAtLab  LabTimeTable[]
 }
 
@@ -119,7 +118,6 @@ model LabTimeTable {
   id            String       @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   lab           Lab          @relation(fields: [labId], references: [id])
   labId         String
-  user          User[]       @relation("admin")
   course        Courses?     @relation(fields: [courseCode], references: [courseCode])
   courseCode    String?
   department    Departments? @relation(fields: [departmentId], references: [id])
