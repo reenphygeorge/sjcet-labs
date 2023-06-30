@@ -63,8 +63,6 @@ model Lab {
   id               String             @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   labName          String             @unique
   capacity         Int
-  roomNumber       String
-  venue            String
   labAdmins        User[]
   report           Report[]
   timeTable        TimeTable[]

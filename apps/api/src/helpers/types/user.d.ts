@@ -75,7 +75,6 @@ export interface FreeLabRequestInfo {
 export interface FreeLabResponseInfo {
 	id: string;
 	labName: string;
-	roomNo: string;
 	status: LabStatus;
 	reservation: Reservation | null;
 }
@@ -87,7 +86,6 @@ export interface UserReservation {
 	department: Department;
 	dateOfRequest: string;
 	periods: number[];
-	venue: string;
 	status: string;
 	purpose: string | null;
 }
@@ -112,8 +110,6 @@ export interface UserLabData {
 	id: string;
 	labName: string;
 	capacity: number;
-	roomNumber: string;
-	venue: string;
 	report: ReportNew[];
 	reservation: ReservationNew[];
 	timeTable: LabTimeTable[];

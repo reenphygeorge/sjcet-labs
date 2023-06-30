@@ -24,9 +24,7 @@ const getUserService = async (authId: string) => {
 									name: true
 								}
 							},
-							labName: true,
-							venue: true,
-							roomNumber: true
+							labName: true
 						}
 					},
 					teachingDepartment: {
@@ -120,11 +118,6 @@ const getLabData = async (labId: string) => {
 						select: {
 							name: true
 						}
-					},
-					lab: {
-						select: {
-							venue: true
-						}
 					}
 				},
 				orderBy: [
@@ -210,7 +203,6 @@ const getLabData = async (labId: string) => {
 					day: 'numeric'
 				}),
 				periods: reservation.periods,
-				venue: reservation.lab.venue,
 				purpose: reservation.purpose,
 				status: reservation.status
 			}
@@ -222,8 +214,6 @@ const getLabData = async (labId: string) => {
 			id: labData.id,
 			labName: labData.labName,
 			capacity: labData.capacity,
-			roomNumber: labData.roomNumber,
-			venue: labData.venue,
 			report: reports,
 			reservation: reservations,
 			timeTable: labData.LabTimeTable
