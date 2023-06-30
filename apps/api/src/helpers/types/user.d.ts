@@ -1,12 +1,11 @@
 import { Days, Experiments, Genders, LabTimeTable, Report, Reservation, ReservationStatus, TimeTable } from "@prisma/client";
 
 export interface PatchUserData {
-	authId: string;
-	registerNumber: string;
-	name: string;
-	departmentId: string;
-	email: string;
-	phoneNumber: string;
+	id: string;
+	registerNumber: string | undefined;
+	name: string | undefined;
+	email: string | undefined;
+	phoneNumber: string | undefined;
 }
 
 export interface StudentInfo {

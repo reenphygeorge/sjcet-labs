@@ -235,17 +235,16 @@ const getLabData = async (labId: string) => {
 
 }
 
-const patchUserData = async ({authId, registerNumber, name, departmentId, email, phoneNumber}: PatchUserData) => {
+const patchUserData = async ({id, registerNumber, name, email, phoneNumber}: PatchUserData) => {
 	await prisma.user.update({
     	data: {
 			registerNumber,
 			name,
-			departmentId,
 			email,
 			phoneNumber
 		},
 		where: {
-			authId
+			id
 		}
 	})
 }
