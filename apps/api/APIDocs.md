@@ -247,10 +247,9 @@
 #### Method: PATCH
 ##### Payload:
 	{
-		"authId": "kishoreseb",
+		"id": "c32fe7fd-51f3-4cb1-800d-00ade9e76a26",
 		"registerNumber": "iwefownf",
 		"name": "Kishore Sebastian",
-		"departmentId": "acee775d-50d6-457b-a9c3-181fd67d5dba",
 		"email": "kishoresebastian@gmail.com",
 		"phoneNumber": "9278267212"
 	}

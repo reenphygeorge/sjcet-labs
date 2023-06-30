@@ -10,12 +10,11 @@ import {
 } from '@prisma/client';
 
 export interface PatchUserData {
-  authId: string;
-  registerNumber: string;
-  name: string;
-  departmentId: string;
-  email: string;
-  phoneNumber: string;
+	id: string;
+	registerNumber: string | undefined;
+	name: string | undefined;
+	email: string | undefined;
+	phoneNumber: string | undefined;
 }
 
 export interface StudentInfo {
@@ -83,23 +82,21 @@ export interface FreeLabRequestInfo {
 }
 
 export interface FreeLabResponseInfo {
-  id: string;
-  labName: string;
-  roomNo: string;
-  status: LabStatus;
-  reservation: Reservation | null;
+	id: string;
+	labName: string;
+	status: LabStatus;
+	reservation: Reservation | null;
 }
 
 export interface UserReservation {
-  id: string;
-  staffName: string;
-  semester: number;
-  department: Department;
-  dateOfRequest: string;
-  periods: number[];
-  venue: string;
-  status: string;
-  purpose: string | null;
+	id: string;
+	staffName: string;
+	semester: number;
+	department: Department;
+	dateOfRequest: string;
+	periods: number[];
+	status: string;
+	purpose: string | null;
 }
 
 export interface UserReport {
@@ -119,12 +116,10 @@ export interface UserDepartment {
 }
 
 export interface UserLabData {
-  id: string;
-  labName: string;
-  capacity: number;
-  roomNumber: string;
-  venue: string;
-  report: ReportNew[];
-  reservation: ReservationNew[];
-  timeTable: LabTimeTable[];
+	id: string;
+	labName: string;
+	capacity: number;
+	report: ReportNew[];
+	reservation: ReservationNew[];
+	timeTable: LabTimeTable[];
 }

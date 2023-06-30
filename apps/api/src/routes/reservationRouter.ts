@@ -20,7 +20,7 @@ const createReservation = router.post('/create', async (request: Request, respon
 
 const reviewReservation = router.patch('/review', async (request: Request, response: Response) => {
 	try {
-		const reviewInfo: ReviewInfo[] = request.body.reviewInfo
+		const reviewInfo: ReviewInfo = request.body
 		const data = await reservationReview(reviewInfo)
 		responseHandler(data, request, response);	
 	} catch (error: Error | any) {
