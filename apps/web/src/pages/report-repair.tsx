@@ -64,7 +64,13 @@ const ReportRepair: NextPage = () => {
     setResolveInfo({ ...resolveInfo, [event.target.id]: event.target.value });
   };
 
-  const resolve = () => {};
+  const resolve = () => {
+    // console.log({
+    //   reportId: selectedReport.id,
+    //   comment: resolveInfo.comment,
+    // });
+    onCloseReportModal();
+  };
   return (
     <>
       <TopHeading heading="Report & Repairs" subText="Reported Error" arrow />
@@ -74,7 +80,8 @@ const ReportRepair: NextPage = () => {
             onClick={() => {
               openModal(key);
             }}
-            circleComponent={false}
+            iconComponent={false}
+            iconHover={false}
             key={id}
             properties={[
               {
@@ -144,14 +151,7 @@ const ReportRepair: NextPage = () => {
                 rounded="12px"
               />
               <HStack justify="center">
-                <CustomButton
-                  onClick={() => {
-                    resolve();
-                  }}
-                  innerText="Resolve"
-                  type="modal"
-                  disabled={false}
-                />
+                <CustomButton onClick={resolve} innerText="Resolve" type="modal" disabled={false} />
               </HStack>
             </FormControl>
           </ModalBody>

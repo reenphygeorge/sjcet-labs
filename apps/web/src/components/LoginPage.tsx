@@ -40,7 +40,7 @@ const LoginPage = () => {
       toast({
         position: 'bottom',
         render: () => (
-          <Box color="white" p={3} rounded="12px" bg="green.50">
+          <Box color="white" p={3} rounded="12px" bg="green.300">
             Welcome!!
           </Box>
         ),

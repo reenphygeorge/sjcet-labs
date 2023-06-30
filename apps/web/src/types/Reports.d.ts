@@ -23,7 +23,7 @@ type SystemNos = {
 type NewReportData = {
   registerNumber: string | null;
   systemNo: NumberOptions[];
-  venue: string;
+  labName: string;
   issue: string;
 };
 

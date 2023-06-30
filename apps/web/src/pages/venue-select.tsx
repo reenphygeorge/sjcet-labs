@@ -6,10 +6,9 @@ import { nanoid } from 'nanoid';
 import Link from 'next/router';
 import { Box, useToast } from '@chakra-ui/react';
 import TopHeading from '@/components/TopHeading';
-import ElementCard from '@/components/ElementCard';
-// Required data
 import { RouteOptions } from '@/types/SelectVenue';
 import authGuard from '../../util/AuthGuard';
+import CustomCard from '@/components/CustomCard';
 
 const VenueSelect: NextPage = () => {
   const venues: Array<RouteOptions> = [
@@ -37,7 +36,7 @@ const VenueSelect: NextPage = () => {
     <>
       <TopHeading heading="Book Venue" subText="Choose the venue" arrow />
       {venues.map(({ id, value, route }, key) => (
-        <ElementCard
+        <CustomCard
           key={id}
           onClick={() => changeOption(key, route)}
           cardProps={{
@@ -54,7 +53,8 @@ const VenueSelect: NextPage = () => {
               },
             },
           ]}
-          circleProps={{}}
+          iconComponent={false}
+          iconHover={false}
         />
       ))}
     </>

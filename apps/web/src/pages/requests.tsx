@@ -28,17 +28,17 @@ const Requests: NextPage = () => {
   const [selectedRequest, setSelectedRequest] = useState<LabSideReservation>({
     id: '',
     staffName: '',
+    labName: '',
     semester: null,
+    batch: '',
     department: {
       id: '',
       name: '',
-      batch: '',
     },
     dateOfRequest: '',
     status: '',
     periods: [],
     purpose: '',
-    venue: '',
   });
   const {
     isOpen: isOpenRequestModal,
@@ -54,8 +54,20 @@ const Requests: NextPage = () => {
     onOpenRequestModal();
   };
 
-  const accept = () => {};
-  const reject = () => {};
+  const accept = () => {
+    // console.log({
+    //   reservationId: selectedRequest.id,
+    //   status: 'APPROVED',
+    // });
+    onCloseRequestModal();
+  };
+  const reject = () => {
+    // console.log({
+    //   reservationId: selectedRequest.id,
+    //   status: 'REJECTED',
+    // });
+    onCloseRequestModal();
+  };
 
   return (
     <>
@@ -67,7 +79,8 @@ const Requests: NextPage = () => {
               onClick={() => {
                 openModal(key);
               }}
-              circleComponent={false}
+              iconComponent={false}
+              iconHover={false}
               key={id}
               properties={[
                 {
@@ -116,7 +129,7 @@ const Requests: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Department & Batch:  ${selectedRequest.department}`}</Text>
+            >{`Department & Batch:  ${selectedRequest.department.name}-${selectedRequest.batch}`}</Text>
             <Text
               fontSize="md"
               mb={4}
@@ -138,8 +151,8 @@ const Requests: NextPage = () => {
               fontWeight="semibold"
             >{`Purpose:  ${selectedRequest.purpose}`}</Text>
             <HStack justify="center" py={5} spacing={10}>
-              <IconButton aria-label="Accept" onClick={() => accept} icon={<Check />} size="sm" />
-              <IconButton aria-label="Reject" onClick={() => reject} icon={<X />} size="sm" />
+              <IconButton aria-label="Accept" onClick={accept} icon={<Check />} size="sm" />
+              <IconButton aria-label="Reject" onClick={reject} icon={<X />} size="sm" />
             </HStack>
           </ModalBody>
         </ModalContent>

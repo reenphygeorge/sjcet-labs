@@ -21,7 +21,6 @@ const TimetableCard: FC = () => {
     { id: nanoid(), value: 'F' },
     { id: nanoid(), value: 'S' },
   ];
-
   return (
     <Card rounded="12px" shadow="md">
       <CardBody>
@@ -69,40 +68,36 @@ const TimetableCard: FC = () => {
         >
           {userContext?.userData.labAdmin !== true
             ? userContext?.userData.timeTable[day].periods.map(
-                ({ id, periodName, semester, department, venue, roomNo }, key) => (
+                ({ id, periodName, semester, department, batch, labName }, key) => (
                   <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                     <CardBody>
-                      <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
-                        {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
+                      <Text fontWeight="bold" color="black.50" fontSize="16" mb="1">
+                        {periodName !== null ? `${key + 1}. ${periodName}` : `${key + 1}. Free`}
                       </Text>
-                      <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                        {semester !== null
-                          ? `S${semester} ${department?.name}-${department?.batch}`
-                          : ''}
+                      <Text fontWeight="semibold" color="black.50" fontSize="12" mb="1" ml="4">
+                        {semester !== null ? `S${semester} ${department?.name}-${batch}` : '---'}
                       </Text>
-                      <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3">
-                        {venue !== null ? `Venue: ${venue} (${roomNo})` : ''}
+                      <Text fontWeight="semibold" color="black.50" fontSize="12" ml="4">
+                        {labName !== null ? `Lab: ${labName}` : '---'}
                       </Text>
                     </CardBody>
                   </Box>
                 )
               )
             : userContext?.userData.labData?.timeTable[day].periods.map(
-                ({ id, periodName, semester, department, staff }, key) => (
+                ({ id, periodName, semester, department, batch, staff }, key) => (
                   <Box key={id} w="300px" ml="5px" mr="20px" bg="gray.50" rounded="12px">
                     <CardBody>
-                      <Text fontWeight="bold" color="black.50" fontSize="17" mb="1">
-                        {periodName !== null ? `${key + 1}. ${periodName}` : 'Free'}
+                      <Text fontWeight="bold" color="black.50" fontSize="16" mb="1">
+                        {periodName !== null ? `${key + 1}. ${periodName}` : `${key + 1}. Free`}
                       </Text>
-                      <Text fontWeight="semibold" color="black.50" fontSize="15" mb="1" ml="3">
-                        {semester !== null
-                          ? `S${semester} ${department?.name}-${department?.batch}`
-                          : ''}
+                      <Text fontWeight="semibold" color="black.50" fontSize="12" mb="2" ml="4">
+                        {semester !== null ? `S${semester} ${department?.name}-${batch}` : '---'}
                       </Text>
                       {staff !== null ? (
                         <>
-                          <Text fontWeight="semibold" color="black.50" fontSize="15" ml="3" mb="2">
-                            In charge:
+                          <Text fontWeight="semibold" color="black.50" fontSize="12" ml="3" mb="1">
+                            In charge
                           </Text>
                           <HStack>
                             {staff?.map(({ staffID, staffName }) => (
@@ -119,7 +114,9 @@ const TimetableCard: FC = () => {
                           </HStack>
                         </>
                       ) : (
-                        ''
+                        <Text fontWeight="semibold" color="black.50" fontSize="12" ml="4" mb="1">
+                          ---
+                        </Text>
                       )}
                     </CardBody>
                   </Box>

@@ -10,10 +10,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Thushara' }],
         semester: 6,
         periodNo: 1,
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -21,10 +21,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         periodName: 'Operating Systems',
         semester: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
         periodNo: 2,
       },
@@ -34,10 +34,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
         periodNo: 3,
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -46,10 +46,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
         periodNo: 4,
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -57,10 +57,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         periodName: 'OS Lab',
         semester: 4,
         periodNo: 5,
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
       },
@@ -69,11 +69,11 @@ const labTimetableData: LabTimeTableByDay[] = [
         periodName: 'OS Lab',
         semester: 4,
         periodNo: 6,
+        batch: 'B',
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
     ],
@@ -87,10 +87,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 1,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -99,10 +99,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 2,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -111,10 +111,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 3,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -123,10 +123,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -135,10 +135,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 5,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -147,10 +147,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 6,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
     ],
@@ -164,10 +164,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 1,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -176,10 +176,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 2,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -188,10 +188,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 3,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -200,10 +200,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -212,10 +212,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 5,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -224,10 +224,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 6,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
     ],
@@ -241,10 +241,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 1,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -253,10 +253,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 2,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -265,10 +265,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 3,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -277,10 +277,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -289,10 +289,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 5,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -301,10 +301,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 6,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
     ],
@@ -318,10 +318,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 1,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -330,10 +330,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 2,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -342,10 +342,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 3,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -354,10 +354,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 4,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -366,10 +366,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 5,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
       {
@@ -378,10 +378,10 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: 6,
         periodNo: 6,
         staff: [{ staffID: 'flrvyfenuc', staffName: 'Ashik' }],
+        batch: 'B',
         department: {
           id: 'wfvcwe',
           name: 'CSE',
-          batch: 'B',
         },
       },
     ],
@@ -395,6 +395,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 1,
         staff: null,
+        batch: null,
         department: null,
       },
       {
@@ -403,6 +404,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 2,
         staff: null,
+        batch: null,
         department: null,
       },
       {
@@ -411,6 +413,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 3,
         staff: null,
+        batch: null,
         department: null,
       },
       {
@@ -419,6 +422,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 4,
         staff: null,
+        batch: null,
         department: null,
       },
       {
@@ -427,6 +431,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 5,
         staff: null,
+        batch: null,
         department: null,
       },
       {
@@ -435,6 +440,7 @@ const labTimetableData: LabTimeTableByDay[] = [
         semester: null,
         periodNo: 6,
         staff: null,
+        batch: null,
         department: null,
       },
     ],

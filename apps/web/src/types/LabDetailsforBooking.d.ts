@@ -1,18 +1,17 @@
 type Data = {
   id: string;
-  name: string;
-  roomNo: string;
+  labName: string;
   status: string;
   reservationDetails: ReservationInfo | null;
 };
 
 type ReservationInfo = {
   id: string;
+  labName: string;
   staffName: string;
   semester: number;
   departmentWithBatch: string;
   date: string;
-  venue: string;
   purpose: string;
   negotiable: boolean;
   phone: string;

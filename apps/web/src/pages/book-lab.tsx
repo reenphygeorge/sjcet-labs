@@ -58,12 +58,12 @@ const BookLab: NextPage = () => {
 
   const [bookingStep, setBookingStep] = useState<number>(1);
   const [selectedPeriods, setSelectedPeriods] = useState<SelectedPeriod[]>([]);
-  const [labName, setLabName] = useState<string>('');
+  const [selectedLab, setSelectedLab] = useState<string>('');
   const [selectedReservationData, setSelectedReservationData] = useState<ReservationInfo>({
     id: '',
     staffName: '',
     date: '',
-    venue: '',
+    labName: '',
     departmentWithBatch: '',
     negotiable: false,
     phone: '',
@@ -80,8 +80,9 @@ const BookLab: NextPage = () => {
         ? userContext?.userData.registerNumber
         : null,
     semester: 1,
-    departmentId: '',
-    venue: '',
+    departmentId: departments[0].id,
+    labName: '',
+    batch: '',
     periods: [
       {
         id: '',
@@ -160,8 +161,8 @@ const BookLab: NextPage = () => {
   };
 
   const saveLabName = (name: string) => {
-    setLabName(name);
-    setBookingDetails({ ...bookingDetails, venue: name });
+    setSelectedLab(name);
+    setBookingDetails({ ...bookingDetails, labName: name });
     onOpenSummaryModal();
   };
 
@@ -169,13 +170,12 @@ const BookLab: NextPage = () => {
     toast({
       position: 'bottom',
       render: () => (
-        <Box color="white" p={3} rounded="12px" bg="green.50">
+        <Box color="white" p={3} rounded="12px" bg="green.300">
           Booking Success
         </Box>
       ),
     });
     Link.push('/');
-    // console.log(bookingDetails);
   };
 
   const reservedLab = (reservationInfo: ReservationInfo | null) => {
@@ -189,7 +189,7 @@ const BookLab: NextPage = () => {
     <Box pb="40">
       <TopHeading
         heading="Book Lab"
-        subText={bookingStep === 1 ? 'Select the periods' : 'Select the venue'}
+        subText={bookingStep === 1 ? 'Select the periods' : 'Select the labName'}
         arrow
       />
       {bookingStep === 1 ? (
@@ -217,11 +217,11 @@ const BookLab: NextPage = () => {
             </>
           </Grid>
           {userContext?.userData.timeTable[dayNumber].periods.map(
-            ({ id, periodName, semester, department, periodNo }, key) => {
+            ({ id, periodName, semester, department, periodNo, batch }, key) => {
               const periodHeading: string =
                 periodName !== null ? `${key + 1}. ${periodName}` : `${key + 1}. Free`;
               const semesterHeading: string =
-                semester !== null ? `S${semester} ${department?.name}-${department?.batch} ` : ``;
+                semester !== null ? `S${semester} ${department?.name}-${batch}` : ``;
               return (
                 <CustomCard
                   onClick={() =>
@@ -255,7 +255,8 @@ const BookLab: NextPage = () => {
                       },
                     },
                   ]}
-                  circleComponent={false}
+                  iconComponent={false}
+                  iconHover={false}
                 />
               );
             }
@@ -271,74 +272,53 @@ const BookLab: NextPage = () => {
         </>
       ) : (
         <>
-          {labDetailsforBooking.data.map(
-            ({ id, name, roomNo, status, reservationDetails }, key) => {
-              const labNameHeading: string = `${key + 1}. ${name}`;
-              return status !== 'Reserved' ? (
-                <CustomCard
-                  key={id}
-                  onClick={status !== 'ClassTime' ? () => saveLabName(name) : () => null}
-                  properties={[
-                    {
-                      id: nanoid(),
-                      value: labNameHeading,
-                      textProps: {
-                        color: status !== 'ClassTime' ? 'black.25' : 'gray.25',
-                        fontSize: 'lg',
-                        fontWeight: 'bold',
-                      },
+          {labDetailsforBooking.data.map(({ id, labName, status, reservationDetails }, key) => {
+            const labNameHeading: string = `${key + 1}. ${labName}`;
+            return status !== 'Reserved' ? (
+              <CustomCard
+                key={id}
+                onClick={status !== 'ClassTime' ? () => saveLabName(labName) : () => null}
+                properties={[
+                  {
+                    id: nanoid(),
+                    value: labNameHeading,
+                    textProps: {
+                      color: status !== 'ClassTime' ? 'black.25' : 'gray.25',
+                      fontSize: 'lg',
+                      fontWeight: 'bold',
                     },
-                    {
-                      id: nanoid(),
-                      value: roomNo,
-                      textProps: {
-                        color: status === 'ClassTime' ? 'gray.25' : 'black.25',
-                        fontSize: '15',
-                        fontWeight: 'medium',
-                        ml: '5',
-                      },
+                  },
+                ]}
+                iconComponent={false}
+                iconHover={false}
+              />
+            ) : (
+              <ElementCard
+                key={id}
+                onClick={() => {
+                  reservedLab(reservationDetails);
+                }}
+                circleProps={{
+                  borderRadius: '12px',
+                  w: '90px',
+                  h: '30px',
+                  bg: 'red.50',
+                }}
+                circleInnerText="Reserved"
+                properties={[
+                  {
+                    id: nanoid(),
+                    value: labNameHeading,
+                    textProps: {
+                      color: 'black.25',
+                      fontSize: 'lg',
+                      fontWeight: 'bold',
                     },
-                  ]}
-                  circleComponent={false}
-                />
-              ) : (
-                <ElementCard
-                  key={id}
-                  onClick={() => {
-                    reservedLab(reservationDetails);
-                  }}
-                  circleProps={{
-                    borderRadius: '12px',
-                    w: '90px',
-                    h: '30px',
-                    bg: 'red.50',
-                  }}
-                  circleInnerText="Reserved"
-                  properties={[
-                    {
-                      id: nanoid(),
-                      value: labNameHeading,
-                      textProps: {
-                        color: 'black.25',
-                        fontSize: 'lg',
-                        fontWeight: 'bold',
-                      },
-                    },
-                    {
-                      id: nanoid(),
-                      value: roomNo,
-                      textProps: {
-                        color: 'black.25',
-                        fontSize: '15',
-                        fontWeight: 'medium',
-                        ml: '5',
-                      },
-                    },
-                  ]}
-                />
-              );
-            }
-          )}
+                  },
+                ]}
+              />
+            );
+          })}
           <CustomButton
             onClick={() => {
               setBookingStep(1);
@@ -381,7 +361,7 @@ const BookLab: NextPage = () => {
                     ))}
                   </Select>
                   <FormLabel htmlFor="departmentId" pl="1">
-                    Department & Batch
+                    Department
                   </FormLabel>
                   <Select
                     id="departmentId"
@@ -391,16 +371,33 @@ const BookLab: NextPage = () => {
                     onChange={handleFormChange}
                     value={bookingDetails.departmentId}
                   >
-                    {departments.map(({ id, name, batch }) => (
+                    {departments.map(({ id, name }) => (
                       <option key={id} value={id}>
-                        {`${name} ${batch}`}
+                        {`${name}`}
                       </option>
                     ))}
                   </Select>
-                  <FormLabel htmlFor="labName" pl="1">
-                    Venue
+                  <FormLabel htmlFor="batch" pl="1">
+                    Batch
                   </FormLabel>
-                  <Input bg="gray.50" id="labName" value={labName} mb="7" rounded="12px" disabled />
+                  <Input
+                    bg="gray.50"
+                    id="batch"
+                    mb="7"
+                    rounded="12px"
+                    onChange={handleFormChange}
+                  />
+                  <FormLabel htmlFor="labName" pl="1">
+                    Lab Name
+                  </FormLabel>
+                  <Input
+                    bg="gray.50"
+                    id="labName"
+                    value={selectedLab}
+                    mb="7"
+                    rounded="12px"
+                    disabled
+                  />
                 </>
               ) : (
                 <>
@@ -484,7 +481,7 @@ const BookLab: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Venue:  ${selectedReservationData?.venue}`}</Text>
+            >{`Lab Name:  ${selectedReservationData?.labName}`}</Text>
             <Text
               fontSize="md"
               mb={4}

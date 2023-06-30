@@ -2,7 +2,7 @@ import { SelectedPeriod } from './BookLab';
 
 type ReactSelectProps = {
   options: StringValuedOptions[] | (() => NumberOptions[]) | any[] | undefined;
-  values: SelectedPeriod[] | Options[] | any[];
+  values: SelectedPeriod[] | NumberOptions[] | Options[] | any[];
   disabled: boolean;
   onChange?: (event: ValueType<Options>) => void;
   placeHolder?: string;

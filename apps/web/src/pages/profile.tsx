@@ -9,6 +9,7 @@ import {
   Input,
   Text,
   VStack,
+  useMediaQuery,
   useToast,
 } from '@chakra-ui/react';
 import { ChangeEvent, useContext, useState } from 'react';
@@ -27,12 +28,24 @@ const Profile: NextPage = () => {
 
   const saveProfile = () => {
     setEditMode(!editMode);
+    // console.log({
+    //   id: userContext?.userData.id,
+    //   registerNumber: userContext?.userData.registerNumber,
+    //   name: userContext?.userData.name,
+    //   email: userContext?.userData.email,
+    //   phoneNumber: userContext?.userData.phoneNumber,
+    // });
   };
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     userContext?.setUserData({ ...userContext?.userData, [event.target.id]: event.target.value });
   };
 
+  const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
+  const [isSmallerThan768] = useMediaQuery('(max-width: 768px)');
+
+  // eslint-disable-next-line no-nested-ternary
+  const rightSpace = isLargerThan1000 ? '96' : isSmallerThan768 ? '16' : '16';
   const toast = useToast();
   const switchAccount = () => {
     const labAdmin: boolean = !userContext?.userData.labAdmin;
@@ -91,7 +104,7 @@ const Profile: NextPage = () => {
           onClick={() => switchAccount()}
           aria-label="Switch-Account"
           position="absolute"
-          right="16"
+          right={rightSpace}
           top="40"
           rounded="100%"
           icon={<Repeat width="18px" />}

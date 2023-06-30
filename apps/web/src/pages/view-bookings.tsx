@@ -29,15 +29,15 @@ const ViewBookings: NextPage = () => {
   const [selectedBooking, setSelectedBooking] = useState<ReservationData>({
     id: '',
     semester: null,
+    batch: '',
     department: {
       id: '',
       name: '',
-      batch: '',
     },
     dateOfRequest: '',
     periods: [],
     purpose: '',
-    venue: '',
+    labName: '',
     status: '',
   });
   const {
@@ -59,7 +59,7 @@ const ViewBookings: NextPage = () => {
     toast({
       position: 'bottom',
       render: () => (
-        <Box color="white" p={3} rounded="12px" bg="green.50">
+        <Box color="white" p={3} rounded="12px" bg="green.300">
           Booking Cancelled
         </Box>
       ),
@@ -74,7 +74,7 @@ const ViewBookings: NextPage = () => {
     <>
       <TopHeading heading="My Bookings" subText="View my bookings" arrow />
       {userContext?.userData.reservation.length !== 0 ? (
-        userContext?.userData.reservation.map(({ id, venue, dateOfRequest, status }, key) => (
+        userContext?.userData.reservation.map(({ id, labName, dateOfRequest, status }, key) => (
           <ElementCard
             onClick={() => {
               openModal(key);
@@ -84,13 +84,13 @@ const ViewBookings: NextPage = () => {
               borderRadius: '12px',
               w: '90px',
               h: '30px',
-              bg: status === 'Requested' ? 'red.50' : 'green.50',
+              bg: status === 'REQUESTED' ? 'red.50' : 'green.50',
             }}
-            circleInnerText={status}
+            circleInnerText={`${status?.charAt(0).toUpperCase()}${status?.slice(1).toLowerCase()}`}
             properties={[
               {
                 id: nanoid(),
-                value: venue,
+                value: labName,
                 textProps: {
                   color: 'black.25',
                   fontSize: 'md',
@@ -131,7 +131,7 @@ const ViewBookings: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Department & Batch:  ${selectedBooking.department.name}-${selectedBooking.department.batch}`}</Text>
+            >{`Department & Batch:  ${selectedBooking.department.name}-${selectedBooking.batch}`}</Text>
             <Text
               fontSize="md"
               mb={4}
@@ -157,7 +157,7 @@ const ViewBookings: NextPage = () => {
               fontSize="md"
               mb={4}
               fontWeight="semibold"
-            >{`Venue:  ${selectedBooking.venue}`}</Text>
+            >{`Lab Name:  ${selectedBooking.labName}`}</Text>
             <Text
               fontSize="md"
               mb={4}

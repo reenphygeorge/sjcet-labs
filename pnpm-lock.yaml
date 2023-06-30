@@ -100,6 +100,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-feather: ^2.0.10
+      react-icons: ^4.10.1
       react-select: ^5.7.3
       typescript: ^4.7.2
     dependencies:
@@ -118,6 +119,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-feather: 2.0.10_react@18.2.0
+      react-icons: 4.10.1_react@18.2.0
       react-select: 5.7.3_zn3vyfk3tbnwebg5ldvieekjaq
       typescript: 4.7.4
 
@@ -5085,6 +5087,14 @@ packages:
       react-clientside-effect: 1.2.6_react@18.2.0
       use-callback-ref: 1.3.0_pofolu2o2erjq4lhyzl3hqovzq
       use-sidecar: 1.1.2_pofolu2o2erjq4lhyzl3hqovzq
+    dev: false
+
+  /react-icons/4.10.1_react@18.2.0:
+    resolution: {integrity: sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

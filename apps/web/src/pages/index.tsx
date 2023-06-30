@@ -73,7 +73,7 @@ const Home: NextPage = () => {
                   changeOption(key, route);
                 }}
                 cardProps={{
-                  height: '130px',
+                  height: '150px',
                   bg: selectOption !== key ? '#F0F2F5' : 'black.50',
                 }}
                 properties={[
@@ -85,11 +85,13 @@ const Home: NextPage = () => {
                       fontSize: 'md',
                       fontWeight: 'bold',
                       position: 'relative',
-                      top: '7',
+                      top: '10',
                     },
                   },
                 ]}
-                circleComponent
+                iconHover={selectOption === key}
+                iconComponent
+                iconName={value}
               />
             ))}
           </Grid>

@@ -40,7 +40,7 @@ const Reports: NextPage = () => {
     id: '',
     date: '',
     timing: '',
-    venue: '',
+    labName: '',
     issue: '',
     status: '',
     systemNo: [],
@@ -52,7 +52,7 @@ const Reports: NextPage = () => {
         ? userContext?.userData.registerNumber
         : null,
     systemNo: [],
-    venue: 'Software Computing Lab',
+    labName: 'Software Computing Lab',
     issue: '',
   });
 
@@ -108,7 +108,7 @@ const Reports: NextPage = () => {
     <>
       <TopHeading heading="Report System" subText="Reported system errors" arrow />
       {userContext?.userData.report.length !== 0 ? (
-        userContext?.userData.report.map(({ id, venue, date, status }, key) => (
+        userContext?.userData.report.map(({ id, labName, date, status }, key) => (
           <ElementCard
             onClick={() => {
               openReportModal(key);
@@ -124,7 +124,7 @@ const Reports: NextPage = () => {
             properties={[
               {
                 id: nanoid(),
-                value: venue,
+                value: labName,
                 textProps: {
                   color: 'black.25',
                   fontSize: 'md',
@@ -180,7 +180,7 @@ const Reports: NextPage = () => {
               ))}
             </HStack>
             <Text fontSize="md" mb={4} fontWeight="semibold">
-              {`Venue: ${selectedReportDetails.venue}`}
+              {`Lab Name: ${selectedReportDetails.labName}`}
             </Text>
             <Text fontSize="md" mb={4} fontWeight="semibold">
               {`Date: ${selectedReportDetails.date}`}
@@ -214,8 +214,8 @@ const Reports: NextPage = () => {
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
-              <FormLabel pl="1">Venue</FormLabel>
-              <Select bg="gray.50" mb="7" rounded="12px" id="venue" onChange={handleFormChange}>
+              <FormLabel pl="1">Lab Name</FormLabel>
+              <Select bg="gray.50" mb="7" rounded="12px" id="labName" onChange={handleFormChange}>
                 {labs.map(({ id, labName }) => (
                   <option id={id} value={labName}>
                     {labName}

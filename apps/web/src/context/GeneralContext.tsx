@@ -10,7 +10,6 @@ const GeneralContext = createContext<GeneralContextProps>({
     {
       id: '',
       name: '',
-      batch: '',
     },
   ],
   labs: [
@@ -18,8 +17,6 @@ const GeneralContext = createContext<GeneralContextProps>({
       id: '',
       labName: '',
       capacity: 0,
-      roomNumber: '',
-      venue: '',
     },
   ],
 });

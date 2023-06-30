@@ -1,7 +1,6 @@
 /* eslint-disable import/extensions */
 import { CardProps, TextProps } from '@chakra-ui/react';
 import { MouseEvent } from 'react';
-import { CircleProps } from './Circle';
 
 interface CardTextInterface {
   id: string;
@@ -13,6 +12,7 @@ export interface CustomCardProps {
   properties: Array<CardTextInterface>;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   cardProps?: CardProps;
-  circleComponent?: boolean;
-  circleProps?: CircleProps;
+  iconComponent?: boolean;
+  iconName?: string;
+  iconHover?: boolean;
 }

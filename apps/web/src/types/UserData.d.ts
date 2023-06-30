@@ -25,7 +25,6 @@ type UserContextData = {
 type Department = {
   id: string;
   name: string;
-  batch: string;
 };
 
 // Teacher TimeTable
@@ -44,10 +43,11 @@ type TimeTablePeriod = {
   id: string;
   periodName: string | null;
   staff: Staff[] | null;
+  batch: string | null;
   department: Department | null;
   semester: number | null;
   periodNo: number;
-  venue: string | null;
+  labName: string | null;
   roomNo: string | null;
 };
 
@@ -62,6 +62,7 @@ type LabTimeTablePeriod = {
   id: string;
   periodName: string | null;
   staff: Staff[] | null;
+  batch: string | null2;
   semester: number | null;
   department: Department | null;
   periodNo: number;
@@ -72,10 +73,11 @@ type LabTimeTablePeriod = {
 type ReservationData = {
   id: string;
   semester: number | null;
+  batch: string;
   department: Department;
   dateOfRequest: string;
   periods: ReservationPeriod[];
-  venue: string;
+  labName: string;
   purpose: string;
   status: string;
 };
@@ -84,10 +86,11 @@ type LabSideReservation = {
   id: string;
   staffName: string;
   semester: number | null;
+  batch: string | null;
   department: Department;
   dateOfRequest: string;
   periods: ReservationPeriod[];
-  venue: string;
+  labName: string;
   status: string;
   purpose: string;
 };
@@ -104,7 +107,7 @@ type ReportData = {
   id: string;
   date: string;
   timing: string;
-  venue: string;
+  labName: string;
   issue: string;
   status: string;
   systemNo: number[];
@@ -127,7 +130,7 @@ type LabData = {
   labName: string;
   capacity: number;
   roomNumber: string;
-  venue: string;
+  labName: string;
   report: LabSideReport[];
   reservation: LabSideReservation[];
   timeTable: LabTimeTableByDay[];
