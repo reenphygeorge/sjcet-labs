@@ -144,9 +144,7 @@
 								"name": "Thomas"
 							}
 						],
-						"labName": "Software Computing Lab",
-						"venue": "MTB",
-						"roomNumber": "283"
+						"labName": "Software Computing Lab"
 					},
 					"teachingDepartment": {
 						"name": "CSE"
@@ -166,8 +164,6 @@
 				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 				"labName": "Programming Lab",
 				"capacity": 32,
-				"roomNumber": "110",
-				"venue": "MTB",
 				"report": [
 					...
 				],
