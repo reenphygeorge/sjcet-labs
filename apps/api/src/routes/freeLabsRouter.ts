@@ -10,7 +10,7 @@ const freeLabsRouter = router.get('/', async (request: Request, response: Respon
 	try {
 		let labInfo: FreeLabRequestInfo = {
 			day: request.body.day,
-			periods: request.body.periods
+			periodNumbers: request.body.periodNumbers
 		}
 		const data = await getFreeLabsInfo(labInfo)
 		responseHandler(data, request, response);

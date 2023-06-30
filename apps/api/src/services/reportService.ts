@@ -26,7 +26,7 @@ const createReport = async (reportData: ReportData) => {
 		let notificationData = []
 		for (const id of labAdmins.labAdmins) {
 			const adminId = {
-				professorsProfessorId: id.registerNumber,
+				professorId: id.registerNumber,
 				heading: `Report For ${reportData.labId}`,
 				message: reportData.issueDescription,
 				type: NotificationType.REPORT

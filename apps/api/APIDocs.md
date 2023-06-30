@@ -6,109 +6,238 @@
 
 ##### Response:
     {
-        "success": true,
-        "data": {
-            "departments": [
-                {
-                    "id": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
-                    "name": "CSE",
-                    "numberOfBatches": 3
-                },
-    			...
-            ],
-    		"courses": [
-      			{
-        			"courseCode": "CST301",
-        			"courseName": "Computer Networks",
-        			"isPractical": false
-      			},
-    			...
-    		],
-    		"labs": [
-    			{
-    				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
-    				"labName": "Software Computing Lab",
-    				"capacity": 65,
-    				"roomNumber": "283",
-    				"venue": "MTB"
-    			},
-      			...
-    		]
-        }
-    }
+		"success": true,
+		"data": {
+			"departments": [
+				{
+					"id": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+					"name": "CSE"
+				},
+				{
+					"id": "1972c47e-879c-40b0-8865-cbc9867377ce",
+					"name": "ECE"
+				},
+				{
+					"id": "a102acb9-c24b-4cfa-85ea-f54725d7cfd9",
+					"name": "ME"
+				},
+				{
+					"id": "1ce1e8e3-3cad-40a7-86b3-6af8ecb069c5",
+					"name": "EEE"
+				}
+			],
+			"courses": [
+				{
+					"courseCode": "CST301",
+					"courseName": "Computer Networks",
+					"isPractical": false
+				},
+				{
+					"courseCode": "CSL300",
+					"courseName": "DBMS Lab",
+					"isPractical": true
+				},
+				{
+					"courseCode": "CSL302",
+					"courseName": "Computer Networks Lab",
+					"isPractical": true
+				},
+				{
+					"courseCode": "CST201",
+					"courseName": "Logic System Design",
+					"isPractical": false
+				}
+			],
+			"labs": [
+				{
+					"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+					"labName": "Software Computing Lab",
+					"capacity": 65,
+					"roomNumber": "283",
+					"venue": "MTB"
+				},
+				{
+					"id": "d83cd966-dfcc-4ca5-aa65-88f18ac9f681",
+					"labName": "Networks Lab",
+					"capacity": 32,
+					"roomNumber": "72",
+					"venue": "SJPB"
+				},
+				{
+					"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+					"labName": "Programming Lab",
+					"capacity": 32,
+					"roomNumber": "110",
+					"venue": "MTB"
+				},
+				{
+					"id": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
+					"labName": "Research Lab",
+					"capacity": 32,
+					"roomNumber": "110",
+					"venue": "MTB"
+				}
+			]
+		}
+	}
 
 ### /user
 #### Method: GET
 ##### Payload:
 	{
-  		"authId": "smithajacob"
+		"authId": "MTV"
 	}
 
 ##### Response:
 	{
-  		"success": true,
-  		"data": {
-			"id": "ac8d5c69-4921-4266-bd80-2fbb720086ce",
-			"authId": "smithajacob",
-			"registerNumber": "CSE088",
-			"name": "Smitha Jacob",
-			"genderName": "Female",
-			"email": "smitha@gmail.com",
-			"phoneNumber": "8261285628",
-			"departmentId": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
+		"success": true,
+		"data": {
+			"id": "da21c3da-c87c-4ad2-9990-a48c4638d562",
+			"authId": "MTV",
+			"registerNumber": "CSE156",
+			"name": "Mereen Thomas",
+			"gender": "Female",
+			"email": "mereenthomas@gmail.com",
+			"phoneNumber": "9367582290",
+			"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
 			"labAdmin": false,
 			"labIncharge": true,
-			"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+			"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 			"timeTable": [
-				...
+				{
+					"id": "baa60b94-9dab-432a-84e3-1c9dd41a2e4d",
+					"userId": "CSE156",
+					"coursesId": "CST303",
+					"semester": 6,
+					"batch": "B",
+					"periodNumber": 4,
+					"dayId": "Tuesday",
+					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+					"labId": null,
+					"course": {
+						"courseName": "Computer Grahics"
+					},
+					"lab": null,
+					"teachingDepartment": {
+						"name": "CSE"
+					}
+				},
+				{
+					"id": "3121ce01-9d43-43fd-816d-1dcbd1609991",
+					"userId": "CSE156",
+					"coursesId": "CST309",
+					"semester": 4,
+					"batch": "A",
+					"periodNumber": 3,
+					"dayId": "Wednesday",
+					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+					"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+					"course": {
+						"courseName": "COA"
+					},
+					"lab": {
+						"labAdmins": [
+							{
+								"name": "Smitha Jacob"
+							},
+							{
+								"name": "Thomas"
+							}
+						],
+						"labName": "Software Computing Lab",
+						"venue": "MTB",
+						"roomNumber": "283"
+					},
+					"teachingDepartment": {
+						"name": "CSE"
+					}
+				}
 			],
 			"reservation": [
 				...
 			],
 			"notifications": [
-				{
-					"id": "b375429b-5691-482f-a1df-28c29d418b56",
-					"professorsProfessorId": "CSE088",
-					"heading": "Software Computing Lab Reservation Request",
-					"message": "Need to teach Data Structures",
-					"type": "RESERVATION_REQUEST",
-					"seen": false,
-					"timeStamp": "2023-06-22T13:21:24.039Z"
-				},
 				...
 			],
 			"report": [
 				...
 			],
-			"labTimeTable": [
-				...
-			],
 			"labData": {
-				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
-				"labName": "Software Computing Lab",
-				"capacity": 65,
-				"roomNumber": "283",
+				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+				"labName": "Programming Lab",
+				"capacity": 32,
+				"roomNumber": "110",
 				"venue": "MTB",
 				"report": [
 					...
 				],
 				"reservation": [
-					{
-						"id": "19675bc7-387a-4cd5-8d4c-b0b294d92097",
-						"professorId": "CSE211",
-						"date": "2023-06-22T00:00:00.000Z",
-						"dayId": "Tuesday",
-						"negotiable": false,
-						"purpose": "Need to teach Data Structures",
-						"coursesId": "CSL202",
-						"semester": 6,
-						"period": 6,
-						"teachingDepartmentsId": "CSE",
-						"labId": "Software Computing Lab",
-						"batch": "B",
-						"status": "REQUESTED"
-					},
 					...
+				],
+				"timeTable": [
+					{
+						"id": "92358fe3-b106-4949-8427-ea6ec5b7bfb7",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 2,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					},
+					{
+						"id": "535d6cb7-21be-44d2-b5c9-d4c65465af1a",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 3,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					},
+					{
+						"id": "4a4e92ab-c2ac-4246-98bb-e454c49f6449",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 4,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					}
 				]
 			}
 		}
@@ -164,7 +293,11 @@
 			"945de729-f39f-4004-95cb-c90ae046682e"
 		],
 		"labName": "Software Computing Lab",
-		"periods": [1, 2, 3]
+		"periods": [1, 2, 3],
+		"teachingStaff": [
+			"CSE209",
+			"CSE223"
+		]
 	}
 
 ##### Response:
@@ -276,8 +409,8 @@
 			"semester": 6,
 			"batch": "B",
 			"periods": [5, 6, 7],
-			"teachingDepartmentsId": "CSE",
-			"labId": "Networks Lab"
+			"teachingDepartmentsId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+			"labId": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2"
 		}
 	}
 
@@ -285,7 +418,23 @@
 	{
 		"success": true,
 		"data": {
-			"count": 3
+			"id": "c8e6ed2e-4a4c-4583-b384-92008b0aa59a",
+			"professorId": "CSE102",
+			"date": "2023-06-30T00:00:00.000Z",
+			"dayId": "Monday",
+			"negotiable": false,
+			"purpose": "I need this to teach Computer Networks",
+			"coursesId": "CSL302",
+			"semester": 6,
+			"periods": [
+				5,
+				6,
+				7
+			],
+			"teachingDepartmentsId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+			"labId": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
+			"batch": "B",
+			"status": "REQUESTED"
 		}
 	}
 
@@ -371,7 +520,7 @@
 ##### Payload:
 	{
 		"date": "2023-06-03T00:00:00.000Z",
-		"labName": "Software Computing Lab",
+		"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
 		"periods": [1, 2, 3]
 	}
 
@@ -379,46 +528,67 @@
 	{
 		"success": true,
 		"data": {
-			"id": "93b0ae95-4acd-4f1c-90de-b9803050b09a",
-			"date": "2023-06-03T00:00:00.000Z",
-			"labName": "Software Computing Lab",
+			"id": "6c6ed5f8-27e1-4ba9-8d54-199f7f5423e1",
+			"date": "2023-06-15T00:00:00.000Z",
+			"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
 			"periods": [
 				1,
 				2,
 				3
 			],
 			"courseCode": "CSL300",
+			"teachingStaff": [
+				{
+					"registerNumber": "CSE209",
+					"name": "Thushara S"
+				},
+				{
+					"registerNumber": "CSE223",
+					"name": "Maria Yesudas"
+				}
+			],
 			"studentPositions": [
-				{
-					"studentId": "20CS040",
-					"systemNumber": 3,
-					"student": {
+			{
+				"studentId": "20CS103",
+				"systemNumber": 3,
+				"student": {
+					"name": "Reenphy George"
+				}
+			},
+			{
+				"studentId": "20CS040",
+				"systemNumber": 7,
+				"student": {
 					"name": "Ashik David Roy"
-					}
-				},
-				{
-					"studentId": "20CS073",
-					"systemNumber": 7,
-					"student": {
-					"name": "Nithin V James"
-					}
-				},
-				...
+				}
+			},
+			{
+				"studentId": "20CS114",
+				"systemNumber": 5,
+				"student": {
+					"name": "Sonu T Shaji"
+				}
+			}
 			],
 			"absentStudents": [
 				{
-					"studentId": "20CS104",
+					"studentId": "20CS113",
 					"student": {
-					"name": "Reenphy George"
+						"name": "Sona Joseph"
 					}
 				},
 				{
-					"studentId": "20CS069",
+					"studentId": "20CS060",
 					"student": {
-					"name": "Jithin Jerome"
+						"name": "George John"
 					}
 				},
-				...
+				{
+					"studentId": "20CS102",
+					"student": {
+						"name": "Raina Raj"
+					}
+				}
 			]
 		}
 	}
@@ -427,8 +597,8 @@
 #### Method: POST
 ##### Payload:
 	{
-		"labId": "Software Computing Lab",
-		"professorId": "CSE103",
+		"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+		"professorId": "CSE200",
 		"systems": [13, 21, 25],
 		"issueDescription": "Unable to power on"
 	}
@@ -437,15 +607,15 @@
 	{
 		"success": true,
 		"data": {
-			"id": "bc8bee45-160b-47d2-8df2-03274143c91d",
-			"labId": "Software Computing Lab",
-			"professorId": "CSE103",
+			"id": "50994902-515b-4b1b-8e93-304c233750da",
+			"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+			"professorId": "CSE200",
 			"systems": [
 				13,
 				21,
 				25
 			],
-			"date": "2023-06-23T16:06:49.959Z",
+			"date": "2023-06-30T05:52:41.042Z",
 			"issueDescription": "Unable to power on",
 			"status": "PENDING"
 		}
@@ -491,8 +661,12 @@
 #### Method: GET
 ##### Payload:
 	{
-		"day": "Wednesday",
-		"periods": [2, 3, 5, 6, 7]
+		"day": "Monday",
+		"periodNumbers": [
+			5,
+			6,
+			7
+		]
 	}
 
 ##### Response:
@@ -500,62 +674,28 @@
 		"success": true,
 		"data": [
 			{
+				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
 				"labName": "Software Computing Lab",
-				"reservation": {
-					"id": "5ce3bbdb-a3e4-4fdf-bc64-81a89c3e3fe0",
-					"professorId": "CSE102",
-					"date": "2023-06-24T00:00:00.000Z",
-					"dayId": "Monday",
-					"negotiable": false,
-					"purpose": "I need this to teach Computer Networks",
-					"coursesId": "CSL302",
-					"semester": 6,
-					"periods": [
-						5,
-						6,
-						7
-					],
-					"teachingDepartmentsId": "CSE",
-					"labId": "Software Computing Lab",
-					"batch": "B",
-					"status": "APPROVED",
-					"professor": {
-						"registerNumber": "CSE102",
-						"name": "Kishore Sebastian"
-					}
-				},
-				"freeOfTimeTable": true
+				"roomNo": "MTB 283",
+				"status": "AVAILABLE"
 			},
 			{
+				"id": "d83cd966-dfcc-4ca5-aa65-88f18ac9f681",
 				"labName": "Networks Lab",
-				"reservation": {
-					"id": "f9da0a17-1b70-4cf1-a32d-a4cea14923f5",
-					"professorId": "CSE102",
-					"date": "2023-06-24T00:00:00.000Z",
-					"dayId": "Monday",
-					"negotiable": false,
-					"purpose": "I need this to teach Computer Networks",
-					"coursesId": "CSL302",
-					"semester": 6,
-					"periods": [
-						5,
-						6,
-						7
-					],
-					"teachingDepartmentsId": "CSE",
-					"labId": "Networks Lab",
-					"batch": "B",
-					"status": "APPROVED",
-					"professor": {
-						"registerNumber": "CSE102",
-						"name": "Kishore Sebastian"
-					}
-				},
-				"freeOfTimeTable": false
+				"roomNo": "SJPB 72",
+				"status": "AVAILABLE"
 			},
 			{
+				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 				"labName": "Programming Lab",
-				"freeOfTimeTable": true
+				"roomNo": "MTB 110",
+				"status": "AVAILABLE"
+			},
+			{
+				"id": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
+				"labName": "Research Lab",
+				"roomNo": "MTB 110",
+				"status": "AVAILABLE"
 			}
 		]
 	}

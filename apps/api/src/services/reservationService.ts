@@ -4,7 +4,7 @@ import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
 const prisma = new PrismaClient()
 
 const reservationCreate = async (reservationInfo: ReservationInfo) => {
-	const data = await prisma.reservation.createMany({
+	const data = await prisma.reservation.create({
 		data: reservationInfo
 	})
 
@@ -23,7 +23,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
 		let notificationData = []
 		for (const id of labAdmins.labAdmins) {
 			const adminId = {
-				professorsProfessorId: id.registerNumber,
+				professorId: id.registerNumber,
 				heading: `Reservation Request For ${reservationInfo.labId}`,
 				message: reservationInfo.purpose,
 				type: NotificationType.REPORT
@@ -68,7 +68,7 @@ const reservationReview = async (reviewInfo: ReviewInfo[]) => {
 		const heading = "Reservation " + reservation.status 
 		await prisma.notifications.create({
 			data: {
-				professorsProfessorId: professorId,
+				professorId: professorId,
 				type: notificationType,
 				heading,
 				message: reservation.purpose

@@ -3,11 +3,20 @@ import { FreeLabRequestInfo, FreeLabResponseInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient()
 
+export enum LabStatus {
+	AVAILABLE = "AVAILABLE",
+	RESERVED = "RESERVED",
+	CLASSTIME = "CLASSTIME"
+}
+
 const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 	// Getting the details of the labs that are free during the specified day and periods
 	const labData = await prisma.lab.findMany({
 		select: {
+			id: true,
 			labName: true,
+			roomNumber: true,
+			venue: true,
 			reservation: {
 				include: {
 					professor: {
@@ -32,17 +41,83 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 
 	const data: FreeLabResponseInfo[] = []
 
+	// for (const lab of labData) {
+	// 	let flag = true
+	// 	for (const period of lab.timeTable) {
+	// 		for (const info of labInfo) {
+	// 			if (period.dayId === info.day && period.periodNumber === info.periodNumber) {
+	// 				flag = false
+	// 				const freeLab: FreeLabResponseInfo = {
+	// 					labName: lab.labName,
+	// 					reservation: null,
+	// 					status: LabStatus.CLASSTIME
+	// 				}
+
+	// 				data.push(freeLab)
+	// 				break
+	// 			}
+	// 		}
+	// 		if (flag === false) {
+	// 			break
+	// 		}
+	// 	}
+
+	// 	if (flag === true) {
+	// 		if (lab.reservation[0] !== undefined) {
+	// 			for (const infoPeriod of labInfo) {
+	// 				const reservation = lab.reservation[0]
+	// 				let flag = true
+	// 				for (const reservationPeriod of reservation.periods) {
+	// 					if (reservationPeriod === infoPeriod.periodNumber) {
+	// 						flag = false
+							
+	// 						const freeLab: FreeLabResponseInfo = {
+	// 							labName: lab.labName,
+	// 							reservation: lab.reservation[0],
+	// 							status: LabStatus.RESERVED
+	// 						}
+	// 						data.push(freeLab)
+							
+	// 						break
+	// 					}
+	// 				}
+	// 				if (flag === false) {
+	// 					break
+	// 				}
+	// 			}
+
+	// 			if (flag === true) {
+	// 				const freeLab: FreeLabResponseInfo = {
+	// 					labName: lab.labName,
+	// 					reservation: null,
+	// 					status: LabStatus.AVAILABLE
+	// 				}
+	// 				data.push(freeLab)
+	// 			}
+	// 		} else {
+	// 			const freeLab: FreeLabResponseInfo = {
+	// 				labName: lab.labName,
+	// 				reservation: null,
+	// 				status: LabStatus.AVAILABLE
+	// 			}
+	// 			data.push(freeLab)
+	// 		}
+	// 	}
+	// }
+
 	for (const lab of labData) {
 		let flag1 = false
 		for (const period of lab.timeTable) {
 			if (period.dayId === labInfo.day) {
 				let flag2 = false
-				for (const periodNumber of labInfo.periods) {
+				for (const periodNumber of labInfo.periodNumbers) {
 					if (periodNumber === period.periodNumber) {
 						const freeLab: FreeLabResponseInfo = {
+							id: lab.id,
 							labName: lab.labName,
-							reservation: lab.reservation[0],
-							freeOfTimeTable: false
+							roomNo: lab.venue + " " + lab.roomNumber,
+							status: LabStatus.CLASSTIME,
+							reservation: null
 						}
 
 						data.push(freeLab)
@@ -52,13 +127,27 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 				}
 
 				if (flag2 === false) {
-					const freeLab: FreeLabResponseInfo = {
-						labName: lab.labName,
-						reservation: lab.reservation[0],
-						freeOfTimeTable: true
-					}
+					if (lab.reservation[0] !== undefined) {
+						const freeLab: FreeLabResponseInfo = {
+							id: lab.id,
+							labName: lab.labName,
+							roomNo: lab.venue + " " + lab.roomNumber,
+							status: LabStatus.RESERVED,
+							reservation: lab.reservation[0]
+						}
 
-					data.push(freeLab)
+						data.push(freeLab)
+					} else {
+						const freeLab: FreeLabResponseInfo = {
+							id: lab.id,
+							labName: lab.labName,
+							roomNo: lab.venue + " " + lab.roomNumber,
+							status: LabStatus.AVAILABLE,
+							reservation: null
+						}
+
+						data.push(freeLab)
+					}
 				}
 
 				flag1 = true
@@ -68,9 +157,11 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
 
 		if (flag1 === false) {
 			const freeLab: FreeLabResponseInfo = {
+				id: lab.id,
 				labName: lab.labName,
-				reservation: lab.reservation[0],
-				freeOfTimeTable: true
+				roomNo: lab.venue + " " + lab.roomNumber,
+				status: LabStatus.AVAILABLE,
+				reservation: lab.reservation[0]
 			}
 
 			data.push(freeLab)
