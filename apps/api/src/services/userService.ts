@@ -11,6 +11,28 @@ const getUserService = async (authId: string) => {
     	},
     	include: {
       		timeTable: {
+				include: {
+					course: {
+						select: {
+							courseName: true
+						}
+					},
+					lab: {
+						select: {
+							labAdmins: {
+								select: {
+									name: true
+								}
+							},
+							labName: true
+						}
+					},
+					teachingDepartment: {
+						select: {
+							name: true
+						}
+					}
+				},
 				orderBy: [
 					{
 						day: {
@@ -115,6 +137,18 @@ const getLabData = async (labId: string) => {
 				]
 			},
 			LabTimeTable: {
+				include: {
+					course: {
+						select: {
+							courseName: true
+						}
+					},
+					teachingStaff: {
+						select: {
+							name: true
+						}
+					}
+				},
 				orderBy: [
 					{
 						day: {

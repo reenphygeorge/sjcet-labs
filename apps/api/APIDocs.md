@@ -41,74 +41,157 @@
 #### Method: GET
 ##### Payload:
 	{
-  		"authId": "smithajacob"
+		"authId": "MTV"
 	}
 
 ##### Response:
 	{
-  		"success": true,
-  		"data": {
-			"id": "ac8d5c69-4921-4266-bd80-2fbb720086ce",
-			"authId": "smithajacob",
-			"registerNumber": "CSE088",
-			"name": "Smitha Jacob",
-			"genderName": "Female",
-			"email": "smitha@gmail.com",
-			"phoneNumber": "8261285628",
-			"departmentId": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
+		"success": true,
+		"data": {
+			"id": "da21c3da-c87c-4ad2-9990-a48c4638d562",
+			"authId": "MTV",
+			"registerNumber": "CSE156",
+			"name": "Mereen Thomas",
+			"gender": "Female",
+			"email": "mereenthomas@gmail.com",
+			"phoneNumber": "9367582290",
+			"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
 			"labAdmin": false,
 			"labIncharge": true,
-			"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+			"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 			"timeTable": [
-				...
+				{
+					"id": "baa60b94-9dab-432a-84e3-1c9dd41a2e4d",
+					"userId": "CSE156",
+					"coursesId": "CST303",
+					"semester": 6,
+					"batch": "B",
+					"periodNumber": 4,
+					"dayId": "Tuesday",
+					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+					"labId": null,
+					"course": {
+						"courseName": "Computer Grahics"
+					},
+					"lab": null,
+					"teachingDepartment": {
+						"name": "CSE"
+					}
+				},
+				{
+					"id": "3121ce01-9d43-43fd-816d-1dcbd1609991",
+					"userId": "CSE156",
+					"coursesId": "CST309",
+					"semester": 4,
+					"batch": "A",
+					"periodNumber": 3,
+					"dayId": "Wednesday",
+					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+					"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+					"course": {
+						"courseName": "COA"
+					},
+					"lab": {
+						"labAdmins": [
+							{
+								"name": "Smitha Jacob"
+							},
+							{
+								"name": "Thomas"
+							}
+						],
+						"labName": "Software Computing Lab"
+					},
+					"teachingDepartment": {
+						"name": "CSE"
+					}
+				}
 			],
 			"reservation": [
 				...
 			],
 			"notifications": [
-				{
-					"id": "b375429b-5691-482f-a1df-28c29d418b56",
-					"professorsProfessorId": "CSE088",
-					"heading": "Software Computing Lab Reservation Request",
-					"message": "Need to teach Data Structures",
-					"type": "RESERVATION_REQUEST",
-					"seen": false,
-					"timeStamp": "2023-06-22T13:21:24.039Z"
-				},
 				...
 			],
 			"report": [
 				...
 			],
-			"labTimeTable": [
-				...
-			],
 			"labData": {
-				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
-				"labName": "Software Computing Lab",
-				"capacity": 65,
-				"roomNumber": "283",
+				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+				"labName": "Programming Lab",
+				"capacity": 32,
+				"roomNumber": "110",
 				"venue": "MTB",
 				"report": [
 					...
 				],
 				"reservation": [
-					{
-						"id": "19675bc7-387a-4cd5-8d4c-b0b294d92097",
-						"professorId": "CSE211",
-						"date": "2023-06-22T00:00:00.000Z",
-						"dayId": "Tuesday",
-						"negotiable": false,
-						"purpose": "Need to teach Data Structures",
-						"coursesId": "CSL202",
-						"semester": 6,
-						"period": 6,
-						"teachingDepartmentsId": "CSE",
-						"labId": "Software Computing Lab",
-						"batch": "B",
-						"status": "REQUESTED"
-					},
 					...
+				],
+				"timeTable": [
+					{
+						"id": "92358fe3-b106-4949-8427-ea6ec5b7bfb7",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 2,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					},
+					{
+						"id": "535d6cb7-21be-44d2-b5c9-d4c65465af1a",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 3,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					},
+					{
+						"id": "4a4e92ab-c2ac-4246-98bb-e454c49f6449",
+						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+						"courseCode": "CSL202",
+						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+						"semester": 3,
+						"batch": "B",
+						"periodNumber": 4,
+						"dayId": "Wednesday",
+						"course": {
+							"courseName": "Data Structures"
+						},
+						"teachingStaff": [
+							{
+								"name": "Thushara S"
+							},
+							{
+								"name": "Smitha Jacob"
+							}
+						]
+					}
 				]
 			}
 		}
