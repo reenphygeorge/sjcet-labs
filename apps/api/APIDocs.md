@@ -81,8 +81,8 @@
 		}
 	}
 
-### /user
-#### Method: GET
+### /user/getUser
+#### Method: POST
 ##### Payload:
 	{
 		"authId": "MTV"
@@ -99,147 +99,106 @@
 			"gender": "Female",
 			"email": "mereenthomas@gmail.com",
 			"phoneNumber": "9367582290",
-			"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+			"department": {
+				"id": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+				"name": "CSE"
+			},
+			"lab": null,
 			"labAdmin": false,
 			"labIncharge": true,
-			"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
-			"timeTable": [
-				{
-					"id": "baa60b94-9dab-432a-84e3-1c9dd41a2e4d",
-					"userId": "CSE156",
-					"coursesId": "CST303",
-					"semester": 6,
-					"batch": "B",
-					"periodNumber": 4,
-					"dayId": "Tuesday",
-					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-					"labId": null,
-					"course": {
-						"courseName": "Computer Grahics"
-					},
-					"lab": null,
-					"teachingDepartment": {
-						"name": "CSE"
-					}
-				},
-				{
-					"id": "3121ce01-9d43-43fd-816d-1dcbd1609991",
-					"userId": "CSE156",
-					"coursesId": "CST309",
-					"semester": 4,
-					"batch": "A",
-					"periodNumber": 3,
-					"dayId": "Wednesday",
-					"teachingDepartmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-					"labId": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
-					"course": {
-						"courseName": "COA"
-					},
-					"lab": {
-						"labAdmins": [
-							{
-								"name": "Smitha Jacob"
-							},
-							{
-								"name": "Thomas"
-							}
-						],
-						"labName": "Software Computing Lab"
-					},
-					"teachingDepartment": {
-						"name": "CSE"
-					}
-				}
-			],
-			"reservation": [
-				...
-			],
-			"notifications": [
-				...
-			],
-			"report": [
-				...
-			],
+			"notifications": null,
 			"labData": {
 				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 				"labName": "Programming Lab",
 				"capacity": 32,
-				"report": [
-					...
-				],
-				"reservation": [
-					...
-				],
+				"report": [],
+				"reservation": [],
 				"timeTable": [
 					{
-						"id": "92358fe3-b106-4949-8427-ea6ec5b7bfb7",
-						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
-						"courseCode": "CSL202",
-						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-						"semester": 3,
-						"batch": "B",
-						"periodNumber": 2,
-						"dayId": "Wednesday",
-						"course": {
-							"courseName": "Data Structures"
-						},
-						"teachingStaff": [
+						"day": "Wednesday",
+						"periods": [
 							{
-								"name": "Thushara S"
+								"id": "92358fe3-b106-4949-8427-ea6ec5b7bfb7",
+								"department": {
+									"id": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+									"name": "CSE"
+								},
+								"semester": 3,
+								"batch": "B",
+								"periodName": "Data Structures",
+								"periodNo": 2,
+								"staff": [
+									{
+										"staffID": "bffc1719-9e91-42fd-b513-a7a0cf31937e",
+										"staffName": "Thushara S"
+									},
+									{
+										"staffID": "42eaad05-139a-4c5a-bf34-c040d08e2205",
+										"staffName": "Smitha Jacob"
+									}
+								]
 							},
-							{
-								"name": "Smitha Jacob"
-							}
-						]
-					},
-					{
-						"id": "535d6cb7-21be-44d2-b5c9-d4c65465af1a",
-						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
-						"courseCode": "CSL202",
-						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-						"semester": 3,
-						"batch": "B",
-						"periodNumber": 3,
-						"dayId": "Wednesday",
-						"course": {
-							"courseName": "Data Structures"
-						},
-						"teachingStaff": [
-							{
-								"name": "Thushara S"
-							},
-							{
-								"name": "Smitha Jacob"
-							}
-						]
-					},
-					{
-						"id": "4a4e92ab-c2ac-4246-98bb-e454c49f6449",
-						"labId": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
-						"courseCode": "CSL202",
-						"departmentId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-						"semester": 3,
-						"batch": "B",
-						"periodNumber": 4,
-						"dayId": "Wednesday",
-						"course": {
-							"courseName": "Data Structures"
-						},
-						"teachingStaff": [
-							{
-								"name": "Thushara S"
-							},
-							{
-								"name": "Smitha Jacob"
-							}
+							...
 						]
 					}
 				]
-			}
+			},
+			"report": [],
+			"reservation": [],
+			"timeTable": [
+				{
+					"day": "Tuesday",
+					"periods": [
+						{
+							"id": "baa60b94-9dab-432a-84e3-1c9dd41a2e4d",
+							"department": {
+							"id": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+							"name": "CSE"
+							},
+							"semester": 6,
+							"batch": "B",
+							"periodName": "Computer Grahics",
+							"periodNo": 4,
+							"labName": null,
+							"staff": null
+						},
+						...
+					]
+				},
+				{
+					"day": "Wednesday",
+					"periods": [
+						{
+							"id": "3121ce01-9d43-43fd-816d-1dcbd1609991",
+							"department": {
+							"id": "82d85ad6-6db5-4693-9373-f02abe9e864a",
+							"name": "CSE"
+							},
+							"semester": 4,
+							"batch": "A",
+							"periodName": "COA",
+							"periodNo": 3,
+							"labName": "Software Computing Lab",
+							"staff": [
+							{
+								"staffID": "42eaad05-139a-4c5a-bf34-c040d08e2205",
+								"staffName": "Smitha Jacob"
+							},
+							{
+								"staffID": "02aee997-e7dc-45d1-b0c0-0f3c01684112",
+								"staffName": "Thomas"
+							}
+							]
+						},
+						...
+					]
+				},
+				...
+			]
 		}
 	}
 
-### /user
+### /user/patchUser
 #### Method: PATCH
 ##### Payload:
 	{
@@ -256,7 +215,7 @@
 	}
 
 ### /experiment
-#### Method: GET
+#### Method: POST
 ##### Payload:
 	{
   		"courseCode": "CSL300"
@@ -312,7 +271,7 @@
 	}
 
 ### /attendance/studentDetails
-#### Method: GET
+#### Method: POST
 ##### Payload:
 	{
 		"departmentId": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
@@ -511,7 +470,7 @@
 	}
 
 ### /logs
-#### Method: GET
+#### Method: POST
 ##### Payload:
 	{
 		"date": "2023-06-03T00:00:00.000Z",
@@ -653,7 +612,7 @@
 	}
 
 ### /freeLabs
-#### Method: GET
+#### Method: POST
 ##### Payload:
 	{
 		"day": "Monday",

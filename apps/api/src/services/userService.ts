@@ -1,11 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { PrismaClient } from '@prisma/client';
+import { Departments, PrismaClient, TimeTable } from '@prisma/client';
 import {
   UserDepartment,
   UserLabData,
   PatchUserData,
   UserReport,
   UserReservation,
+  UserContextData,
+  UserReportData,
+  ReservationData,
+  ReservationPeriod,
+  TimeTableByDay,
+  TimeTablePeriod,
+  Staff,
+  LabTimeTableByDay,
+  LabTimeTablePeriod
 } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
@@ -16,6 +25,11 @@ const getUserService = async (authId: string) => {
     		authId
     	},
     	include: {
+			department: {
+				select: {
+					name: true
+				}
+			},
       		timeTable: {
 				include: {
 					course: {
@@ -27,6 +41,7 @@ const getUserService = async (authId: string) => {
 						select: {
 							labAdmins: {
 								select: {
+									id: true,
 									name: true
 								}
 							},
@@ -51,6 +66,18 @@ const getUserService = async (authId: string) => {
 				]
 			},
 			reservation: {
+				include: {
+					teachingDepartment: {
+						select: {
+							name: true
+						}
+					},
+					lab: {
+						select: {
+							labName: true
+						}
+					}
+				},
 				orderBy: [
 					{
 						day: {
@@ -62,30 +89,202 @@ const getUserService = async (authId: string) => {
 					}
 				]
 			},
-			notifications: true,
-			report: true
+			// notifications: true,
+			report: {
+				include: {
+					lab: {
+						select: {
+							labName: true
+						}
+					}
+				}
+			}
 		}
 	})
 
-  if (user !== null) {
-    if (!user?.labAdmin && !user?.labIncharge) {
-      return user;
-    } else if (user?.labAdmin || user?.labIncharge) {
-      const labId = user.labId;
-      if (labId !== null) {
-        const labData = await getLabData(labId);
+	if (user !== null) {
+		const reports: UserReportData[] = []
+		for (const report of user.report) {
+			const newReport: UserReportData = {
+				id: report.id,
+				date: report.date.toLocaleDateString(undefined, {
+					weekday: undefined,
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				}),
+				labName: report.lab.labName,
+				timing: report.date.toLocaleDateString(undefined, {
+					weekday: undefined,
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				}),
+				issue: report.issueDescription,
+				systemNo: report.systems,
+				status: report.status
+			}
+	
+			reports.push(newReport)
+		}
+	
+		const reservations: ReservationData[] = []
+	
+		for (const reservation of user.reservation) {
+			const periods: ReservationPeriod[] = []
+	
+			for (const period of reservation.periods) {
+				const newPeriod: ReservationPeriod = {
+					id: reservation.id,
+					day: reservation.dayId,
+					date: reservation.date.toLocaleDateString(undefined, {
+						weekday: undefined,
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric',
+					}),
+					periodNo: period
+				}
+	
+				periods.push(newPeriod)
+			}
+	
+			const newReservation: ReservationData = {
+				id: reservation.id,
+				dateOfRequest: reservation.date.toLocaleDateString(undefined, {
+					weekday: undefined,
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				}),
+				department: {
+					id: reservation.teachingDepartmentsId,
+					name: reservation.teachingDepartment.name
+				},
+				semester: reservation.semester,
+				batch: reservation.batch,
+				labName: reservation.lab.labName,
+				periods,
+				purpose: reservation.purpose,
+				status: reservation.status 
+			}
+	
+			reservations.push(newReservation)
+		}
+	
+		const timeTablesByDay: TimeTableByDay[] = []
+	
+		for (const timeTable of user.timeTable) {
+			if (!dayExists(timeTablesByDay, timeTable.dayId)) {
+				const newTimeTablesByDay: TimeTableByDay = {
+					day: timeTable.dayId,
+					periods: []
+				}
+	
+				timeTablesByDay.push(newTimeTablesByDay)
+			}
+		}
+	
+		for (const timeTable of user.timeTable) {
+			const index = timeTablesByDay.findIndex(value => {
+				if (value.day === timeTable.dayId) {
+					return value
+				}
+			})
+	
+			let department: Departments | null
+			if (timeTable.teachingDepartmentId !== null && timeTable.teachingDepartment !== null) {
+				department = {
+					id: timeTable.teachingDepartmentId,
+					name: timeTable.teachingDepartment.name
+				}
+			} else {
+				department = null
+			}
+	
+			let staffMembers: Staff[] | null = []
+			if (timeTable.lab !== null) {
+				for (const staff of timeTable.lab.labAdmins) {
+					const newStaff: Staff = {
+						staffID: staff.id,
+						staffName: staff.name
+					}
+	
+					staffMembers.push(newStaff)
+				}
+	
+			} else {
+				staffMembers = null
+			}
+	
+			let labName: string | null
+			if (timeTable.lab === null) {
+				labName = null
+			} else {
+				labName = timeTable.lab.labName
+			}
+	
+			let periodName: string | null
+			if (timeTable.course === null) {
+				periodName = null
+			} else {
+				periodName = timeTable.course.courseName
+			}
+	
+			const period: TimeTablePeriod = {
+				id: timeTable.id,
+				department,
+				semester: timeTable.semester,
+				batch: timeTable.batch,
+				periodName,
+				periodNo: timeTable.periodNumber,
+				labName,
+				staff: staffMembers
+			}
+	
+			timeTablesByDay[index].periods.push(period)
+		}
+	
+		const userData: UserContextData = {
+			id: user.id,
+			authId: user.authId,
+			registerNumber: user.registerNumber,
+			name: user.name,
+			gender: user.gender,
+			email: user.email,
+			phoneNumber: user.phoneNumber,
+			department: {
+				id: user.departmentId,
+				name: user.department.name
+			},
+			lab: null,
+			labAdmin: user.labAdmin,
+			labIncharge: user.labIncharge,
+			notifications: null,
+			labData: null,
+			report: reports,
+			reservation: reservations,
+			timeTable: timeTablesByDay
+		}
 
-        const newData = {
-          ...user,
-          labData,
-        };
+		if (!user?.labAdmin && !user?.labIncharge) {
+			return userData;
+		} else if (user?.labAdmin || user?.labIncharge) {
+			const labId = user.labId;
+			if (labId !== null) {
+				const labData = await getLabData(labId);
 
-        return newData;
-      }
-    }
-  } else {
-    return null;
-  }
+				const newData = {
+					...userData,
+					labData,
+				};
+
+				return newData;
+			}
+		}
+	} else {
+		return null;
+	}
 };
 
 const getLabData = async (labId: string) => {
@@ -124,6 +323,11 @@ const getLabData = async (labId: string) => {
 						select: {
 							name: true
 						}
+					},
+					lab: {
+						select: {
+							labName: true
+						}
 					}
 				},
 				orderBy: [
@@ -145,6 +349,12 @@ const getLabData = async (labId: string) => {
 						}
 					},
 					teachingStaff: {
+						select: {
+							id: true,
+							name: true
+						}
+					},
+					department: {
 						select: {
 							name: true
 						}
@@ -172,15 +382,15 @@ const getLabData = async (labId: string) => {
 				id: report.id,
 				staffName: report.professor.name,
 				date: temp.toLocaleDateString(undefined, {
-				weekday: undefined,
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
+					weekday: undefined,
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
 				}),
 				timing: temp.toLocaleTimeString(undefined, {
-				hour: 'numeric',
-				minute: 'numeric',
-				second: undefined,
+					hour: 'numeric',
+					minute: 'numeric',
+					second: undefined,
 				}),
 				systemNo: report.systems,
 				issue: report.issueDescription,
@@ -195,9 +405,26 @@ const getLabData = async (labId: string) => {
 			let tempDate = new Date(reservation.date)
 			let tempDepartment: UserDepartment = {
 				id: reservation.teachingDepartmentsId,
-				name: reservation.teachingDepartment.name,
-				batch: reservation.batch
+				name: reservation.teachingDepartment.name
 			}
+
+			let periods: ReservationPeriod[] = []
+			for (const period of reservation.periods) {
+				const newPeriod: ReservationPeriod = {
+					id: reservation.id,
+					date: reservation.date.toLocaleDateString(undefined, {
+						weekday: undefined,
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					}),
+					day: reservation.dayId,
+					periodNo: period
+				}
+
+				periods.push(newPeriod)
+			}
+
 			const tempReservation: UserReservation = {
 				id: reservation.id,
 				staffName: reservation.professor.name,
@@ -209,12 +436,79 @@ const getLabData = async (labId: string) => {
 					month: 'long',
 					day: 'numeric'
 				}),
-				periods: reservation.periods,
+				periods,
 				purpose: reservation.purpose,
-				status: reservation.status
+				status: reservation.status,
+				batch: reservation.batch,
+				labName: reservation.lab.labName
 			}
 
 			reservations.push(tempReservation)
+		}
+
+		const labTimeTablesByDay: LabTimeTableByDay[] = []
+
+		for (const period of labData.LabTimeTable) {
+			if (!dayExists(labTimeTablesByDay, period.dayId)) {
+				const newLabTimeTablesByDay: LabTimeTableByDay = {
+					day: period.dayId,
+					periods: []
+				}
+	
+				labTimeTablesByDay.push(newLabTimeTablesByDay)
+			}
+		}
+
+		for (const period of labData.LabTimeTable) {
+			const index = labTimeTablesByDay.findIndex(value => {
+				if (value.day === period.dayId) {
+					return value
+				}
+			})
+
+			let department: Departments | null
+			if (period.departmentId !== null && period.department !== null) {
+				department = {
+					id: period.departmentId,
+					name: period.department.name
+				}
+			} else {
+				department = null
+			}
+	
+			let staffMembers: Staff[] | null = []
+			if (period.teachingStaff !== null) {
+				for (const staff of period.teachingStaff) {
+					const newStaff: Staff = {
+						staffID: staff.id,
+						staffName: staff.name
+					}
+	
+					staffMembers.push(newStaff)
+				}
+	
+			} else {
+				staffMembers = null
+			}
+	
+			let periodName: string | null
+			if (period.course === null) {
+				periodName = null
+			} else {
+				periodName = period.course.courseName
+			}
+	
+			const newPeriod: LabTimeTablePeriod = {
+				id: period.id,
+				department,
+				semester: period.semester,
+				batch: period.batch,
+				periodName,
+				periodNo: period.periodNumber,
+				staff: staffMembers				
+			}
+	
+			labTimeTablesByDay[index].periods.push(newPeriod)
 		}
 		
 		let data: UserLabData = {
@@ -223,7 +517,7 @@ const getLabData = async (labId: string) => {
 			capacity: labData.capacity,
 			report: reports,
 			reservation: reservations,
-			timeTable: labData.LabTimeTable
+			timeTable: labTimeTablesByDay
 		}
 		return data
 	} else {
@@ -243,6 +537,18 @@ const patchUserData = async ({id, registerNumber, name, email, phoneNumber}: Pat
 			id
 		}
 	})
+}
+
+const dayExists = (timeTablesByDay: TimeTableByDay[] | LabTimeTableByDay[], day: string) => {
+	let flag = false
+	for (const timeTable of timeTablesByDay) {
+		if (timeTable.day === day) {
+			flag = true
+			break
+		}
+	}
+
+	return flag
 }
 
 export { getUserService, patchUserData };
