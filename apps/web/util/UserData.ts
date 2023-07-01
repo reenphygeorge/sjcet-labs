@@ -1,11 +1,15 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-extraneous-dependencies */
+import axios from 'axios';
 import { UserContextData } from '@/types/UserData.d';
 import timetableData from './TimeTableData';
 import labTimetableData from './LabTimeTable';
+import env from '@/config/env';
 
 const fetchUserData = (): UserContextData => ({
-  id: 'b6b6f95d-654e-4d06-abc6-7cd66e4bb1c3',
+  id: 'b0b1e662-8b04-4aad-b510-0c55727074c9',
   authId: '61d84453-f8a0-4895-ac6c-67ab07e6e85b',
-  registerNumber: 'CSE102',
+  registerNumber: 'CSE004',
   name: 'Kishore Sebastian',
   gender: 'Male',
   email: 'kishoresebastian@gmail.com',
@@ -34,7 +38,7 @@ const fetchUserData = (): UserContextData => ({
       ],
       labName: 'Software Computing Lab',
       purpose: '',
-      status: 'REQUESTED',
+      status: 'Requested',
     },
     {
       id: 'ejgvbkjehgka',
@@ -121,4 +125,30 @@ const fetchUserData = (): UserContextData => ({
   },
 });
 
+type Profile = {
+  id?: string;
+  registerNumber?: string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+};
+
+const patchUser = async (data: Profile) => {
+  try {
+    await axios.patch(`${env.apiDomain}/user`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // console.log('Response:', response.data);
+    // Handle the response as needed
+  } catch (error) {
+    // console.error('Error:', error);
+    // Handle the error as needed
+  }
+};
+
 export default fetchUserData;
+
+export { patchUser };

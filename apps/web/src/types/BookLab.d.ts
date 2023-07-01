@@ -34,12 +34,13 @@ interface LabDetails {
 }
 
 interface LabBookingDetails {
-  registerNumber: string | null;
+  professorId: string | null;
   semester: number | null;
-  departmentId: string;
+  teachingDepartmentsId: string;
+  dayId: string;
   batch: string;
-  labName: string;
-  periods: SelectedPeriod[] | string[];
+  labId: string;
+  periods: number[];
   negotiable: boolean;
   purpose: string;
 }

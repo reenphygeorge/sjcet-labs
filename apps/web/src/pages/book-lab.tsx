@@ -54,6 +54,7 @@ const BookLab: NextPage = () => {
     { id: nanoid(), value: 7 },
     { id: nanoid(), value: 8 },
   ];
+
   const { departments } = useContext(GeneralContext);
 
   const [bookingStep, setBookingStep] = useState<number>(1);
@@ -75,23 +76,18 @@ const BookLab: NextPage = () => {
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
   const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
-    registerNumber:
+    professorId:
       userContext?.userData.registerNumber !== undefined
         ? userContext?.userData.registerNumber
         : null,
-    semester: 1,
-    departmentId: departments[0].id,
-    labName: '',
-    batch: '',
-    periods: [
-      {
-        id: '',
-        periodNo: 0,
-        day: '',
-      },
-    ],
+    dayId: '',
     negotiable: false,
     purpose: '',
+    semester: 1,
+    batch: '',
+    periods: [],
+    teachingDepartmentsId: departments[0].id,
+    labId: '',
   });
 
   const contactStaff = (phone: string) => {
@@ -142,7 +138,7 @@ const BookLab: NextPage = () => {
 
   const toast = useToast();
 
-  const changePage = () => {
+  const changePage = async () => {
     if (selectedPeriods.length === 0) {
       toast({
         position: 'bottom',
@@ -153,20 +149,35 @@ const BookLab: NextPage = () => {
         ),
       });
     } else {
-      // console.log({ selectedPeriods });
-
+      const periodNoArray = selectedPeriods.map(({ periodNo }) => periodNo);
+      // const labDetails = await postData('/freeLabs', {
+      //   day: selectedPeriods[0].day,
+      //   periodNumbers: periodNoArray,
+      // });
+      // setLabDetailsforBooking(labDetails);
       setBookingStep(2);
-      setBookingDetails({ ...bookingDetails, periods: selectedPeriods });
+      setBookingDetails({
+        ...bookingDetails,
+        dayId: selectedPeriods[0].day,
+        periods: periodNoArray,
+      });
+
+      console.log(periodNoArray);
     }
   };
 
-  const saveLabName = (name: string) => {
+  type SaveLabName = {
+    id: string;
+    name: string;
+  };
+
+  const saveLabName = ({ id, name }: SaveLabName) => {
     setSelectedLab(name);
-    setBookingDetails({ ...bookingDetails, labName: name });
+    setBookingDetails({ ...bookingDetails, labId: id });
     onOpenSummaryModal();
   };
 
-  const bookNow = () => {
+  const bookNow = async () => {
     toast({
       position: 'bottom',
       render: () => (
@@ -176,6 +187,9 @@ const BookLab: NextPage = () => {
       ),
     });
     Link.push('/');
+    // await bookLabs('/reservation/create', bookingDetails);
+    // userContext?.setUserData({ ...useContext });
+    console.log(bookingDetails);
   };
 
   const reservedLab = (reservationInfo: ReservationInfo | null) => {
@@ -189,7 +203,7 @@ const BookLab: NextPage = () => {
     <Box pb="40">
       <TopHeading
         heading="Book Lab"
-        subText={bookingStep === 1 ? 'Select the periods' : 'Select the labName'}
+        subText={bookingStep === 1 ? 'Select the periods' : 'Select the lab name'}
         arrow
       />
       {bookingStep === 1 ? (
@@ -262,8 +276,8 @@ const BookLab: NextPage = () => {
             }
           )}
           <CustomButton
-            onClick={() => {
-              changePage();
+            onClick={async () => {
+              await changePage();
             }}
             innerText="Next"
             type="regular"
@@ -272,12 +286,14 @@ const BookLab: NextPage = () => {
         </>
       ) : (
         <>
-          {labDetailsforBooking.data.map(({ id, labName, status, reservationDetails }, key) => {
+          {labDetailsforBooking?.data.map(({ id, labName, status, reservationDetails }, key) => {
             const labNameHeading: string = `${key + 1}. ${labName}`;
             return status !== 'Reserved' ? (
               <CustomCard
                 key={id}
-                onClick={status !== 'ClassTime' ? () => saveLabName(labName) : () => null}
+                onClick={
+                  status !== 'Classtime' ? () => saveLabName({ id, name: labName }) : () => null
+                }
                 properties={[
                   {
                     id: nanoid(),
@@ -369,7 +385,7 @@ const BookLab: NextPage = () => {
                     mb="7"
                     rounded="12px"
                     onChange={handleFormChange}
-                    value={bookingDetails.departmentId}
+                    value={bookingDetails.teachingDepartmentsId}
                   >
                     {departments.map(({ id, name }) => (
                       <option key={id} value={id}>

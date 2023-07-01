@@ -19,6 +19,7 @@ import CustomButton from '@/components/CustomButton';
 import { useAuth } from '@/context/AuthContext';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
+import { patchUser } from '../../util/UserData';
 
 const Profile: NextPage = () => {
   const { signOut } = useAuth();
@@ -28,13 +29,15 @@ const Profile: NextPage = () => {
 
   const saveProfile = () => {
     setEditMode(!editMode);
-    // console.log({
-    //   id: userContext?.userData.id,
-    //   registerNumber: userContext?.userData.registerNumber,
-    //   name: userContext?.userData.name,
-    //   email: userContext?.userData.email,
-    //   phoneNumber: userContext?.userData.phoneNumber,
-    // });
+
+    patchUser({
+      id: userContext?.userData.id,
+      registerNumber: userContext?.userData.registerNumber,
+      name: userContext?.userData.name,
+      email: userContext?.userData.email,
+      phoneNumber: userContext?.userData.phoneNumber,
+    });
+    // console.log();
   };
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -123,6 +126,7 @@ const Profile: NextPage = () => {
           onChange={handleFormChange}
           mb="7"
           rounded="12px"
+          disabled
         />
         <FormLabel htmlFor="name" pl="1">
           Name

@@ -12,12 +12,12 @@ type UserContextData = {
   email: string;
   phoneNumber: string;
   department: Department;
+  labAdmin: boolean;
+  labIncharge: boolean;
   timeTable: TimeTableByDay[];
   reservation: ReservationData[];
   report: ReportData[];
   notifications: string[];
-  labAdmin: boolean;
-  labIncharge: boolean;
   lab: string | null;
   labData: LabData | null;
 };
