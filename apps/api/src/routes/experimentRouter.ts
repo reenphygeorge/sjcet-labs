@@ -5,7 +5,7 @@ import { getExperiments } from '../services/experimentService';
 
 const router = express.Router()
 
-const experimentRouter = router.get('/', async (request: Request, response: Response) => {
+const experimentRouter = router.post('/', async (request: Request, response: Response) => {
 	try {
 		const courseCode = request.body.courseCode
 		const data = await getExperiments(courseCode);

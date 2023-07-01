@@ -6,7 +6,7 @@ import { FreeLabRequestInfo } from '../helpers/types/user';
 
 const router = express.Router()
 
-const freeLabsRouter = router.get('/', async (request: Request, response: Response) => {
+const freeLabsRouter = router.post('/', async (request: Request, response: Response) => {
 	try {
 		let labInfo: FreeLabRequestInfo = {
 			day: request.body.day,
