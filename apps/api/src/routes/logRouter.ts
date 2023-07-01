@@ -6,7 +6,7 @@ import { LogData } from '../helpers/types/user';
 
 const router = express.Router()
 
-const getLog = router.get('/', async (request: Request, response: Response) => {
+const getLog = router.post('/', async (request: Request, response: Response) => {
 	try {
 		const logData: LogData = {
 			date: new Date(request.body.date),

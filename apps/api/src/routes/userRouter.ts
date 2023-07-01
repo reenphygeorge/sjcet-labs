@@ -5,7 +5,7 @@ import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const router = express.Router();
 
-const userGet = router.get('/', async (request: Request, response: Response) => {
+const userGet = router.post('/getUser', async (request: Request, response: Response) => {
 	try {
 		const authId = request.body.authId;
 		const data = await getUserService(authId);
@@ -23,7 +23,7 @@ const userGet = router.get('/', async (request: Request, response: Response) => 
 	}
 });
 
-const userPatch = router.patch('/', async (request: Request, response: Response) => {
+const userPatch = router.patch('/patchUser', async (request: Request, response: Response) => {
 	try {
 		const returnedData = await patchUserData(request.body);
 		responseHandler(returnedData, request, response);

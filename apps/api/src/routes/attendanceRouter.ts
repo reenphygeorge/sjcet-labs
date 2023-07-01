@@ -31,7 +31,7 @@ const createRecord = router.post('/create', async (request: Request, response: R
 	}
 })
 
-const studentDetailsRouter = router.get('/studentDetails', async (request: Request, response: Response) => {
+const studentDetailsRouter = router.post('/studentDetails', async (request: Request, response: Response) => {
 		try {
 		const studentInfo: StudentInfo = {
 			departmentId: request.body.departmentId,
