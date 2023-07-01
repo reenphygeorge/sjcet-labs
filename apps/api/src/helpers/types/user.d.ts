@@ -88,16 +88,151 @@ export interface FreeLabResponseInfo {
   reservation: Reservation | null;
 }
 
+// export interface UserReservation {
+// 	id: string;
+// 	staffName: string;
+// 	semester: number;
+// 	department: Department;
+// 	dateOfRequest: string;
+// 	periods: number[];
+// 	status: string;
+// 	purpose: string | null;
+// }
+
+// export interface UserReport {
+//   id: string;
+//   staffName: string;
+//   date: string;
+//   timing: string;
+//   status: string;
+//   issue: string;
+//   systemNo: number[];
+// }
+
+// export interface UserDepartment {
+//   id: string;
+//   name: string;
+//   batch: string | null;
+// }
+
+// export interface UserLabData {
+// 	id: string;
+// 	labName: string;
+// 	capacity: number;
+// 	report: ReportNew[];
+// 	reservation: ReservationNew[];
+// 	timeTable: LabTimeTable[];
+// }
+
+export interface UserContextData {
+  id: string;
+  authId: string;
+  registerNumber: string;
+  name: string;
+  gender: string;
+  email: string;
+  phoneNumber: string;
+  department: UserDepartment;
+  timeTable: TimeTableByDay[];
+  reservation: ReservationData[];
+  report: UserReportData[];
+  notifications: string[] | null;
+  labAdmin: boolean;
+  labIncharge: boolean;
+  lab: string | null;
+  labData: LabData | null;
+};
+
+export interface UserDepartment {
+  id: string;
+  name: string;
+};
+
+// Teacher TimeTable
+
+export interface TimeTableByDay {
+  day: string;
+  periods: TimeTablePeriod[];
+};
+
+export interface Staff {
+  staffID: string;
+  staffName: string;
+};
+
+export interface TimeTablePeriod {
+  id: string;
+  periodName: string | null | undefined;
+  staff: Staff[] | null;
+  batch: string | null;
+  department: Department | null | undefined;
+  semester: number | null;
+  periodNo: number;
+  labName: string | null;
+};
+
+// Lab TimeTable
+
+export interface LabTimeTableByDay {
+  day: string;
+  periods: LabTimeTablePeriod[];
+};
+
+export interface LabTimeTablePeriod {
+  id: string;
+  periodName: string | null;
+  staff: Staff[] | null;
+  batch: string | null2;
+  semester: number | null;
+  department: Department | null;
+  periodNo: number;
+};
+
+// Reservation
+
+export interface ReservationData {
+  id: string;
+  semester: number | null;
+  batch: string | null;
+  department: UserDepartment;
+  dateOfRequest: string;
+  periods: ReservationPeriod[];
+  labName: string;
+  purpose: string | null;
+  status: string;
+};
+
 export interface UserReservation {
   id: string;
   staffName: string;
-  semester: number;
+  semester: number | null;
+  batch: string | null;
   department: Department;
   dateOfRequest: string;
-  periods: number[];
+  periods: ReservationPeriod[];
+  labName: string;
   status: string;
   purpose: string | null;
-}
+};
+
+export interface ReservationPeriod {
+  id: string;
+  periodNo: number;
+  day: string;
+  date: string;
+};
+
+// Reports
+
+export interface UserReportData {
+  id: string;
+  date: string;
+  timing: string;
+  labName: string;
+  issue: string;
+  status: string;
+  systemNo: number[];
+};
 
 export interface UserReport {
   id: string;
@@ -107,19 +242,16 @@ export interface UserReport {
   status: string;
   issue: string;
   systemNo: number[];
-}
+};
 
-export interface UserDepartment {
-  id: string;
-  name: string;
-  batch: string | null;
-}
+// Lab Data
 
 export interface UserLabData {
   id: string;
   labName: string;
   capacity: number;
-  report: ReportNew[];
-  reservation: ReservationNew[];
-  timeTable: LabTimeTable[];
-}
+  labName: string;
+  report: LabSideReport[];
+  reservation: LabSideReservation[];
+  timeTable: LabTimeTableByDay[];
+};
