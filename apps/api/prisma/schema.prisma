@@ -80,8 +80,6 @@ model Reservation {
   dayId                 String
   negotiable            Boolean
   purpose               String?
-  course                Courses           @relation(fields: [coursesId], references: [courseCode])
-  coursesId             String
   semester              Int
   periods               Int[]
   teachingDepartment    Departments       @relation(fields: [teachingDepartmentsId], references: [id])
@@ -90,6 +88,8 @@ model Reservation {
   labId                 String
   batch                 String?
   status                ReservationStatus @default(REQUESTED)
+  Courses               Courses?          @relation(fields: [coursesCourseCode], references: [courseCode])
+  coursesCourseCode     String?
 
   @@unique([dayId, labId, periods, semester, batch, teachingDepartmentsId, professorId])
 }
