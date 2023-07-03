@@ -359,7 +359,6 @@
 			"dayId": "Monday",
 			"negotiable": false,
 			"purpose": "I need this to teach Computer Networks",
-			"coursesId": "CSL302",
 			"semester": 6,
 			"batch": "B",
 			"periods": [5, 6, 7],
@@ -378,7 +377,6 @@
 			"dayId": "Monday",
 			"negotiable": false,
 			"purpose": "I need this to teach Computer Networks",
-			"coursesId": "CSL302",
 			"semester": 6,
 			"periods": [
 				5,

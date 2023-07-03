@@ -49,7 +49,6 @@ export interface ReservationInfo {
   dayId: string;
   negotiable: boolean;
   purpose: string?;
-  coursesId: string;
   semester: number;
   batch: string;
   periods: number[];
