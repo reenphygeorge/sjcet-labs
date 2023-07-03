@@ -32,7 +32,7 @@ const reviewReservation = router.patch('/review', async (request: Request, respo
 
 const deleteReservation = router.delete('/delete', async (request: Request, response: Response) => {
 	try {
-		const reservationInfo: string[] = request.body.reservationInfo
+		const reservationInfo: string = request.body.reservationInfo
 		const data = await reservationDelete(reservationInfo)
 		responseHandler(data, request, response);	
 	} catch (error: Error | any) {

@@ -25,7 +25,6 @@ export interface StudentInfo {
 }
 
 export interface AttendanceInfo {
-  date: Date;
   labId: string;
   periods: number[];
   courseCode: string;

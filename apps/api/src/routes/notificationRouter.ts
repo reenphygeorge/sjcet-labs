@@ -7,8 +7,8 @@ const router = express.Router()
 
 const notificationViewRoute = router.patch('/view', async (request: Request, response: Response) => {
 	try {
-		const notificationIds: string[] = request.body.notificationIds
-		const data = await viewNotifications(notificationIds);
+		const notificationId: string = request.body.notificationId
+		const data = await viewNotifications(notificationId);
 		responseHandler(data, request, response);
 	} catch (error: Error | any) {
 		const message = 'Failed to view notifications';

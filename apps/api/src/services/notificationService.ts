@@ -2,15 +2,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const viewNotifications= async (notificationIds: string[]) => {
-	const data = await prisma.notifications.updateMany({
+const viewNotifications = async (notificationId: string) => {
+	const data = await prisma.notifications.update({
 		data: {
 			seen: true
 		},
 		where: {
-			id: {
-				in: notificationIds
-			}
+			id: notificationId
 		}
 	})
 

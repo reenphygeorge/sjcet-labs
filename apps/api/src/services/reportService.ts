@@ -44,12 +44,10 @@ const createReport = async (reportData: ReportData) => {
 	return data
 }
 
-const reviewReport = async (reportIds: string[]) => {
-	const data = await prisma.report.updateMany({
+const reviewReport = async (reportId: string) => {
+	const data = await prisma.report.update({
 		where: {
-			id: {
-				in: reportIds
-			}
+			id: reportId
 		},
 		data: {
 			status: ReportStatus.SOLVED
