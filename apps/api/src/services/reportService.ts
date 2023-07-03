@@ -10,7 +10,7 @@ const createReport = async (reportData: ReportData) => {
 
 	const labAdmins = await prisma.lab.findUnique({
 		where: {
-			labName: reportData.labId
+			id: reportData.labId
 		},
 		select: {
 			labAdmins: {
@@ -51,6 +51,15 @@ const reviewReport = async (reportId: string) => {
 		},
 		data: {
 			status: ReportStatus.SOLVED
+		}
+	})
+
+	await prisma.notifications.create({
+		data: {
+			professorId: data.professorId,
+			heading: "Report Resolved",
+			message: data.issueDescription,
+			type: NotificationType.REPORT
 		}
 	})
 
