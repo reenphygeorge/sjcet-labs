@@ -25,7 +25,6 @@ export interface StudentInfo {
 }
 
 export interface AttendanceInfo {
-  date: Date;
   labId: string;
   periods: number[];
   courseCode: string;
@@ -49,7 +48,6 @@ export interface ReservationInfo {
   dayId: string;
   negotiable: boolean;
   purpose: string?;
-  coursesId: string;
   semester: number;
   batch: string;
   periods: number[];

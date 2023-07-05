@@ -239,18 +239,17 @@
 #### Method: POST
 ##### Payload:
 	{
-		"date": "2023-06-03",
-		"courseCode": "CSL300",
+		"courseCode": "CSL201",
 		"experimentIds": [
-			"b704bd8e-0112-41b1-afc5-1f73015b6869",
-			"f5a7d0fb-d77b-47b4-a5ec-28bdc0c2c853",
-			"945de729-f39f-4004-95cb-c90ae046682e"
+			"1663187b-aeb9-4188-8a42-79ed5755c1ee",
+			"ca4a2e68-195f-4934-b326-68dcadff9f0f",
+			"46dea369-b600-4f8d-ae5e-52ea36957f35"
 		],
-		"labName": "Software Computing Lab",
+		"labId": "ec75ee7c-8096-4874-8565-10b4568e6fb4",
 		"periods": [1, 2, 3],
 		"teachingStaff": [
-			"CSE209",
-			"CSE223"
+			"CSE154",
+			"CSE123"
 		]
 	}
 
@@ -258,15 +257,15 @@
 	{
 		"success": true,
 		"data": {
-			"id": "e73e3370-5e32-4456-9dbb-511e680b3739",
-			"date": "2023-06-15T00:00:00.000Z",
-			"labName": "Software Computing Lab",
+			"id": "012a0609-09ef-49df-8f43-7535e4e730e1",
+			"date": "2023-07-03T18:43:46.677Z",
+			"labId": "ec75ee7c-8096-4874-8565-10b4568e6fb4",
 			"periods": [
 				1,
 				2,
 				3
 			],
-			"courseCode": "CSL300"
+			"courseCode": "CSL201"
 		}
 	}
 
@@ -359,7 +358,6 @@
 			"dayId": "Monday",
 			"negotiable": false,
 			"purpose": "I need this to teach Computer Networks",
-			"coursesId": "CSL302",
 			"semester": 6,
 			"batch": "B",
 			"periods": [5, 6, 7],
@@ -378,7 +376,6 @@
 			"dayId": "Monday",
 			"negotiable": false,
 			"purpose": "I need this to teach Computer Networks",
-			"coursesId": "CSL302",
 			"semester": 6,
 			"periods": [
 				5,
@@ -396,17 +393,8 @@
 #### Method: PATCH
 ##### Payload:
 	{
-		"reviewInfo": [
-			{
-				"reservationId": "6f259b2e-d8ef-46b6-8406-c057fcdc1ebe",
-				"status": "APPROVED"
-			},
-			{
-				"reservationId": "8f6a32cb-464b-4521-8ba4-d8d5ba6a1d52",
-				"status": "REJECTED"
-			},
-			...
-		]
+		"reservationId": "6f259b2e-d8ef-46b6-8406-c057fcdc1ebe",
+		"status": "APPROVED"
 	}
 
 ##### Response:
@@ -437,17 +425,20 @@
 #### Method: PATCH
 ##### Payload:
 	{
-		"notificationIds": [
-			"84eaafd9-0fce-4cd4-92fb-7ebe566561b0",
-			"4d0f0405-aed4-464e-b855-7ae0d2827b3f"
-		]
+	"notificationId": 84eaafd9-0fce-4cd4-92fb-7ebe566561b0"
 	}
 
 ##### Response:
 	{
 		"success": true,
 		"data": {
-			"count": 2
+			"id": "f7e35552-ee40-45c3-b297-adab25a4df6c",
+			"professorId": "CSE102",
+			"heading": "Reservation APPROVED",
+			"message": "I need this to teach Computer Networks",
+			"type": "RESERVATION_APPROVED",
+			"seen": true,
+			"timeStamp": "2023-07-03T18:20:11.605Z"
 		}
 	}
 
@@ -579,17 +570,24 @@
 #### Method: PATCH
 ##### Payload:
 	{
-		"reviewIds": [
-			"bc8bee45-160b-47d2-8df2-03274143c91d",
-			...
-		]
+		"reviewId": "bc8bee45-160b-47d2-8df2-03274143c91d",
 	}
 
 ##### Response:
 	{
 		"success": true,
 		"data": {
-			"count": 1
+			"id": "56f205fe-82e6-4430-9bef-1b408193eb12",
+			"labId": "7d5a3880-2c53-46e3-a12a-bef3f9860915",
+			"professorId": "CSE102",
+			"systems": [
+				13,
+				21,
+				25
+			],
+			"date": "2023-07-03T19:10:30.079Z",
+			"issueDescription": "Unable to power on",
+			"status": "SOLVED"
 		}
 	}
 
@@ -630,25 +628,21 @@
 			{
 				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
 				"labName": "Software Computing Lab",
-				"roomNo": "MTB 283",
 				"status": "AVAILABLE"
 			},
 			{
 				"id": "d83cd966-dfcc-4ca5-aa65-88f18ac9f681",
 				"labName": "Networks Lab",
-				"roomNo": "SJPB 72",
 				"status": "AVAILABLE"
 			},
 			{
 				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
 				"labName": "Programming Lab",
-				"roomNo": "MTB 110",
 				"status": "AVAILABLE"
 			},
 			{
 				"id": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
 				"labName": "Research Lab",
-				"roomNo": "MTB 110",
 				"status": "AVAILABLE"
 			}
 		]

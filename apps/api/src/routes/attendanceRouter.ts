@@ -15,7 +15,6 @@ const router = express.Router();
 const createRecord = router.post('/create', async (request: Request, response: Response) => {
 	try {
 		const attendanceInfo: AttendanceInfo = {
-			date: new Date(request.body.date),
 			courseCode: request.body.courseCode,
 			experimentIds: request.body.experimentIds,
 			labId: request.body.labId,

@@ -12,7 +12,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
 	// Creating Notifications for the lab administrators
 	const labAdmins = await prisma.lab.findUnique({
 		where: {
-			labName: reservationInfo.labId
+			id: reservationInfo.labId
 		},
 		select: {
 			labAdmins: true
@@ -74,12 +74,10 @@ const reservationReview = async (reviewInfo: ReviewInfo) => {
 	return reservation
 }
 
-const reservationDelete = async (reservationInfo: string[]) => {
-	const data = await prisma.reservation.deleteMany({
+const reservationDelete = async (reservationInfo: string) => {
+	const data = await prisma.reservation.delete({
 		where: {
-			id: {
-				in: reservationInfo
-			}
+			id: reservationInfo
 		}
 	})
 

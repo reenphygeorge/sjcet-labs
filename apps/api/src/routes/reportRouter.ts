@@ -25,8 +25,8 @@ const reportCreateRouter = router.post('/create', async (request: Request, respo
 
 const reportReviewRouter = router.patch('/review', async (request: Request, response: Response) => {
 	try {
-		const reviewIds: string[] = request.body.reviewIds
-		const data = await reviewReport(reviewIds)
+		const reviewId: string = request.body.reviewId
+		const data = await reviewReport(reviewId)
 		responseHandler(data, request, response);
 	} catch (error: Error | any) {
 		const message = 'Failed to review report';
