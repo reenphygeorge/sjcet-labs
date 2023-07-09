@@ -88,8 +88,6 @@ model Reservation {
   labId                 String
   batch                 String?
   status                ReservationStatus @default(REQUESTED)
-  Courses               Courses?          @relation(fields: [coursesCourseCode], references: [courseCode])
-  coursesCourseCode     String?
 
   @@unique([dayId, labId, periods, semester, batch, teachingDepartmentsId, professorId])
 }
@@ -182,7 +180,6 @@ model Courses {
   courseName       String
   isPractical      Boolean            @default(false)
   department       Departments[]
-  reservation      Reservation[]
   timeTable        TimeTable[]
   experiments      Experiments[]
   labTimeTable     LabTimeTable[]
