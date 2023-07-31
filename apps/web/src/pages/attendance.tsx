@@ -23,7 +23,7 @@ import { nanoid } from 'nanoid';
 import TopHeading from '@/components/TopHeading';
 import ElementCard from '@/components/ElementCard';
 import CustomButton from '@/components/CustomButton';
-import { StudentAttendanceData, FreeSystems, AttendanceStatus } from '@/types/Attendance.d';
+import { StudentAttendanceData, FreeSystems } from '@/types/Attendance.d';
 import authGuard from '../../util/AuthGuard';
 
 const Attendance: NextPage = () => {
@@ -36,14 +36,14 @@ const Attendance: NextPage = () => {
       rollNo: '1',
       name: 'Abin K Jaimon',
       systemNo: 1,
-      attendanceStatus: AttendanceStatus.Present,
+      attendanceStatus: 'Present',
     },
     {
       id: 'S1',
       rollNo: '2',
       name: 'Aimil Bij',
       systemNo: 2,
-      attendanceStatus: AttendanceStatus.Absent,
+      attendanceStatus: 'Absent',
     },
   ];
 
@@ -52,7 +52,7 @@ const Attendance: NextPage = () => {
     rollNo: '',
     name: '',
     systemNo: 0,
-    attendanceStatus: AttendanceStatus.Absent,
+    attendanceStatus: 'Absent',
   });
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -66,8 +66,7 @@ const Attendance: NextPage = () => {
   };
 
   const handleRadioInput = (value: string) => {
-    const newAttendanceStatus =
-      value === 'Absent' ? AttendanceStatus.Absent : AttendanceStatus.Present;
+    const newAttendanceStatus = value === 'Absent' ? 'Absent' : 'Present';
     setSelectedStudentDetails({
       ...selectedStudentDetails,
       attendanceStatus: newAttendanceStatus,

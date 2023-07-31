@@ -45,10 +45,8 @@ const Profile: NextPage = () => {
   };
 
   const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
-  const [isSmallerThan768] = useMediaQuery('(max-width: 768px)');
+  // const [isSmallerThan768] = useMediaQuery('(max-width: 768px)');
 
-  // eslint-disable-next-line no-nested-ternary
-  const rightSpace = isLargerThan1000 ? '96' : isSmallerThan768 ? '16' : '16';
   const toast = useToast();
   const switchAccount = () => {
     const labAdmin: boolean = !userContext?.userData.labAdmin;
@@ -88,7 +86,7 @@ const Profile: NextPage = () => {
   };
 
   return (
-    <VStack pb="40" mx="5">
+    <VStack mx="5">
       <Text fontSize="2xl" fontWeight="semibold" color="black.50">
         My Profile
       </Text>
@@ -107,7 +105,7 @@ const Profile: NextPage = () => {
           onClick={() => switchAccount()}
           aria-label="Switch-Account"
           position="absolute"
-          right={rightSpace}
+          right={isLargerThan1000 ? '96' : '16'}
           top="40"
           rounded="100%"
           icon={<Repeat width="18px" />}

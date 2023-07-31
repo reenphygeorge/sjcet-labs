@@ -52,7 +52,7 @@ const Home: NextPage = () => {
       {appSession === null ? (
         <LoginPage />
       ) : (
-        <Box pb="40">
+        <Box>
           <Box my="20px">
             <Text fontSize="lg" lineHeight="0.5" fontWeight="black" color="black.50">
               Welcome

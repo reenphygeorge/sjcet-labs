@@ -1,21 +1,17 @@
 import { AuthError } from '@supabase/supabase-js';
 
-interface LoginData {
+type LoginData = {
   email: string;
   password: string;
-}
+};
 
-interface ResetPasswordResult {
+type ResetPasswordResult = {
   data: Object | null;
   error: AuthError | null;
-}
+};
 
-interface LoadingState {
-  state: State;
-}
+type LoadingState = {
+  state: 'IsLoading' | 'NotLoading';
+};
 
-enum State {
-  IsLoading,
-  NotLoading,
-}
-export { LoginData, ResetPasswordResult, State, LoadingState };
+export { LoginData, ResetPasswordResult, LoadingState };

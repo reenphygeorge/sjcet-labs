@@ -162,7 +162,7 @@ const BookLab: NextPage = () => {
         periods: periodNoArray,
       });
 
-      console.log(periodNoArray);
+      // console.log(periodNoArray);
     }
   };
 
@@ -189,7 +189,7 @@ const BookLab: NextPage = () => {
     Link.push('/');
     // await bookLabs('/reservation/create', bookingDetails);
     // userContext?.setUserData({ ...useContext });
-    console.log(bookingDetails);
+    // console.log(bookingDetails);
   };
 
   const reservedLab = (reservationInfo: ReservationInfo | null) => {
@@ -200,7 +200,7 @@ const BookLab: NextPage = () => {
   };
 
   return (
-    <Box pb="40">
+    <Box pb="20">
       <TopHeading
         heading="Book Lab"
         subText={bookingStep === 1 ? 'Select the periods' : 'Select the lab name'}

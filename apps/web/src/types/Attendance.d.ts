@@ -1,25 +1,20 @@
-interface StudentAttendanceData {
+type StudentAttendanceData = {
   id: string;
   rollNo: string;
   name: string;
   systemNo: number;
-  attendanceStatus: AttendanceStatus;
-}
+  attendanceStatus: 'Present' | 'Absent';
+};
 
-enum AttendanceStatus {
-  Present = 'Present',
-  Absent = 'Absent',
-}
-
-interface Data {
+type Data = {
   id: string;
   name: string;
   roomNo: string;
-}
+};
 
-interface FreeSystems {
+type FreeSystems = {
   id: string;
   systemNo: number;
-}
+};
 
-export { StudentAttendanceData, FreeSystems, AttendanceStatus };
+export { StudentAttendanceData, FreeSystems };

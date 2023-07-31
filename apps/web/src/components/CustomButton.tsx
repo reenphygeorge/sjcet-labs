@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable import/extensions */
 import { FC } from 'react';
 import { Button, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
@@ -7,17 +6,33 @@ import { CustomButtonProps } from '@/types/CustomButton';
 const CustomButton: FC<CustomButtonProps> = ({ onClick, innerText, type, disabled, isLoading }) => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
-  const buttonWidth = isLargerThan768
-    ? type === 'modal'
-      ? '280px'
-      : type === 'mini'
-      ? '230px'
-      : '85vw'
-    : type === 'modal'
-    ? '280px'
-    : type === 'mini'
-    ? '35vw'
-    : '85vw';
+  let buttonWidth;
+
+  if (isLargerThan768) {
+    switch (type) {
+      case 'modal':
+        buttonWidth = '280px';
+        break;
+      case 'mini':
+        buttonWidth = '230px';
+        break;
+      default:
+        buttonWidth = '85vw';
+        break;
+    }
+  } else {
+    switch (type) {
+      case 'modal':
+        buttonWidth = '280px';
+        break;
+      case 'mini':
+        buttonWidth = '35vw';
+        break;
+      default:
+        buttonWidth = '85vw';
+        break;
+    }
+  }
 
   return (
     <Flex justify="center">

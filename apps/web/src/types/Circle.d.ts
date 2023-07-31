@@ -1,6 +1,6 @@
 import { BoxProps } from '@chakra-ui/react';
 
-export interface CircleProps {
+export type CircleProps = {
   circleProps?: BoxProps;
   innerText?: String;
-}
+};

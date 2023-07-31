@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable import/extensions */
 import { ChangeEvent, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';

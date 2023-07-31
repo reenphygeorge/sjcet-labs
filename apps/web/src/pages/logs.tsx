@@ -9,7 +9,7 @@ import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
 import { NumberOptions } from '@/types/ReactSelect';
 import { LogPayLoad } from '@/types/Logs';
-import { AttendanceStatus, StudentAttendanceData } from '@/types/Attendance.d';
+import { StudentAttendanceData } from '@/types/Attendance.d';
 import ElementCard from '@/components/ElementCard';
 import authGuard from '../../util/AuthGuard';
 
@@ -75,14 +75,14 @@ const Logs: NextPage = () => {
       rollNo: '1',
       name: 'Abin K Jaimon',
       systemNo: 1,
-      attendanceStatus: AttendanceStatus.Present,
+      attendanceStatus: 'Present',
     },
     {
       id: 'S1',
       rollNo: '2',
       name: 'Aimil Bij',
       systemNo: 2,
-      attendanceStatus: AttendanceStatus.Absent,
+      attendanceStatus: 'Absent',
     },
   ];
 

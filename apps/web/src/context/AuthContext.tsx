@@ -17,7 +17,7 @@ type AuthContextValue = {
   signOut: () => Promise<void>;
 };
 
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const AuthContext = createContext<AuthContextValue | null>(null);
 
 const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);

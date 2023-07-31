@@ -137,3 +137,9 @@ prisma/dev.db
 tmp
 .vscode/*
 
+# Capacitor build files
+android
+ios
+
+# Android studio
+.idea

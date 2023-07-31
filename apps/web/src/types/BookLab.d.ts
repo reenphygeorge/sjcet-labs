@@ -1,15 +1,15 @@
-interface Options {
+type Options = {
   id: string;
   value: string | number;
-}
+};
 
-interface SelectedPeriod {
+type SelectedPeriod = {
   id: string;
   periodNo: number;
   day: string;
-}
+};
 
-interface ReservationInfo {
+type ReservationInfo = {
   id: string;
   staffName: string;
   semester: number;
@@ -19,21 +19,21 @@ interface ReservationInfo {
   purpose: string;
   negotiable: boolean;
   phone: string;
-}
+};
 
-interface LabData {
+type LabData = {
   id: string;
   name: string;
   roomNo: string;
-  status: Status;
+  status: 'Reserved' | 'Available' | 'ClassTime';
   reservationInfo?: ReservationInfo;
-}
+};
 
-interface LabDetails {
+type LabDetails = {
   data: LabData[];
-}
+};
 
-interface LabBookingDetails {
+type LabBookingDetails = {
   professorId: string | null;
   semester: number | null;
   teachingDepartmentsId: string;
@@ -43,12 +43,6 @@ interface LabBookingDetails {
   periods: number[];
   negotiable: boolean;
   purpose: string;
-}
+};
 
-enum Status {
-  Reserved = 'Reserved',
-  Available = 'Available',
-  ClassTime = 'ClassTime',
-}
-
-export { Options, SelectedPeriod, ReservationInfo, LabData, LabDetails, LabBookingDetails, Status };
+export { Options, SelectedPeriod, ReservationInfo, LabData, LabDetails, LabBookingDetails };

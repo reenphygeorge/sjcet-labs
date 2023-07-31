@@ -1,8 +1,6 @@
 import { NumberOptions } from './ReactSelect';
 
-interface LogPayLoad {
+export type LogPayLoad = {
   dateTime: string;
   systemNo: NumberOptions[];
-}
-
-export { LogPayLoad };
+};
