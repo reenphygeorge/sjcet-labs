@@ -98,6 +98,20 @@ You need to install
    pnpm --filter web dev
    ```
 
+6. Build & export static content
+
+   ```sh
+   pnpm --filter web static
+   ```
+
+7. Sync changes with capacitor
+
+   ```sh
+   pnpm --filter web cap-sync
+   ```
+
+8. Open `android` directory in Android-Studio & `ios` directory in XCode to build the gradle.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Installation with Docker compose
