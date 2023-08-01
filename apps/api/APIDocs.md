@@ -84,9 +84,7 @@
 ### /user/getUser
 #### Method: POST
 ##### Payload:
-	{
-		"authId": "MTV"
-	}
+	/user/getUser/MTV
 
 ##### Response:
 	{
