@@ -7,53 +7,54 @@ import {
   getStudentDetails,
   addAbsentStudents,
 } from '../services/attendanceService';
-import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
-import { StudentInfo } from '../helpers/types/user';
+import { AttendanceInfo, StudentInfo } from '../helpers/types/user';
 
 const router = express.Router();
 
 const createRecord = router.post('/create', async (request: Request, response: Response) => {
-	try {
-		const attendanceInfo: AttendanceInfo = {
-			courseCode: request.body.courseCode,
-			experimentIds: request.body.experimentIds,
-			labId: request.body.labId,
-			periods: request.body.periods,
-			teachingStaff: request.body.teachingStaff
-		}
-		const data = await recordCreate(attendanceInfo)
-		responseHandler(data, request, response);	
-	} catch (error: Error | any) {
-		const message = 'Failed to create attendance record';
-		error.message = message;
-		errorHandler(error, request, response);
-	}
-})
+  try {
+    const attendanceInfo: AttendanceInfo = {
+      courseCode: request.body.courseCode,
+      experimentIds: request.body.experimentIds,
+      labId: request.body.labId,
+      periods: request.body.periods,
+      teachingStaff: request.body.teachingStaff,
+    };
+    const data = await recordCreate(attendanceInfo);
+    responseHandler(data, request, response);
+  } catch (error: Error | any) {
+    const message = 'Failed to create attendance record';
+    error.message = message;
+    errorHandler(error, request, response);
+  }
+});
 
-const studentDetailsRouter = router.post('/studentDetails', async (request: Request, response: Response) => {
-		try {
-		const studentInfo: StudentInfo = {
-			departmentId: request.body.departmentId,
-			semester: request.body.semester,
-			batch: request.body.batch,
-			labBatch: request.body.labBatch,
-		};
-		const data = await getStudentDetails(studentInfo);
-		responseHandler(data, request, response);
-		} catch (error: Error | any) {
-		const message = 'Failed to retrieve student data';
-		error.message = message;
-		errorHandler(error, request, response);
-		}
-	}
+const studentDetailsRouter = router.post(
+  '/studentDetails',
+  async (request: Request, response: Response) => {
+    try {
+      const studentInfo: StudentInfo = {
+        departmentId: request.body.departmentId,
+        semester: request.body.semester,
+        batch: request.body.batch,
+        labBatch: request.body.labBatch,
+      };
+      const data = await getStudentDetails(studentInfo);
+      responseHandler(data, request, response);
+    } catch (error: Error | any) {
+      const message = 'Failed to retrieve student data';
+      error.message = message;
+      errorHandler(error, request, response);
+    }
+  }
 );
 
 const studentPositions = router.post(
   '/studentPositions',
   async (request: Request, response: Response) => {
     try {
-      const studentPositions: StudentPositions[] = request.body.studentPositions;
-      const data = await addStudentPositions(studentPositions);
+      const { studentsPositions } = request.body;
+      const data = await addStudentPositions(studentsPositions);
       responseHandler(data, request, response);
     } catch (error: Error | any) {
       const message = 'Failed to insert student positions data';
@@ -67,8 +68,8 @@ const absentStudents = router.post(
   '/absentStudents',
   async (request: Request, response: Response) => {
     try {
-      const absentStudents: AbsentStudents[] = request.body.absentStudents;
-      const data = await addAbsentStudents(absentStudents);
+      const { absentStudentsInfo } = request.body;
+      const data = await addAbsentStudents(absentStudentsInfo);
       responseHandler(data, request, response);
     } catch (error: Error | any) {
       const message = 'Failed to insert absent students data';

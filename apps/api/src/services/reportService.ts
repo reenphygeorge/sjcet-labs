@@ -4,78 +4,78 @@ import { ReportData } from '../helpers/types/user';
 const prisma = new PrismaClient();
 
 const createReport = async (reportData: ReportData) => {
-	const data = await prisma.report.create({
-		data: reportData
-	})
+  const data = await prisma.report.create({
+    data: reportData,
+  });
 
-	const labAdmins = await prisma.lab.findUnique({
-		where: {
-			id: reportData.labId
-		},
-		select: {
-			labAdmins: {
-				select: {
-					registerNumber: true
-				}
-			},
-			labName: true
-		}
-	})
+  const labAdmins = await prisma.lab.findUnique({
+    where: {
+      id: reportData.labId,
+    },
+    select: {
+      labAdmins: {
+        select: {
+          registerNumber: true,
+        },
+      },
+      labName: true,
+    },
+  });
 
-	// Creating notifications for the lab administrators
-	if (labAdmins !== null) {
-		let notificationData = []
-		for (const id of labAdmins.labAdmins) {
-			const adminId = {
-				professorId: id.registerNumber,
-				heading: `Report For ${labAdmins.labName}`,
-				message: reportData.issueDescription,
-				type: NotificationType.REPORT
-			}
+  // Creating notifications for the lab administrators
+  if (labAdmins !== null) {
+    const notificationData: any = [];
+    labAdmins.labAdmins.forEach((id: any) => {
+      const adminId = {
+        professorId: id.registerNumber,
+        heading: `Report For ${labAdmins.labName}`,
+        message: reportData.issueDescription,
+        type: NotificationType.REPORT,
+      };
 
-			notificationData.push(adminId)
-		}
-		
-		await prisma.notifications.createMany({
-			data: notificationData
-		})
-	}
+      notificationData.push(adminId);
+    });
 
-	return data
-}
+    await prisma.notifications.createMany({
+      data: notificationData,
+    });
+  }
+
+  return data;
+};
 
 const reviewReport = async (reportId: string) => {
-	const data = await prisma.report.update({
-		where: {
-			id: reportId
-		},
-		data: {
-			status: ReportStatus.SOLVED
-		}
-	})
+  const data = await prisma.report.update({
+    where: {
+      id: reportId,
+    },
+    data: {
+      status: ReportStatus.SOLVED,
+    },
+  });
 
-	await prisma.notifications.create({
-		data: {
-			professorId: data.professorId,
-			heading: "Report Resolved",
-			message: data.issueDescription,
-			type: NotificationType.REPORT
-		}
-	})
+  await prisma.notifications.create({
+    data: {
+      professorId: data.professorId,
+      heading: 'Report Resolved',
+      message: data.issueDescription,
+      type: NotificationType.REPORT,
+    },
+  });
 
-	return data
-}
+  return data;
+};
 
-const deleteReports = async(reporIds: string[]) => {
-	const data = await prisma.report.deleteMany({
-		where: {
-			id: {
-				in: reporIds
-			}
-		}
-	})
+const deleteReports = async (reporIds: string[]) => {
+  const data = await prisma.report.deleteMany({
+    where: {
+      id: {
+        in: reporIds,
+      },
+    },
+  });
 
-	return data
-}
+  return data;
+};
 
-export{ createReport, reviewReport, deleteReports }
+export { createReport, reviewReport, deleteReports };
