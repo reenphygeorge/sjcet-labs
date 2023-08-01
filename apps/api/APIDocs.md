@@ -597,40 +597,39 @@
 	}
 
 ### /freeLabs
-#### Method: POST
+#### Method: GET
 ##### Payload:
-	{
-		"day": "Monday",
-		"periodNumbers": [
-			5,
-			6,
-			7
-		]
-	}
+	/freeLabs/cca69a7d-57c8-4ed8-b17e-b9c084c092a6
 
 ##### Response:
 	{
 		"success": true,
-		"data": [
-			{
-				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
-				"labName": "Software Computing Lab",
-				"status": "AVAILABLE"
-			},
-			{
-				"id": "d83cd966-dfcc-4ca5-aa65-88f18ac9f681",
-				"labName": "Networks Lab",
-				"status": "AVAILABLE"
-			},
-			{
-				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
-				"labName": "Programming Lab",
-				"status": "AVAILABLE"
-			},
-			{
-				"id": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
-				"labName": "Research Lab",
-				"status": "AVAILABLE"
-			}
-		]
+		"data": {
+			"id": "cca69a7d-57c8-4ed8-b17e-b9c084c092a6",
+			"labName": "Software Computing Lab",
+			"labReservationInfo": [
+				{
+					"id": "2c7e2481-173e-47e5-bb79-11e776030c88",
+					"dayId": "Monday",
+					"periodNumber": 2,
+					"staffName": "Ashley Thomas",
+					"departmentWithBatch": "CSE-A",
+					"semester": 8,
+					"purpose": "Request For Booking",
+					"negotiable": true,
+					"phoneNumber": "9288373747"
+				},
+				{
+					"id": "2c7e2481-173e-47e5-bb79-11e776030c88",
+					"dayId": "Monday",
+					"periodNumber": 7,
+					"staffName": "Ashley Thomas",
+					"departmentWithBatch": "CSE-A",
+					"semester": 8,
+					"purpose": "Request For Booking",
+					"negotiable": true,
+					"phoneNumber": "9288373747"
+				}
+			]
+		}
 	}
