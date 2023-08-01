@@ -8,6 +8,8 @@ import { LuClipboardEdit } from 'react-icons/lu';
 import { GoReport } from 'react-icons/go';
 import { LiaToolsSolid } from 'react-icons/lia';
 import { IoFileTrayStackedOutline } from 'react-icons/io5';
+import { AiOutlineExperiment } from 'react-icons/ai';
+import { IoIosPeople } from 'react-icons/io';
 import { CustomCardProps } from '@/types/CustomCard';
 
 const CustomCard: FC<CustomCardProps> = ({
@@ -26,6 +28,8 @@ const CustomCard: FC<CustomCardProps> = ({
     Requests: <BsBuildingExclamation size="26px" />,
     'Report & Repair': <LiaToolsSolid size="28px" />,
     Logs: <IoFileTrayStackedOutline size="26px" />,
+    Laboratory: <AiOutlineExperiment size="26px" />,
+    'Conference Hall': <IoIosPeople size="30px" />,
   };
 
   const currentIcon = iconMap[iconName as string] || null;

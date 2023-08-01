@@ -1,3 +1,5 @@
+import { ReservationInfo } from './BookLab';
+
 type UserContextProps = {
   userData: UserContextData;
   setUserData: (data: UserContextData) => void;
@@ -49,6 +51,7 @@ type TimeTablePeriod = {
   periodNo: number;
   labName: string | null;
   roomNo: string | null;
+  reservationStatus: ReservationInfo | null;
 };
 
 // Lab TimeTable

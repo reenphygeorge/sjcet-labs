@@ -83,7 +83,7 @@ const Home: NextPage = () => {
                     textProps: {
                       color: selectOption !== key ? 'black.25' : 'white',
                       fontSize: 'md',
-                      fontWeight: 'bold',
+                      fontWeight: 'medium',
                       position: 'relative',
                       top: '10',
                     },
