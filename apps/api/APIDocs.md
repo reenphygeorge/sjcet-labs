@@ -596,10 +596,42 @@
 		}
 	}
 
-### /freeLabs
+### /labs/availableLabs
 #### Method: GET
 ##### Payload:
-	/freeLabs/cca69a7d-57c8-4ed8-b17e-b9c084c092a6
+	/labs/availableLabs/30
+
+##### Response:
+	{
+		"success": true,
+		"data": [
+			{
+				"id": "cca69a7d-57c8-4ed8-b17e-b9c084c092a6",
+				"labName": "Software Computing Lab",
+				"capacity": 70
+			},
+			{
+				"id": "ca162b6a-33bf-49c0-8c7b-9e4e1b0c0be0",
+				"labName": "Programming Lab",
+				"capacity": 35
+			},
+			{
+				"id": "51e711e6-141e-4735-8343-79a1488c58e1",
+				"labName": "Network Lab",
+				"capacity": 35
+			},
+			{
+				"id": "4ef454db-4cb6-4a95-8f03-7a3bc8edf452",
+				"labName": "Research Lab",
+				"capacity": 33
+			}
+		]
+	}
+
+### /labs/reservations
+#### Method: GET
+##### Payload:
+	/labs/reservations/cca69a7d-57c8-4ed8-b17e-b9c084c092a6
 
 ##### Response:
 	{

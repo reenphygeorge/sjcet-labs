@@ -3,7 +3,7 @@ import { FreeLabResponseInfo, LabReservationInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
-const getFreeLabsInfo = async (labId: string) => {
+const getLabReservationInfo = async (labId: string) => {
   // Getting the details of the labs that are free during the specified day and periods
   const labData = await prisma.lab.findUnique({
     select: {
@@ -81,4 +81,21 @@ const getFreeLabsInfo = async (labId: string) => {
   return data;
 };
 
-export { getFreeLabsInfo };
+const getFreeLabsInfo = async (capacity: number) => {
+  const data = await prisma.lab.findMany({
+    where: {
+      capacity: {
+        gte: capacity,
+      },
+    },
+    select: {
+      id: true,
+      labName: true,
+      capacity: true,
+    },
+  });
+
+  return data;
+};
+
+export { getFreeLabsInfo, getLabReservationInfo };
