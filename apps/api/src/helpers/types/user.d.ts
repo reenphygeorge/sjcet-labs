@@ -1,4 +1,4 @@
-import { Reservation, ReservationStatus } from '@prisma/client';
+import { ReservationStatus } from '@prisma/client';
 
 export interface PatchUserData {
   id: string;
@@ -65,11 +65,28 @@ export interface ReportData {
   issueDescription: string;
 }
 
+export interface LabReservationInfo {
+  id: string;
+  dayId: string;
+  periodNumber: number;
+  staffName: string;
+  semester: number;
+  departmentWithBatch: string;
+  purpose: string | null;
+  negotiable: boolean;
+  phoneNumber: string;
+}
+
 export interface FreeLabResponseInfo {
   id: string;
   labName: string;
-  status: LabStatus;
-  reservation: Reservation | null;
+  labReservationInfo: LabReservationInfo[];
+}
+
+export interface ConflictingPeriods {
+  status: 'CONFLICTING' | 'SUCCESSFUL';
+  dayId: string | null;
+  periodNumber: number | null;
 }
 
 export interface UserContextData {

@@ -84,9 +84,7 @@
 ### /user/getUser
 #### Method: POST
 ##### Payload:
-	{
-		"authId": "MTV"
-	}
+	/user/getUser/MTV
 
 ##### Response:
 	{
@@ -369,24 +367,13 @@
 ##### Response:
 	{
 		"success": true,
-		"data": {
-			"id": "c8e6ed2e-4a4c-4583-b384-92008b0aa59a",
-			"professorId": "CSE102",
-			"date": "2023-06-30T00:00:00.000Z",
-			"dayId": "Monday",
-			"negotiable": false,
-			"purpose": "I need this to teach Computer Networks",
-			"semester": 6,
-			"periods": [
-				5,
-				6,
-				7
-			],
-			"teachingDepartmentsId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-			"labId": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
-			"batch": "B",
-			"status": "REQUESTED"
-		}
+		"data": [
+			{
+				"status": "SUCCESSFUL",
+				"dayId": null,
+				"periodNumber": null
+			}
+		]
 	}
 
 ### /reservation/review
@@ -609,41 +596,72 @@
 		}
 	}
 
-### /freeLabs
-#### Method: POST
+### /labs/availableLabs
+#### Method: GET
 ##### Payload:
-	{
-		"day": "Monday",
-		"periodNumbers": [
-			5,
-			6,
-			7
-		]
-	}
+	/labs/availableLabs/30
 
 ##### Response:
 	{
 		"success": true,
 		"data": [
 			{
-				"id": "ca7d5cb0-540d-4dfb-b6e4-42f311dd199b",
+				"id": "cca69a7d-57c8-4ed8-b17e-b9c084c092a6",
 				"labName": "Software Computing Lab",
-				"status": "AVAILABLE"
+				"capacity": 70
 			},
 			{
-				"id": "d83cd966-dfcc-4ca5-aa65-88f18ac9f681",
-				"labName": "Networks Lab",
-				"status": "AVAILABLE"
-			},
-			{
-				"id": "a90e7652-90bc-4259-b73a-bbdf5f5abfdc",
+				"id": "ca162b6a-33bf-49c0-8c7b-9e4e1b0c0be0",
 				"labName": "Programming Lab",
-				"status": "AVAILABLE"
+				"capacity": 35
 			},
 			{
-				"id": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
+				"id": "51e711e6-141e-4735-8343-79a1488c58e1",
+				"labName": "Network Lab",
+				"capacity": 35
+			},
+			{
+				"id": "4ef454db-4cb6-4a95-8f03-7a3bc8edf452",
 				"labName": "Research Lab",
-				"status": "AVAILABLE"
+				"capacity": 33
 			}
 		]
+	}
+
+### /labs/reservations
+#### Method: GET
+##### Payload:
+	/labs/reservations/cca69a7d-57c8-4ed8-b17e-b9c084c092a6
+
+##### Response:
+	{
+		"success": true,
+		"data": {
+			"id": "cca69a7d-57c8-4ed8-b17e-b9c084c092a6",
+			"labName": "Software Computing Lab",
+			"labReservationInfo": [
+				{
+					"id": "2c7e2481-173e-47e5-bb79-11e776030c88",
+					"dayId": "Monday",
+					"periodNumber": 2,
+					"staffName": "Ashley Thomas",
+					"departmentWithBatch": "CSE-A",
+					"semester": 8,
+					"purpose": "Request For Booking",
+					"negotiable": true,
+					"phoneNumber": "9288373747"
+				},
+				{
+					"id": "2c7e2481-173e-47e5-bb79-11e776030c88",
+					"dayId": "Monday",
+					"periodNumber": 7,
+					"staffName": "Ashley Thomas",
+					"departmentWithBatch": "CSE-A",
+					"semester": 8,
+					"purpose": "Request For Booking",
+					"negotiable": true,
+					"phoneNumber": "9288373747"
+				}
+			]
+		}
 	}

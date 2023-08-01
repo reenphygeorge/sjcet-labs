@@ -5,9 +5,9 @@ import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const router = express.Router();
 
-const userGet = router.post('/getUser', async (request: Request, response: Response) => {
+const userGet = router.get('/getUser/:authId', async (request: Request, response: Response) => {
   try {
-    const { authId } = request.body;
+    const { authId } = request.params;
     const data = await getUserService(authId);
 
     if (data === null) {

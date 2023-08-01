@@ -1,10 +1,48 @@
 import { NotificationType, PrismaClient } from '@prisma/client';
-import { ReservationInfo, ReviewInfo } from '../helpers/types/user';
+import { ConflictingPeriods, ReservationInfo, ReviewInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
 const reservationCreate = async (reservationInfo: ReservationInfo) => {
-  const data = await prisma.reservation.create({
+  const labTimeTableInfo = await prisma.labTimeTable.findMany({
+    select: {
+      dayId: true,
+      periodNumber: true,
+    },
+    where: {
+      labId: reservationInfo.labId,
+    },
+  });
+
+  const conflictingPeriods: ConflictingPeriods[] = [];
+  let flag = false;
+
+  reservationInfo.periods.forEach((periodNumber) => {
+    labTimeTableInfo.forEach((timeTable) => {
+      if (reservationInfo.dayId === timeTable.dayId) {
+        if (periodNumber === timeTable.periodNumber) {
+          flag = true;
+          conflictingPeriods.push({
+            status: 'CONFLICTING',
+            dayId: reservationInfo.dayId,
+            periodNumber,
+          });
+        }
+      }
+    });
+  });
+
+  if (flag) {
+    return conflictingPeriods;
+  }
+
+  conflictingPeriods.push({
+    status: 'SUCCESSFUL',
+    dayId: null,
+    periodNumber: null,
+  });
+
+  await prisma.reservation.create({
     data: reservationInfo,
   });
 
@@ -36,7 +74,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
     });
   }
 
-  return data;
+  return conflictingPeriods;
 };
 
 const reservationReview = async (reviewInfo: ReviewInfo) => {
