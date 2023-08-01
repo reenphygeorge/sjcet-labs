@@ -54,6 +54,7 @@ A software that assists college faculties to maintain and manage the laboratory.
 - [Next.js](https://nextjs.org/)
 - [ChakraUI](https://chakra-ui.com/)
 - [Supabase Auth](https://supabase.com/docs/guides/auth)
+- [CapacitorJS](https://capacitorjs.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -65,7 +66,7 @@ A software that assists college faculties to maintain and manage the laboratory.
 
 You need to install
 
-1. [Node v16](https://nodejs.org/en/)
+1. [Node v18](https://nodejs.org/en/)
 2. [pnpm](https://pnpm.io/)
 
 ### Installation
@@ -73,7 +74,7 @@ You need to install
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/reenphygeorge/lab-management.git
+   git clone https://github.com/reenphygeorge/sjcet-labs.git
    ```
 
 2. Install all the NPM packages all the applications.
@@ -196,13 +197,13 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[contributors-shield]: https://img.shields.io/github/contributors/reenphygeorge/lab-management.svg?style=for-the-badge
-[contributors-url]: https://github.com/reenphygeorge/lab-management/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/reenphygeorge/lab-management.svg?style=for-the-badge
-[forks-url]: https://github.com/reenphygeorge/lab-management/network/members
-[stars-shield]: https://img.shields.io/github/stars/reenphygeorge/lab-management.svg?style=for-the-badge
-[stars-url]: https://github.com/reenphygeorge/lab-management/stargazers
-[issues-shield]: https://img.shields.io/github/issues/reenphygeorge/lab-management.svg?style=for-the-badge
-[issues-url]: https://github.com/reenphygeorge/lab-management/issues
-[license-shield]: https://img.shields.io/github/license/reenphygeorge/lab-management.svg?style=for-the-badge
-[license-url]: https://github.com/reenphygeorge/lab-management/blob/main/LICENCE
+[contributors-shield]: https://img.shields.io/github/contributors/reenphygeorge/sjcet-labs.svg?style=for-the-badge
+[contributors-url]: https://github.com/reenphygeorge/sjcet-labs/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/reenphygeorge/sjcet-labs.svg?style=for-the-badge
+[forks-url]: https://github.com/reenphygeorge/sjcet-labs/network/members
+[stars-shield]: https://img.shields.io/github/stars/reenphygeorge/sjcet-labs.svg?style=for-the-badge
+[stars-url]: https://github.com/reenphygeorge/sjcet-labs/stargazers
+[issues-shield]: https://img.shields.io/github/issues/reenphygeorge/sjcet-labs.svg?style=for-the-badge
+[issues-url]: https://github.com/reenphygeorge/sjcet-labs/issues
+[license-shield]: https://img.shields.io/github/license/reenphygeorge/sjcet-labs.svg?style=for-the-badge
+[license-url]: https://github.com/reenphygeorge/sjcet-labs/blob/main/LICENCE
