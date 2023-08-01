@@ -5,9 +5,9 @@ import { getFreeLabsInfo } from '../services/freeLabsService';
 
 const router = express.Router();
 
-const freeLabsRouter = router.post('/', async (request: Request, response: Response) => {
+const freeLabsRouter = router.get('/:labId', async (request: Request, response: Response) => {
   try {
-    const { labId } = request.body;
+    const { labId } = request.params;
     const data = await getFreeLabsInfo(labId);
     responseHandler(data, request, response);
   } catch (error: Error | any) {

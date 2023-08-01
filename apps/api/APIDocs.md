@@ -369,24 +369,13 @@
 ##### Response:
 	{
 		"success": true,
-		"data": {
-			"id": "c8e6ed2e-4a4c-4583-b384-92008b0aa59a",
-			"professorId": "CSE102",
-			"date": "2023-06-30T00:00:00.000Z",
-			"dayId": "Monday",
-			"negotiable": false,
-			"purpose": "I need this to teach Computer Networks",
-			"semester": 6,
-			"periods": [
-				5,
-				6,
-				7
-			],
-			"teachingDepartmentsId": "82d85ad6-6db5-4693-9373-f02abe9e864a",
-			"labId": "a3f7a019-6b21-4a94-8a86-cfd2beb118b2",
-			"batch": "B",
-			"status": "REQUESTED"
-		}
+		"data": [
+			{
+				"status": "SUCCESSFUL",
+				"dayId": null,
+				"periodNumber": null
+			}
+		]
 	}
 
 ### /reservation/review
