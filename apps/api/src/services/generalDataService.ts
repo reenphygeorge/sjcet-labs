@@ -3,19 +3,19 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const getGeneralData = async () => {
-	const departments = await prisma.departments.findMany()
+  const departments = await prisma.departments.findMany();
 
-	const courses = await prisma.courses.findMany()
+  const courses = await prisma.courses.findMany();
 
-	const labs = await prisma.lab.findMany()
+  const labs = await prisma.lab.findMany();
 
-	const data = {
-		departments,
-		courses,
-		labs
-	}
+  const data = {
+    departments,
+    courses,
+    labs,
+  };
 
-	return data
-}
+  return data;
+};
 
-export { getGeneralData }
+export { getGeneralData };

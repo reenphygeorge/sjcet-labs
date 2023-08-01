@@ -1,15 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const getExperiments = async (courseCode: string) => {
-	const data = await prisma.experiments.findMany({
-		where: {
-			courseCode: courseCode
-		}
-	})
+  const data = await prisma.experiments.findMany({
+    where: {
+      courseCode,
+    },
+  });
 
-	return data
-}
+  return data;
+};
 
-export { getExperiments }
+export { getExperiments };

@@ -3,28 +3,28 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const viewNotifications = async (notificationId: string) => {
-	const data = await prisma.notifications.update({
-		data: {
-			seen: true
-		},
-		where: {
-			id: notificationId
-		}
-	})
+  const data = await prisma.notifications.update({
+    data: {
+      seen: true,
+    },
+    where: {
+      id: notificationId,
+    },
+  });
 
-	return data
-}
+  return data;
+};
 
 const deleteNotifications = async (notificationIds: string[]) => {
-	const data = await prisma.notifications.deleteMany({
-		where: {
-			id: {
-				in: notificationIds
-			}
-		}
-	})
+  const data = await prisma.notifications.deleteMany({
+    where: {
+      id: {
+        in: notificationIds,
+      },
+    },
+  });
 
-	return data
-}
+  return data;
+};
 
-export { viewNotifications, deleteNotifications }
+export { viewNotifications, deleteNotifications };

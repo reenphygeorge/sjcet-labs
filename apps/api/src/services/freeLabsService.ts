@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { FreeLabRequestInfo, FreeLabResponseInfo } from '../helpers/types/user';
+import { FreeLabResponseInfo } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
@@ -9,11 +9,36 @@ export enum LabStatus {
   CLASSTIME = 'CLASSTIME',
 }
 
-const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
+const getFreeLabsInfo = async (labId: string) => {
   // Getting the details of the labs that are free during the specified day and periods
-  const labData = await prisma.lab.findMany({
+  // const labData = await prisma.lab.findMany({
+  //   select: {
+  //     id: true,
+  //     labName: true,
+  //     reservation: {
+  //       include: {
+  //         professor: {
+  //           select: {
+  //             registerNumber: true,
+  //             name: true,
+  //           },
+  //         },
+  //       },
+  //       where: {
+  //         status: 'APPROVED',
+  //       },
+  //     },
+  //     timeTable: {
+  //       select: {
+  //         periodNumber: true,
+  //         dayId: true,
+  //       },
+  //     },
+  //   },
+  // });
+
+  const labData = await prisma.lab.findUnique({
     select: {
-      id: true,
       labName: true,
       reservation: {
         include: {
@@ -24,16 +49,21 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
             },
           },
         },
-        where: {
-          status: 'APPROVED',
-        },
       },
       timeTable: {
         select: {
           periodNumber: true,
           dayId: true,
         },
+        orderBy: {
+          day: {
+            dayNumber: 'asc',
+          },
+        },
       },
+    },
+    where: {
+      id: labId,
     },
   });
 
@@ -103,64 +133,68 @@ const getFreeLabsInfo = async (labInfo: FreeLabRequestInfo) => {
   // 	}
   // }
 
-  for (const lab of labData) {
-    let flag1 = false;
-    for (const period of lab.timeTable) {
-      if (period.dayId === labInfo.day) {
-        let flag2 = false;
-        for (const periodNumber of labInfo.periodNumbers) {
-          if (periodNumber === period.periodNumber) {
-            const freeLab: FreeLabResponseInfo = {
-              id: lab.id,
-              labName: lab.labName,
-              status: LabStatus.CLASSTIME,
-              reservation: null,
-            };
-
-            data.push(freeLab);
-            flag2 = true;
-            break;
-          }
-        }
-
-        if (flag2 === false) {
-          if (lab.reservation[0] !== undefined) {
-            const freeLab: FreeLabResponseInfo = {
-              id: lab.id,
-              labName: lab.labName,
-              status: LabStatus.RESERVED,
-              reservation: lab.reservation[0],
-            };
-
-            data.push(freeLab);
-          } else {
-            const freeLab: FreeLabResponseInfo = {
-              id: lab.id,
-              labName: lab.labName,
-              status: LabStatus.AVAILABLE,
-              reservation: null,
-            };
-
-            data.push(freeLab);
-          }
-        }
-
-        flag1 = true;
-        break;
-      }
-    }
-
-    if (flag1 === false) {
-      const freeLab: FreeLabResponseInfo = {
-        id: lab.id,
-        labName: lab.labName,
-        status: LabStatus.AVAILABLE,
-        reservation: lab.reservation[0],
-      };
-
-      data.push(freeLab);
-    }
+  if (labData === null) {
+    return null;
   }
+
+  // labData.forEach((lab: any) => {
+  //   let flag1 = false;
+  //   lab.timeTable.forEach((period: any) => {
+  //     if (period.dayId === labInfo.day) {
+  //       let flag2 = false;
+  //       labInfo.periodNumbers.forEach((periodNumber: any) => {
+  //         if (periodNumber === period.periodNumber) {
+  //           const freeLab: FreeLabResponseInfo = {
+  //             id: lab.id,
+  //             labName: lab.labName,
+  //             status: LabStatus.CLASSTIME,
+  //             reservation: null,
+  //           };
+
+  //           data.push(freeLab);
+  //           flag2 = true;
+  //           break;
+  //         }
+  //       });
+
+  //       if (flag2 === false) {
+  //         if (lab.reservation[0] !== undefined) {
+  //           const freeLab: FreeLabResponseInfo = {
+  //             id: lab.id,
+  //             labName: lab.labName,
+  //             status: LabStatus.RESERVED,
+  //             reservation: lab.reservation[0],
+  //           };
+
+  //           data.push(freeLab);
+  //         } else {
+  //           const freeLab: FreeLabResponseInfo = {
+  //             id: lab.id,
+  //             labName: lab.labName,
+  //             status: LabStatus.AVAILABLE,
+  //             reservation: null,
+  //           };
+
+  //           data.push(freeLab);
+  //         }
+  //       }
+
+  //       flag1 = true;
+  //       break;
+  //     }
+  //   });
+
+  //   if (flag1 === false) {
+  //     const freeLab: FreeLabResponseInfo = {
+  //       id: lab.id,
+  //       labName: lab.labName,
+  //       status: LabStatus.AVAILABLE,
+  //       reservation: lab.reservation[0],
+  //     };
+
+  //     data.push(freeLab);
+  //   }
+  // });
 
   return data;
 };
