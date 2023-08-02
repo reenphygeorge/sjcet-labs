@@ -19,7 +19,7 @@ import CustomButton from '@/components/CustomButton';
 import { useAuth } from '@/context/AuthContext';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
-import { patchUser } from '../../util/UserData';
+import { patchUser } from '@/hooks/api/user';
 
 const Profile: NextPage = () => {
   const { signOut } = useAuth();
@@ -37,7 +37,6 @@ const Profile: NextPage = () => {
       email: userContext?.userData.email,
       phoneNumber: userContext?.userData.phoneNumber,
     });
-    // console.log();
   };
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -153,7 +152,7 @@ const Profile: NextPage = () => {
         </FormLabel>
         <Input
           bg="gray.50"
-          id="phone"
+          id="phoneNumber"
           value={userContext?.userData.phoneNumber}
           onChange={handleFormChange}
           mb="7"

@@ -125,30 +125,4 @@ const fetchUserData = (): UserContextData => ({
   },
 });
 
-type Profile = {
-  id?: string;
-  registerNumber?: string;
-  name?: string;
-  email?: string;
-  phoneNumber?: string;
-};
-
-const patchUser = async (data: Profile) => {
-  try {
-    await axios.patch(`${env.apiDomain}/user`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    // console.log('Response:', response.data);
-    // Handle the response as needed
-  } catch (error) {
-    // console.error('Error:', error);
-    // Handle the error as needed
-  }
-};
-
 export default fetchUserData;
-
-export { patchUser };

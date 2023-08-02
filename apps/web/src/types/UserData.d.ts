@@ -5,6 +5,14 @@ type UserContextProps = {
   setUserData: (data: UserContextData) => void;
 };
 
+type Profile = {
+  id?: string;
+  registerNumber?: string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+};
+
 type UserContextData = {
   id: string;
   authId: string;
@@ -143,6 +151,7 @@ export {
   UserContextData,
   UserContextProps,
   TimeTableByDay,
+  Profile,
   LabTimeTableByDay,
   ReservationData,
   ReportData,

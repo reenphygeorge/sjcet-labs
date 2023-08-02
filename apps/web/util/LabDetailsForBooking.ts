@@ -3,13 +3,13 @@ import { LabDetailsforBooking } from '@/types/LabDetailsforBooking.d';
 const labDetailsforBooking: LabDetailsforBooking = {
   data: [
     {
-      id: '0',
+      id: 'cca69a7d-57c8-4ed8-b17e-b9c084c092a6',
       labName: 'Software Computing Lab',
       status: 'Available',
       reservationDetails: null,
     },
     {
-      id: '1',
+      id: 'ca162b6a-33bf-49c0-8c7b-9e4e1b0c0be0',
       labName: 'Programming Lab',
       status: 'Reserved',
       reservationDetails: {
@@ -25,20 +25,14 @@ const labDetailsforBooking: LabDetailsforBooking = {
       },
     },
     {
-      id: '2',
+      id: '51e711e6-141e-4735-8343-79a1488c58e1',
       labName: 'Network Lab',
       status: 'ClassTime',
       reservationDetails: null,
     },
     {
-      id: '3',
+      id: '4ef454db-4cb6-4a95-8f03-7a3bc8edf452',
       labName: 'Research Lab',
-      status: 'available',
-      reservationDetails: null,
-    },
-    {
-      id: '4',
-      labName: 'Testing Lab',
       status: 'available',
       reservationDetails: null,
     },

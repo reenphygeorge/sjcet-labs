@@ -5,11 +5,10 @@ import errorHandler from '../helpers/handlers/ErrorHandler';
 
 const router = express.Router();
 
-const userGet = router.get('/getUser/:authId', async (request: Request, response: Response) => {
+const userGet = router.get('/getUser', async (request: Request, response: Response) => {
   try {
-    const { authId } = request.params;
+    const authId = request.query.authId as string;
     const data = await getUserService(authId);
-
     if (data === null) {
       const message = 'User Not Found';
       const error = new Error(message);

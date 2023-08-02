@@ -1,140 +1,118 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable import/extensions */
 import {
   Box,
   Flex,
+  FormControl,
+  FormLabel,
   Grid,
-  // Input,
-  // Modal,
-  // ModalBody,
-  // ModalCloseButton,
-  // ModalContent,
-  // ModalHeader,
-  // ModalOverlay,
-  // Select,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Select,
   Text,
+  useDisclosure,
   useToast,
-  // useDisclosure,
 } from '@chakra-ui/react';
-// import Link from 'next/router';
-import { useContext, useState } from 'react';
-import { nanoid } from 'nanoid';
 import { NextPage } from 'next';
+import { ChangeEvent, useContext, useState } from 'react';
+import { nanoid } from 'nanoid';
+import Link from 'next/router';
+import { BookLabContext } from '@/context/BookLabContext';
+import TopHeading from '@/components/TopHeading';
+import { Day, LabBookingDetails, ReservationInfo, Semester } from '@/types/BookLab';
 import CustomCard from '@/components/CustomCard';
 import CustomButton from '@/components/CustomButton';
-import TopHeading from '@/components/TopHeading';
-// import ElementCard from '@/components/ElementCard';
-// import ReactSelect from '@/components/ReactSelect';
-import { LabBookingDetails, Options, SelectedPeriod } from '@/types/BookLab.d';
+import ReactSelect from '@/components/ReactSelect';
 import { UserContext } from '@/context/UserContext';
+import { bookLab } from '@/hooks/api/labs';
 import { GeneralContext } from '@/context/GeneralContext';
-// import labDetailsforBooking from '../../util/LabDetailsForBooking';
 
-const BookLab: NextPage = () => {
+const PeriodSelect: NextPage = () => {
+  const bookLabContext = useContext(BookLabContext);
+  const userContext = useContext(UserContext);
+  const { departments } = useContext(GeneralContext).data;
+
   const [dayNumber, setDayNumber] = useState<number>(0);
-  const days: Options[] = [
-    { id: nanoid(), value: 'M' },
-    { id: nanoid(), value: 'T' },
-    { id: nanoid(), value: 'W' },
-    { id: nanoid(), value: 'T' },
-    { id: nanoid(), value: 'F' },
-    { id: nanoid(), value: 'S' },
+  const days: Day[] = [
+    { id: nanoid(), value: 'M', day: 'Monday' },
+    { id: nanoid(), value: 'T', day: 'Tuesday' },
+    { id: nanoid(), value: 'W', day: 'Wednesday' },
+    { id: nanoid(), value: 'T', day: 'Thursday' },
+    { id: nanoid(), value: 'F', day: 'Friday' },
+    { id: nanoid(), value: 'S', day: 'Saturday' },
   ];
 
-  // const semesters: Options[] = [
-  //   { id: nanoid(), value: 1 },
-  //   { id: nanoid(), value: 2 },
-  //   { id: nanoid(), value: 3 },
-  //   { id: nanoid(), value: 4 },
-  //   { id: nanoid(), value: 5 },
-  //   { id: nanoid(), value: 6 },
-  //   { id: nanoid(), value: 7 },
-  //   { id: nanoid(), value: 8 },
-  // ];
+  const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
 
-  const { departments } = useContext(GeneralContext);
-
-  const [selectedPeriods, setSelectedPeriods] = useState<SelectedPeriod[]>([]);
-  // const [selectedLab, setSelectedLab] = useState<string>('');
-  // const [selectedReservationData, setSelectedReservationData] = useState<ReservationInfo>({
-  //   id: '',
-  //   staffName: '',
-  //   date: '',
-  //   labName: '',
-  //   departmentWithBatch: '',
-  //   negotiable: false,
-  //   phone: '',
-  //   purpose: '',
-  //   semester: 0,
-  // });
-  const userContext = useContext(UserContext);
-
-  // const [summaryPage, setSummaryPage] = useState<number>(1);
-
-  const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
-    professorId:
-      userContext?.userData.registerNumber !== undefined
-        ? userContext?.userData.registerNumber
-        : null,
-    dayId: '',
-    negotiable: false,
-    purpose: '',
-    semester: 1,
-    batch: '',
-    periods: [],
-    teachingDepartmentsId: departments[0].id,
-    labId: '',
-  });
-
-  // const contactStaff = (phone: string) => {
-  //   window.open(`tel:${phone}`);
-  // };
-
-  // const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  //   if (event.target.id === 'negotiable' && event.target.value === 'true')
-  //     setBookingDetails({ ...bookingDetails, negotiable: true });
-  //   else if (event.target.id === 'negotiable' && event.target.value === 'false')
-  //     setBookingDetails({ ...bookingDetails, negotiable: false });
-  //   else setBookingDetails({ ...bookingDetails, [event.target.id]: event.target.value });
-  // };
-
-  // const {
-  //   isOpen: isOpenSummaryModal,
-  //   onOpen: onOpenSummaryModal,
-  //   onClose: onCloseSummaryModal,
-  // } = useDisclosure();
-
-  // const {
-  //   isOpen: isOpenReservationModal,
-  //   onOpen: onOpenReservationModal,
-  //   onClose: onCloseReservationModal,
-  // } = useDisclosure();
-
-  // const closeSummaryModal = () => {
-  //   // onCloseSummaryModal();
-  //   setSummaryPage(1);
-  // };
-
-  const removePeriod = (id: string) => {
-    const newPeriods = selectedPeriods.filter((period) => period.id !== id);
-    setSelectedPeriods(newPeriods);
-  };
-
-  const togglePeriods = (id: string, periodNo: number, day: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    selectedPeriods.some((period) => period.id.includes(id)) === false
-      ? setSelectedPeriods((prevElements) => [...prevElements, { id, periodNo, day }])
-      : removePeriod(id);
-  };
+  const [summaryPage, setSummaryPage] = useState<number>(1);
 
   const changeDay = (key: number) => {
     setSelectedPeriods([]);
     setDayNumber(key);
   };
 
+  const removePeriod = (periodNo: number) => {
+    const newPeriod = selectedPeriods.filter((period) => period !== periodNo);
+    setSelectedPeriods(newPeriod);
+  };
+
+  const togglePeriods = (periodNo: number) => {
+    if (selectedPeriods.includes(periodNo)) {
+      removePeriod(periodNo);
+    } else {
+      setSelectedPeriods([...selectedPeriods, periodNo]);
+    }
+  };
+
+  const periodNos = [1, 2, 3, 4, 5, 6];
+
   const toast = useToast();
 
-  const changePage = async () => {
+  const [bookingDetails, setBookingDetails] = useState<LabBookingDetails>({
+    professorId: userContext?.userData !== undefined ? userContext?.userData.registerNumber : '',
+    dayId: '',
+    negotiable: false,
+    purpose: '',
+    semester: 1,
+    batch: '',
+    periods: selectedPeriods,
+    teachingDepartmentsId: '56b3fe8a-83e6-4184-9f1b-d0c976fc4f2e',
+    labId: bookLabContext?.labData.labId !== undefined ? bookLabContext?.labData.labId : '',
+  });
+
+  const semesters: Semester[] = [
+    { id: nanoid(), value: 1 },
+    { id: nanoid(), value: 2 },
+    { id: nanoid(), value: 3 },
+    { id: nanoid(), value: 4 },
+    { id: nanoid(), value: 5 },
+    { id: nanoid(), value: 6 },
+    { id: nanoid(), value: 7 },
+    { id: nanoid(), value: 8 },
+  ];
+
+  const {
+    isOpen: isOpenSummaryModal,
+    onOpen: onOpenSummaryModal,
+    onClose: onCloseSummaryModal,
+  } = useDisclosure();
+
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (event.target.id === 'negotiable' && event.target.value === 'true')
+      setBookingDetails({ ...bookingDetails, negotiable: true });
+    else if (event.target.id === 'negotiable' && event.target.value === 'false')
+      setBookingDetails({ ...bookingDetails, negotiable: false });
+    else if (event.target.id === 'semester')
+      setBookingDetails({ ...bookingDetails, semester: Number(event.target.value) });
+    else setBookingDetails({ ...bookingDetails, [event.target.id]: event.target.value });
+  };
+
+  const viewSummary = async () => {
     if (selectedPeriods.length === 0) {
       toast({
         position: 'bottom',
@@ -145,54 +123,31 @@ const BookLab: NextPage = () => {
         ),
       });
     } else {
-      const periodNoArray = selectedPeriods.map(({ periodNo }) => periodNo);
-      // const labDetails = await postData('/freeLabs', {
-      //   day: selectedPeriods[0].day,
-      //   periodNumbers: periodNoArray,
-      // });
-      // setLabDetailsforBooking(labDetails);
+      setSummaryPage(1);
       setBookingDetails({
         ...bookingDetails,
-        dayId: selectedPeriods[0].day,
-        periods: periodNoArray,
+        periods: selectedPeriods,
+        dayId: days[dayNumber].day,
       });
-
-      // console.log(periodNoArray);
+      onOpenSummaryModal();
     }
   };
 
-  // type SaveLabName = {
-  //   id: string;
-  //   name: string;
-  // };
+  const bookNow = async () => {
+    bookLab(bookingDetails).then(() => {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="green.300">
+            Booking Success
+          </Box>
+        ),
+      });
+      Link.push('/');
+    });
+  };
 
-  // const saveLabName = ({ id, name }: SaveLabName) => {
-  //   setSelectedLab(name);
-  //   setBookingDetails({ ...bookingDetails, labId: id });
-  //   onOpenSummaryModal();
-  // };
-
-  // const bookNow = async () => {
-  //   toast({
-  //     position: 'bottom',
-  //     render: () => (
-  //       <Box color="white" p={3} rounded="12px" bg="green.300">
-  //         Booking Success
-  //       </Box>
-  //     ),
-  //   });
-  //   Link.push('/');
-  //   // await bookLabs('/reservation/create', bookingDetails);
-  //   // userContext?.setUserData({ ...useContext });
-  //   // console.log(bookingDetails);
-  // };
-
-  // const reservedLab = (reservationInfo: ReservationInfo | null) => {
-  //   if (reservationInfo !== null) {
-  //     setSelectedReservationData(reservationInfo);
-  //   }
-  //   onOpenReservationModal();
-  // };
+  const reservationModal = () => {};
 
   return (
     <Box pb="20">
@@ -219,64 +174,56 @@ const BookLab: NextPage = () => {
           ))}
         </>
       </Grid>
-      {userContext?.userData.timeTable[dayNumber].periods.map(
-        ({ id, periodName, semester, department, periodNo, batch }, key) => {
-          const periodHeading: string =
-            periodName !== null ? `${key + 1}. ${periodName}` : `${key + 1}. Free`;
-          const semesterHeading: string =
-            semester !== null ? `S${semester} ${department?.name}-${batch}` : ``;
-          return (
-            <CustomCard
-              onClick={() =>
-                togglePeriods(id, periodNo, userContext?.userData.timeTable[dayNumber].day)
-              }
-              cardProps={{
-                bg:
-                  selectedPeriods.some((period) => period.id.includes(id)) === false
-                    ? 'gray.50'
-                    : 'green.25',
-              }}
-              key={id}
-              properties={[
-                {
-                  id: nanoid(),
-                  value: periodHeading,
-                  textProps: {
-                    color: 'black.25',
-                    fontSize: 'lg',
-                    fontWeight: 'bold',
-                  },
+      {periodNos.map((periodNo) => {
+        const reserved: boolean =
+          bookLabContext?.reservationInfo !== undefined
+            ? bookLabContext?.reservationInfo.some(
+                (info: ReservationInfo) =>
+                  info.dayId === days[dayNumber].day && info.periodNumber === periodNo
+              )
+            : true;
+        const periodHeading = reserved ? `${periodNo}. Reserved` : `${periodNo}. Available`;
+        const defaultBgColor: string = reserved ? 'gray.100' : 'gray.50';
+        const defaultTextColor: string = reserved ? 'gray.400' : 'black';
+
+        return (
+          <CustomCard
+            onClick={() => (!reserved ? togglePeriods(periodNo) : reservationModal())}
+            cardProps={{
+              bg: selectedPeriods.includes(periodNo) && !reserved ? 'green.25' : defaultBgColor,
+            }}
+            key={periodNo}
+            properties={[
+              {
+                id: nanoid(),
+                value: periodHeading,
+                textProps: {
+                  color: defaultTextColor,
+                  fontSize: 'lg',
+                  fontWeight: 'bold',
                 },
-                {
-                  id: nanoid(),
-                  value: semesterHeading,
-                  textProps: {
-                    color: 'black.25',
-                    fontSize: '15',
-                    fontWeight: 'medium',
-                    ml: '4',
-                  },
-                },
-              ]}
-              iconComponent={false}
-              iconHover={false}
-            />
-          );
-        }
-      )}
+              },
+            ]}
+            iconComponent={false}
+            iconHover={false}
+          />
+        );
+      })}
       <CustomButton
         onClick={async () => {
-          await changePage();
+          await viewSummary();
         }}
         innerText="Next"
         type="regular"
         disabled={false}
       />
 
-      {/* <Modal
+      {/* Summary Modal */}
+
+      <Modal
         isCentered
         size="xs"
-        onClose={closeSummaryModal}
+        onClose={onCloseSummaryModal}
         isOpen={isOpenSummaryModal}
         motionPreset="slideInBottom"
       >
@@ -303,11 +250,11 @@ const BookLab: NextPage = () => {
                       <option key={id}>{value}</option>
                     ))}
                   </Select>
-                  <FormLabel htmlFor="departmentId" pl="1">
+                  <FormLabel htmlFor="teachingDepartmentsId" pl="1">
                     Department
                   </FormLabel>
                   <Select
-                    id="departmentId"
+                    id="teachingDepartmentsId"
                     bg="gray.50"
                     mb="7"
                     rounded="12px"
@@ -336,7 +283,7 @@ const BookLab: NextPage = () => {
                   <Input
                     bg="gray.50"
                     id="labName"
-                    value={selectedLab}
+                    value={bookLabContext?.labData.labName}
                     mb="7"
                     rounded="12px"
                     disabled
@@ -347,7 +294,17 @@ const BookLab: NextPage = () => {
                   <FormLabel htmlFor="periodNo" pl="1">
                     Periods
                   </FormLabel>
-                  <ReactSelect options={selectedPeriods} values={selectedPeriods} disabled />
+                  <ReactSelect
+                    options={selectedPeriods.map((period) => ({
+                      label: `Period ${period}`,
+                      value: period,
+                    }))}
+                    values={selectedPeriods.map((period) => ({
+                      label: `Period ${period}`,
+                      value: period,
+                    }))}
+                    disabled
+                  />
 
                   <FormLabel htmlFor="purpose" pl="1">
                     Purpose
@@ -387,64 +344,8 @@ const BookLab: NextPage = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-
-      <Modal
-        isCentered
-        size="xs"
-        onClose={onCloseReservationModal}
-        isOpen={isOpenReservationModal}
-        motionPreset="slideInBottom"
-      >
-        <ModalOverlay bg="rgba(255, 255, 255, 0.15)" backdropFilter="blur(20px)" />
-        <ModalContent>
-          <ModalHeader>Reservation Info</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Staff:  ${selectedReservationData?.staffName}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Department & Batch:  ${selectedReservationData?.departmentWithBatch}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Semester:  S${selectedReservationData?.semester}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Date:  ${selectedReservationData?.date}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Lab Name:  ${selectedReservationData?.labName}`}</Text>
-            <Text
-              fontSize="md"
-              mb={4}
-              fontWeight="semibold"
-            >{`Purpose:  ${selectedReservationData?.purpose}`}</Text>
-            <CustomButton
-              onClick={() =>
-                selectedReservationData?.negotiable === true
-                  ? contactStaff(selectedReservationData?.phone)
-                  : null
-              }
-              innerText="Negotiate"
-              type="modal"
-              disabled={!selectedReservationData?.negotiable}
-            />
-          </ModalBody>
-        </ModalContent>
-      </Modal> */}
     </Box>
   );
 };
 
-export default BookLab;
+export default PeriodSelect;

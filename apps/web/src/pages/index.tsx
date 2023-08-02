@@ -3,7 +3,7 @@
 import Head from 'next/head';
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/router';
 import TimetableCard from '@/components/TimetableCard';
@@ -11,6 +11,7 @@ import CustomCard from '@/components/CustomCard';
 import LoginPage from '@/components/LoginPage';
 import { useAuth } from '@/context/AuthContext';
 import { UserContext } from '@/context/UserContext';
+import { getUser } from '@/hooks/api/user';
 
 type RouteOptions = {
   id: string;
@@ -40,6 +41,15 @@ const Home: NextPage = () => {
     setSelectOption(key);
     await Link.push(route);
   };
+
+  useEffect(() => {
+    if (appSession?.user.id !== undefined) {
+      getUser(appSession?.user.id).then((userData) => {
+        userContext?.setUserData(userData.data);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appSession?.user.id]);
 
   return (
     <>

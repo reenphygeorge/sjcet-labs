@@ -32,7 +32,7 @@ import { NumberOptions } from '@/types/ReactSelect';
 
 const Reports: NextPage = () => {
   const toast = useToast();
-  const { labs } = useContext(GeneralContext);
+  const { labs } = useContext(GeneralContext).data;
   const userContext = useContext(UserContext);
 
   const [selectedReportDetails, setReportStudentDetails] = useState<ReportData>({
@@ -173,7 +173,13 @@ const Reports: NextPage = () => {
                 System No:
               </Text>
               {selectedReportDetails.systemNo.map((number) => (
-                <Tag fontSize="md" id={number.toString()} variant="solid" fontWeight="semibold">
+                <Tag
+                  key={number}
+                  fontSize="md"
+                  id={number.toString()}
+                  variant="solid"
+                  fontWeight="semibold"
+                >
                   {`# ${number}`}
                 </Tag>
               ))}
@@ -216,7 +222,7 @@ const Reports: NextPage = () => {
               <FormLabel pl="1">Lab Name</FormLabel>
               <Select bg="gray.50" mb="7" rounded="12px" id="labName" onChange={handleFormChange}>
                 {labs.map(({ id, labName }) => (
-                  <option id={id} value={labName}>
+                  <option id={id} key={id} value={labName}>
                     {labName}
                   </option>
                 ))}

@@ -12,15 +12,20 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext } from 'react';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
+import { getFreeLabs } from '@/hooks/api/labs';
+import { BookLabContext } from '@/context/BookLabContext';
 
 const LabCapacitySelect: NextPage = () => {
-  const [sliderValue, setSliderValue] = useState<number>(0);
+  const bookLabContext = useContext(BookLabContext);
+
   const toast = useToast();
   const getLabList = async () => {
-    if (sliderValue !== 0) {
+    if (bookLabContext?.labCapacity !== 0 && bookLabContext?.labCapacity !== undefined) {
+      const freeLabs = await getFreeLabs(bookLabContext?.labCapacity);
+      bookLabContext?.setAvailableLabs(freeLabs.data);
       await Link.push('lab-select');
     } else {
       toast({
@@ -39,16 +44,16 @@ const LabCapacitySelect: NextPage = () => {
       <Card mt="56" mb={10}>
         <CardBody>
           <Text fontSize="lg" fontWeight="medium">
-            No of Students: {sliderValue}
+            No of Students: {bookLabContext?.labCapacity}
           </Text>
           <Slider
             min={0}
             max={70}
             step={1}
             aria-label="student-slider"
-            defaultValue={sliderValue}
+            defaultValue={bookLabContext?.labCapacity}
             onChange={(value) => {
-              setSliderValue(value);
+              bookLabContext?.setLabCapacity(value);
             }}
           >
             <SliderTrack>

@@ -7,21 +7,24 @@ import BottomBar from '@/components/BottomBar';
 import { AuthProvider } from '@/context/AuthContext';
 import { UserProvider } from '@/context/UserContext';
 import { GeneralProvider } from '@/context/GeneralContext';
+import { BookLabProvider } from '@/context/BookLabContext';
 
 const App = ({ Component, pageProps }: AppProps) => (
   <AuthProvider>
     <GeneralProvider>
       <UserProvider>
-        <ChakraProvider theme={theme}>
-          <Container h="100vh" pt="25px" px="25px">
-            <Component {...pageProps} />
-            <Flex justify="center">
-              <Box position="fixed" p="20px" bottom="1">
-                <BottomBar />
-              </Box>
-            </Flex>
-          </Container>
-        </ChakraProvider>
+        <BookLabProvider>
+          <ChakraProvider theme={theme}>
+            <Container h="100vh" pt="25px" px="25px">
+              <Component {...pageProps} />
+              <Flex justify="center">
+                <Box position="fixed" p="20px" bottom="1">
+                  <BottomBar />
+                </Box>
+              </Flex>
+            </Container>
+          </ChakraProvider>
+        </BookLabProvider>
       </UserProvider>
     </GeneralProvider>
   </AuthProvider>

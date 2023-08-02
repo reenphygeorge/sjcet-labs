@@ -84,7 +84,13 @@ const ViewBookings: NextPage = () => {
               borderRadius: '12px',
               w: '90px',
               h: '30px',
-              bg: status === 'Requested' ? 'red.50' : 'green.50',
+              bg:
+                // eslint-disable-next-line no-nested-ternary
+                status === 'REQUESTED'
+                  ? 'yellow.300'
+                  : status === 'REJECTED'
+                  ? 'red.50'
+                  : 'green.50',
             }}
             circleInnerText={`${status?.charAt(0).toUpperCase()}${status?.slice(1).toLowerCase()}`}
             properties={[
