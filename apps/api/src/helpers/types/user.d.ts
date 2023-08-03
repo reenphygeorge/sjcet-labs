@@ -6,13 +6,7 @@ export interface PatchUserData {
   name: string | undefined;
   email: string | undefined;
   phoneNumber: string | undefined;
-}
-
-export interface StudentInfo {
-  departmentId: string;
-  semester: number;
-  batch: string;
-  labBatch: number?;
+  labAdmin: boolean | undefined;
 }
 
 export interface AttendanceInfo {

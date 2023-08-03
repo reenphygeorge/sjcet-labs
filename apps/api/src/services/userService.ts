@@ -19,13 +19,21 @@ import {
 
 const prisma = new PrismaClient();
 
-const patchUserData = async ({ id, registerNumber, name, email, phoneNumber }: PatchUserData) => {
+const patchUserData = async ({
+  id,
+  registerNumber,
+  name,
+  email,
+  phoneNumber,
+  labAdmin,
+}: PatchUserData) => {
   await prisma.user.update({
     data: {
       registerNumber,
       name,
       email,
       phoneNumber,
+      labAdmin,
     },
     where: {
       id,

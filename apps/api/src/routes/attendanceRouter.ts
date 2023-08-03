@@ -7,7 +7,7 @@ import {
   getStudentDetails,
   addAbsentStudents,
 } from '../services/attendanceService';
-import { AttendanceInfo, StudentInfo } from '../helpers/types/user';
+import { AttendanceInfo } from '../helpers/types/user';
 
 const router = express.Router();
 
@@ -29,16 +29,11 @@ const createRecord = router.post('/create', async (request: Request, response: R
   }
 });
 
-const studentDetailsRouter = router.post(
+const studentDetailsRouter = router.get(
   '/studentDetails',
   async (request: Request, response: Response) => {
     try {
-      const studentInfo: StudentInfo = {
-        departmentId: request.body.departmentId,
-        semester: request.body.semester,
-        batch: request.body.batch,
-        labBatch: request.body.labBatch,
-      };
+      const studentInfo: any = request.query;
       const data = await getStudentDetails(studentInfo);
       responseHandler(data, request, response);
     } catch (error: Error | any) {

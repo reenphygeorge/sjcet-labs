@@ -1,10 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import {
-  AbsentStudents,
-  AttendanceInfo,
-  StudentPositions,
-  StudentInfo,
-} from '../helpers/types/user';
+import { AbsentStudents, AttendanceInfo, StudentPositions } from '../helpers/types/user';
 
 const prisma = new PrismaClient();
 
@@ -42,26 +37,31 @@ const recordCreate = async ({
   return recordInfo;
 };
 
-const getStudentDetails = async (studentinfo: StudentInfo) => {
+const getStudentDetails = async (studentinfo: any) => {
   // Retreiving the details of the student according to the data provided
-  if (studentinfo.labBatch !== null) {
+  if (studentinfo.labBatch !== undefined) {
     const data = await prisma.student.findMany({
       where: {
         departmentsId: studentinfo.departmentId,
-        semester: studentinfo.semester,
+        semester: Number(studentinfo.semester),
         batch: studentinfo.batch,
-        labBatch: studentinfo.labBatch,
+        labBatch: Number(studentinfo.labBatch),
       },
+      take: Number(studentinfo.entries),
+      skip: (Number(studentinfo.page) - 1) * Number(studentinfo.entries),
     });
 
     return data;
   }
+
   const data = await prisma.student.findMany({
     where: {
       departmentsId: studentinfo.departmentId,
-      semester: studentinfo.semester,
+      semester: Number(studentinfo.semester),
       batch: studentinfo.batch,
     },
+    take: Number(studentinfo.entries),
+    skip: (Number(studentinfo.page) - 1) * Number(studentinfo.entries),
   });
 
   return data;
