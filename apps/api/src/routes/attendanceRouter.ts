@@ -18,7 +18,6 @@ const createRecord = router.post('/create', async (request: Request, response: R
       experimentIds: request.body.experimentIds,
       labId: request.body.labId,
       periods: request.body.periods,
-      teachingStaff: request.body.teachingStaff,
     };
     const data = await recordCreate(attendanceInfo);
     responseHandler(data, request, response);

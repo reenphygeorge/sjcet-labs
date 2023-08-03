@@ -30,7 +30,6 @@ model User {
   report           Report[]
   timeTable        TimeTable[]
   teachingAtLab    LabTimeTable[]
-  AttendanceRecord AttendanceRecord[]
 }
 
 model Departments {
@@ -135,7 +134,6 @@ model AttendanceRecord {
   lab              Lab                @relation(fields: [labId], references: [id])
   labId            String
   periods          Int[]
-  teachingStaff    User[]
   studentPositions StudentPositions[]
   course           Courses            @relation(fields: [courseCode], references: [courseCode])
   courseCode       String
