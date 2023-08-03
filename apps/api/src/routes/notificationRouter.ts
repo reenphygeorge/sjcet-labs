@@ -24,8 +24,8 @@ const notificationDeleteRoute = router.delete(
   '/delete',
   async (request: Request, response: Response) => {
     try {
-      const { notificationIds } = request.body;
-      const data = await deleteNotifications(notificationIds);
+      const { notificationId } = request.query;
+      const data = await deleteNotifications(String(notificationId));
       responseHandler(data, request, response);
     } catch (error: Error | any) {
       const message = 'Failed to delete notifications';

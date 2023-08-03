@@ -66,12 +66,10 @@ const reviewReport = async (reportId: string) => {
   return data;
 };
 
-const deleteReports = async (reporIds: string[]) => {
-  const data = await prisma.report.deleteMany({
+const deleteReports = async (reporId: string) => {
+  const data = await prisma.report.delete({
     where: {
-      id: {
-        in: reporIds,
-      },
+      id: reporId,
     },
   });
 

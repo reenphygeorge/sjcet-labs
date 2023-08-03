@@ -36,8 +36,8 @@ const reviewReservation = router.patch('/review', async (request: Request, respo
 
 const deleteReservation = router.delete('/delete', async (request: Request, response: Response) => {
   try {
-    const { reservationInfo } = request.body;
-    const data = await reservationDelete(reservationInfo);
+    const { reservationInfo } = request.query;
+    const data = await reservationDelete(String(reservationInfo));
     responseHandler(data, request, response);
   } catch (error: Error | any) {
     const message = 'Failed to delete reservation';

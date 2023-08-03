@@ -15,12 +15,10 @@ const viewNotifications = async (notificationId: string) => {
   return data;
 };
 
-const deleteNotifications = async (notificationIds: string[]) => {
-  const data = await prisma.notifications.deleteMany({
+const deleteNotifications = async (notificationId: string) => {
+  const data = await prisma.notifications.delete({
     where: {
-      id: {
-        in: notificationIds,
-      },
+      id: notificationId,
     },
   });
 

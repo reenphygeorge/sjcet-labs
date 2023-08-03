@@ -5,10 +5,10 @@ import { getExperiments } from '../services/experimentService';
 
 const router = express.Router();
 
-const experimentRouter = router.post('/', async (request: Request, response: Response) => {
+const experimentRouter = router.get('/', async (request: Request, response: Response) => {
   try {
-    const { courseCode } = request.body;
-    const data = await getExperiments(courseCode);
+    const { courseCode } = request.query;
+    const data = await getExperiments(String(courseCode));
     responseHandler(data, request, response);
   } catch (error: Error | any) {
     const message = 'Failed to retrieve experiment data';
