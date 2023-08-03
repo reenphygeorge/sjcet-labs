@@ -213,11 +213,9 @@
 	}
 
 ### /experiment
-#### Method: POST
+#### Method: GET
 ##### Payload:
-	{
-  		"courseCode": "CSL300"
-	}
+  	/experiment?courseCode=CSL300
 
 ##### Response:
 	{
@@ -268,14 +266,10 @@
 	}
 
 ### /attendance/studentDetails
-#### Method: POST
+#### Method: GET
 ##### Payload:
-	{
-		"departmentId": "8d7a4429-3a29-4c87-94d3-b64c1b9072f0",
-		"semester": 6,
-		"batch": "B",
-		"labBatch": 2
-	}
+	/attendance/studentDetails?departmentId=8d7a4429-3a29-4c87-94d3-b64c1b9072f0&
+	semester=6&batch=B&labBatch=2
 
 ##### Response:
 	{
@@ -393,12 +387,7 @@
 ### /reservation/delete
 #### Method: DELETE
 ##### Payload:
-	{
-		"reservationInfo": [
-			"ab5fabb6-447d-4c73-91cd-f4f0c5ea6f4f",
-			"c9664bbe-908d-4ea3-ab45-bc4454fc35e0"
-		]
-	}
+	/reservation/delete?reservationInfo=2213bf79-3ea3-4f30-8893-54c8db79f16e
 
 ##### Response:
 	{
@@ -432,12 +421,7 @@
 ### /notification/delete
 #### Method: DELETE
 ##### Payload:
-	{
-		"notificationIds": [
-			"a1349f98-02f6-4296-b41c-3760fce6efc9",
-			"a6fb8f59-227e-4823-ad04-7368317cee0b"
-		]
-	}
+	/notification/delete?notificationId=a1349f98-02f6-4296-b41c-3760fce6efc9
 
 ##### Response:
 	{
@@ -581,12 +565,7 @@
 ### /report/delete
 #### Method: DELETE
 ##### Payload:
-	{
-		"reportIds": [
-			"bc8bee45-160b-47d2-8df2-03274143c91d",
-			...
-		]
-	}
+	/report/delete?reportId=bc8bee45-160b-47d2-8df2-03274143c91d
 
 ##### Response:
 	{

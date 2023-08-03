@@ -39,8 +39,8 @@ const reportDeleteRouter = router.delete(
   '/delete',
   async (request: Request, response: Response) => {
     try {
-      const { reportIds } = request.body;
-      const data = await deleteReports(reportIds);
+      const { reportId } = request.query;
+      const data = await deleteReports(String(reportId));
       responseHandler(data, request, response);
     } catch (error: Error | any) {
       const message = 'Failed to delete report';
