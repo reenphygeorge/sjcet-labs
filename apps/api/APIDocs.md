@@ -242,11 +242,7 @@
 			"46dea369-b600-4f8d-ae5e-52ea36957f35"
 		],
 		"labId": "ec75ee7c-8096-4874-8565-10b4568e6fb4",
-		"periods": [1, 2, 3],
-		"teachingStaff": [
-			"CSE154",
-			"CSE123"
-		]
+		"periods": [1, 2, 3]
 	}
 
 ##### Response:
@@ -268,8 +264,7 @@
 ### /attendance/studentDetails
 #### Method: GET
 ##### Payload:
-	/attendance/studentDetails?departmentId=8d7a4429-3a29-4c87-94d3-b64c1b9072f0&
-	semester=6&batch=B&labBatch=2
+	localhost:8000/attendance/studentDetails?departmentId=56b3fe8a-83e6-4184-9f1b-d0c976fc4f2e&semester=7&batch=B&page=3&entries=2&labBatch=2
 
 ##### Response:
 	{

@@ -8,6 +8,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
     select: {
       dayId: true,
       periodNumber: true,
+      courseCode: true,
     },
     where: {
       labId: reservationInfo.labId,
@@ -20,7 +21,7 @@ const reservationCreate = async (reservationInfo: ReservationInfo) => {
   reservationInfo.periods.forEach((periodNumber) => {
     labTimeTableInfo.forEach((timeTable) => {
       if (reservationInfo.dayId === timeTable.dayId) {
-        if (periodNumber === timeTable.periodNumber) {
+        if (periodNumber === timeTable.periodNumber && timeTable.courseCode !== null) {
           flag = true;
           conflictingPeriods.push({
             status: 'CONFLICTING',
