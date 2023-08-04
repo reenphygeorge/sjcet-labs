@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 import { useContext, useState } from 'react';
 import {
+  Box,
+  Flex,
   HStack,
   IconButton,
   Modal,
@@ -12,7 +14,10 @@ import {
   Tag,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
+import Link from 'next/router';
+import Lottie from 'lottie-react';
 import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
 import { Check, X } from 'react-feather';
@@ -21,9 +26,12 @@ import CustomCard from '@/components/CustomCard';
 import authGuard from '../../util/AuthGuard';
 import { LabSideReservation } from '@/types/UserData';
 import { UserContext } from '@/context/UserContext';
+import { reviewReservation } from '@/hooks/api/reservation';
+import nothinghere from '../../public/nothinghere.json';
 
 const Requests: NextPage = () => {
   const userContext = useContext(UserContext);
+  const toast = useToast();
 
   const [selectedRequest, setSelectedRequest] = useState<LabSideReservation>({
     id: '',
@@ -55,57 +63,77 @@ const Requests: NextPage = () => {
   };
 
   const accept = () => {
-    // console.log({
-    //   reservationId: selectedRequest.id,
-    //   status: 'APPROVED',
-    // });
-    onCloseRequestModal();
+    reviewReservation(selectedRequest.id, 'APPROVED').then(() => {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="green.300">
+            Requested Approved!
+          </Box>
+        ),
+      });
+      Link.push('/');
+    });
   };
   const reject = () => {
-    // console.log({
-    //   reservationId: selectedRequest.id,
-    //   status: 'REJECTED',
-    // });
-    onCloseRequestModal();
+    reviewReservation(selectedRequest.id, 'REJECTED').then(() => {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="red.50">
+            Requested Rejected!
+          </Box>
+        ),
+      });
+      Link.push('/');
+    });
   };
 
   return (
     <>
       <TopHeading heading="Lab Requests" subText="Accept/Decline" arrow />
-      {userContext?.userData.labData?.reservation.map(
-        ({ id, staffName, dateOfRequest, status }, key) =>
-          status === 'Requested' ? (
-            <CustomCard
-              onClick={() => {
-                openModal(key);
-              }}
-              iconComponent={false}
-              iconHover={false}
-              key={id}
-              properties={[
-                {
-                  id: nanoid(),
-                  value: `Prof. ${staffName}`,
-                  textProps: {
-                    color: 'black.25',
-                    fontSize: 'lg',
-                    fontWeight: 'bold',
+      {userContext?.userData.labData?.reservation.length !== 0 ? (
+        userContext?.userData.labData?.reservation.map(
+          ({ id, staffName, dateOfRequest, status }, key) =>
+            status === 'REQUESTED' ? (
+              <CustomCard
+                onClick={() => {
+                  openModal(key);
+                }}
+                iconComponent={false}
+                iconHover={false}
+                key={id}
+                properties={[
+                  {
+                    id: nanoid(),
+                    value: `Prof. ${staffName}`,
+                    textProps: {
+                      color: 'black.25',
+                      fontSize: 'lg',
+                      fontWeight: 'bold',
+                    },
                   },
-                },
-                {
-                  id: nanoid(),
-                  value: dateOfRequest,
-                  textProps: {
-                    color: 'black.25',
-                    fontSize: '15',
-                    fontWeight: 'medium',
+                  {
+                    id: nanoid(),
+                    value: dateOfRequest,
+                    textProps: {
+                      color: 'black.25',
+                      fontSize: '15',
+                      fontWeight: 'medium',
+                    },
                   },
-                },
-              ]}
-            />
-          ) : (
-            ''
-          )
+                ]}
+              />
+            ) : (
+              ''
+            )
+        )
+      ) : (
+        <Flex justifyContent="center">
+          <Box w={64} mb={36}>
+            <Lottie animationData={nothinghere} />
+          </Box>
+        </Flex>
       )}
 
       <Modal

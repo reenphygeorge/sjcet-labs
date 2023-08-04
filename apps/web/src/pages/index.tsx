@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 import Head from 'next/head';
-import { Box, Grid, Text } from '@chakra-ui/react';
+import { Box, Grid, Text, useToast } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useContext, useEffect, useState } from 'react';
 import { NextPage } from 'next';
@@ -22,6 +22,7 @@ type RouteOptions = {
 const Home: NextPage = () => {
   const { appSession } = useAuth();
   const userContext = useContext(UserContext);
+  const toast = useToast();
   const options: RouteOptions[] =
     userContext?.userData.labAdmin === false
       ? [
@@ -39,7 +40,16 @@ const Home: NextPage = () => {
 
   const changeOption = async (key: number, route: string) => {
     setSelectOption(key);
-    await Link.push(route);
+    if (route === 'attendance' || route === 'logs') {
+      toast({
+        position: 'top',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="purple.25">
+            Coming Soon !
+          </Box>
+        ),
+      });
+    } else await Link.push(route);
   };
 
   useEffect(() => {
@@ -62,7 +72,7 @@ const Home: NextPage = () => {
       {appSession === null ? (
         <LoginPage />
       ) : (
-        <Box>
+        <Box pb={20}>
           <Box my="20px">
             <Text fontSize="lg" lineHeight="0.5" fontWeight="black" color="black.50">
               Welcome

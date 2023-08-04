@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
   Grid,
+  HStack,
   Input,
   Modal,
   ModalBody,
@@ -29,7 +30,7 @@ import CustomCard from '@/components/CustomCard';
 import CustomButton from '@/components/CustomButton';
 import ReactSelect from '@/components/ReactSelect';
 import { UserContext } from '@/context/UserContext';
-import { bookLab } from '@/hooks/api/labs';
+import { bookLab } from '@/hooks/api/reservation';
 import { GeneralContext } from '@/context/GeneralContext';
 
 const PeriodSelect: NextPage = () => {
@@ -51,6 +52,13 @@ const PeriodSelect: NextPage = () => {
 
   const [summaryPage, setSummaryPage] = useState<number>(1);
 
+  type Conflict = {
+    status: string;
+    dayId: string;
+    periodNumber: string;
+  };
+  const [conflictData, setConflictData] = useState<Conflict[]>();
+
   const changeDay = (key: number) => {
     setSelectedPeriods([]);
     setDayNumber(key);
@@ -69,7 +77,7 @@ const PeriodSelect: NextPage = () => {
     }
   };
 
-  const periodNos = [1, 2, 3, 4, 5, 6];
+  const periodNos = [1, 2, 3, 4, 5, 6, 7];
 
   const toast = useToast();
 
@@ -100,6 +108,12 @@ const PeriodSelect: NextPage = () => {
     isOpen: isOpenSummaryModal,
     onOpen: onOpenSummaryModal,
     onClose: onCloseSummaryModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenConflictModal,
+    onOpen: onOpenConflictModal,
+    onClose: onCloseConflictModal,
   } = useDisclosure();
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -134,16 +148,21 @@ const PeriodSelect: NextPage = () => {
   };
 
   const bookNow = async () => {
-    bookLab(bookingDetails).then(() => {
-      toast({
-        position: 'bottom',
-        render: () => (
-          <Box color="white" p={3} rounded="12px" bg="green.300">
-            Booking Success
-          </Box>
-        ),
-      });
-      Link.push('/');
+    bookLab(bookingDetails).then((data) => {
+      if (data.data[0].status === 'CONFLICTING') {
+        setConflictData(data.data);
+        onOpenConflictModal();
+      } else {
+        toast({
+          position: 'bottom',
+          render: () => (
+            <Box color="white" p={3} rounded="12px" bg="green.300">
+              Booking Success
+            </Box>
+          ),
+        });
+        Link.push('/');
+      }
     });
   };
 
@@ -341,6 +360,43 @@ const PeriodSelect: NextPage = () => {
                 disabled={false}
               />
             </FormControl>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Conflict */}
+      <Modal
+        isCentered
+        size="xs"
+        onClose={onCloseConflictModal}
+        isOpen={isOpenConflictModal}
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay bg="rgba(255, 255, 255, 0.15)" backdropFilter="blur(20px)" />
+        <ModalContent>
+          <ModalHeader>Period Conflict</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {conflictData?.map(({ dayId, periodNumber }) => (
+              <Box key={periodNumber + dayId}>
+                <HStack mb={4}>
+                  <Text fontSize="md" fontWeight="semibold">
+                    Day:
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md" mb="1">
+                    {dayId}
+                  </Text>
+                </HStack>
+                <HStack mb={4}>
+                  <Text fontSize="md" fontWeight="semibold">
+                    Period No:
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md" mb="2">
+                    {periodNumber}
+                  </Text>
+                </HStack>
+              </Box>
+            ))}
           </ModalBody>
         </ModalContent>
       </Modal>

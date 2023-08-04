@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import CustomCard from '@/components/CustomCard';
 import TopHeading from '@/components/TopHeading';
 import { BookLabContext } from '@/context/BookLabContext';
-import { getLabRervations } from '@/hooks/api/labs';
+import { getLabRervations } from '@/hooks/api/reservation';
 
 const LabSelect: NextPage = () => {
   const bookLabContext = useContext(BookLabContext);

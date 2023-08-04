@@ -15,7 +15,7 @@ import {
 import { useContext } from 'react';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
-import { getFreeLabs } from '@/hooks/api/labs';
+import { getFreeLabs } from '@/hooks/api/reservation';
 import { BookLabContext } from '@/context/BookLabContext';
 
 const LabCapacitySelect: NextPage = () => {

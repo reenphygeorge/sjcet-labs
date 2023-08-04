@@ -49,6 +49,11 @@ const Profile: NextPage = () => {
   const toast = useToast();
   const switchAccount = () => {
     const labAdmin: boolean = !userContext?.userData.labAdmin;
+    patchUser({
+      id: userContext?.userData.id,
+      registerNumber: userContext?.userData.registerNumber,
+      labAdmin,
+    });
     userContext?.setUserData({
       ...userContext?.userData,
       labAdmin,
@@ -85,7 +90,7 @@ const Profile: NextPage = () => {
   };
 
   return (
-    <VStack mx="5">
+    <VStack mx="5" pb={20}>
       <Text fontSize="2xl" fontWeight="semibold" color="black.50">
         My Profile
       </Text>

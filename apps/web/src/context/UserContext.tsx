@@ -12,7 +12,6 @@ const UserProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const userDataFetched: UserContextData = fetchUserData();
   const [userData, setUserData] = useState<UserContextData>(userDataFetched);
   const userContextData = useMemo(() => ({ userData, setUserData }), [userData, setUserData]);
-  // const authID = '';
   return <UserContext.Provider value={userContextData}>{children}</UserContext.Provider>;
 };
 

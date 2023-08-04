@@ -47,7 +47,7 @@ const TimetableCard: FC = () => {
           </>
         </Grid>
         <Grid
-          templateColumns="repeat(6, 1fr)"
+          templateColumns="repeat(7, 1fr)"
           overflowX="scroll"
           sx={{
             scrollbarWidth: 'thin',

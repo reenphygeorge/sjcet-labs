@@ -20,6 +20,7 @@ import {
 import { ChangeEvent, useContext, useState } from 'react';
 import { NextPage } from 'next';
 import { nanoid } from 'nanoid';
+import Link from 'next/router';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
@@ -28,7 +29,7 @@ import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
 import { ReportData } from '@/types/UserData';
 import { GeneralContext } from '@/context/GeneralContext';
-import { NumberOptions } from '@/types/ReactSelect';
+import { createReports } from '@/hooks/api/report';
 
 const Reports: NextPage = () => {
   const toast = useToast();
@@ -44,27 +45,23 @@ const Reports: NextPage = () => {
     status: '',
     systemNo: [],
   });
-
   const [newReportData, setNewReportData] = useState<NewReportData>({
-    registerNumber:
+    professorId:
       userContext?.userData.registerNumber !== undefined
         ? userContext?.userData.registerNumber
         : null,
-    systemNo: [],
-    labName: 'Software Computing Lab',
-    issue: '',
+    systems: [],
+    labId: labs[0].id,
+    issueDescription: '',
   });
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (event.target.id === 'systemNo') {
-      const systemNo: NumberOptions[] = event.target.value.split(' ').map((value) => ({
-        value: parseInt(value, 10),
-        label: `${value}`,
-      }));
+    if (event.target.id === 'systems') {
+      const systems: number[] = event.target.value.split(' ').map((value) => parseInt(value, 10));
 
       setNewReportData({
         ...newReportData,
-        systemNo: [...systemNo],
+        systems: [...systems],
       });
     } else {
       setNewReportData({ ...newReportData, [event.target.id]: event.target.value });
@@ -91,62 +88,58 @@ const Reports: NextPage = () => {
   };
 
   const reportNow = () => {
-    toast({
-      position: 'bottom',
-      render: () => (
-        <Box color="white" p={3} rounded="12px" bg="green.50">
-          Reported
-        </Box>
-      ),
+    createReports(newReportData).then(() => {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="green.300">
+            Reported
+          </Box>
+        ),
+      });
     });
-    // console.log(newReportData);
     onCloseNewReportModal();
+    Link.push('/');
   };
 
   return (
-    <>
+    <Box pb={20}>
       <TopHeading heading="Report System" subText="Reported system errors" arrow />
-      {userContext?.userData.report.length !== 0 ? (
-        userContext?.userData.report.map(({ id, labName, date, status }, key) => (
-          <ElementCard
-            onClick={() => {
-              openReportModal(key);
-            }}
-            key={id}
-            circleProps={{
-              borderRadius: '12px',
-              w: '90px',
-              h: '30px',
-              bg: status === 'Pending' ? 'red.50' : 'green.50',
-            }}
-            circleInnerText={status}
-            properties={[
-              {
-                id: nanoid(),
-                value: labName,
-                textProps: {
-                  color: 'black.25',
-                  fontSize: 'md',
-                  fontWeight: 'bold',
-                },
+      {userContext?.userData.report.map(({ id, labName, date, status }, key) => (
+        <ElementCard
+          onClick={() => {
+            openReportModal(key);
+          }}
+          key={id}
+          circleProps={{
+            borderRadius: '12px',
+            w: '90px',
+            h: '30px',
+            bg: status === 'PENDING' ? 'red.50' : 'green.50',
+          }}
+          circleInnerText={status}
+          properties={[
+            {
+              id: nanoid(),
+              value: labName,
+              textProps: {
+                color: 'black.25',
+                fontSize: 'md',
+                fontWeight: 'bold',
               },
-              {
-                id: nanoid(),
-                value: date,
-                textProps: {
-                  color: 'black.25',
-                  fontSize: '15',
-                  fontWeight: 'medium',
-                },
+            },
+            {
+              id: nanoid(),
+              value: date,
+              textProps: {
+                color: 'black.25',
+                fontSize: '15',
+                fontWeight: 'medium',
               },
-            ]}
-          />
-        ))
-      ) : (
-        <Text fontSize="md" mb={4} fontWeight="semibold">
-          Nothing to Show
-        </Text>
-      )}
+            },
+          ]}
+        />
+      ))}
       <CustomButton
         onClick={() => {
           onOpenNewReportModal();
@@ -220,17 +213,23 @@ const Reports: NextPage = () => {
           <ModalBody>
             <FormControl>
               <FormLabel pl="1">Lab Name</FormLabel>
-              <Select bg="gray.50" mb="7" rounded="12px" id="labName" onChange={handleFormChange}>
+              <Select bg="gray.50" mb="7" rounded="12px" id="labId" onChange={handleFormChange}>
                 {labs.map(({ id, labName }) => (
-                  <option id={id} key={id} value={labName}>
+                  <option id={id} key={id} value={id}>
                     {labName}
                   </option>
                 ))}
               </Select>
               <FormLabel pl="1">System No</FormLabel>
-              <Input bg="gray.50" id="systemNo" mb="7" rounded="12px" onChange={handleFormChange} />
+              <Input bg="gray.50" id="systems" mb="7" rounded="12px" onChange={handleFormChange} />
               <FormLabel pl="1">Describe the issue</FormLabel>
-              <Input bg="gray.50" id="issue" mb="7" rounded="12px" onChange={handleFormChange} />
+              <Input
+                bg="gray.50"
+                id="issueDescription"
+                mb="7"
+                rounded="12px"
+                onChange={handleFormChange}
+              />
               <CustomButton
                 onClick={() => {
                   reportNow();
@@ -243,7 +242,7 @@ const Reports: NextPage = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

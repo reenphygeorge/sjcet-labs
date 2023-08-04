@@ -11,6 +11,7 @@ type Profile = {
   name?: string;
   email?: string;
   phoneNumber?: string;
+  labAdmin?: boolean;
 };
 
 type UserContextData = {
@@ -138,7 +139,6 @@ type LabSideReport = {
 
 type LabData = {
   id: string;
-  labName: string;
   capacity: number;
   roomNumber: string;
   labName: string;

@@ -1,5 +1,3 @@
-import { NumberOptions } from './ReactSelect';
-
 // type ReportData = {
 //   id: string;
 //   date: string;
@@ -21,10 +19,10 @@ type SystemNos = {
 };
 
 type NewReportData = {
-  registerNumber: string | null;
-  systemNo: NumberOptions[];
-  labName: string;
-  issue: string;
+  professorId: string | null;
+  systems: number[];
+  labId: string;
+  issueDescription: string;
 };
 
 export { LabList, NewReportData };

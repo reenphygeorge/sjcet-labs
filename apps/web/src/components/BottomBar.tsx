@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Box, Card, Flex, useMediaQuery } from '@chakra-ui/react';
+import { Box, Card, Flex, useMediaQuery, useToast } from '@chakra-ui/react';
 import Link from 'next/router';
 import { FC } from 'react';
 import { Bell, Home, User } from 'react-feather';
@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 
 const BottomBar: FC = () => {
   const { appSession } = useAuth();
+  const toast = useToast();
 
   const changeScreen = (option: string) => {
     const path = option === 'home' ? '/' : option;
@@ -27,7 +28,18 @@ const BottomBar: FC = () => {
         >
           <Flex justify="space-around" h="50px" align="center">
             <Box>
-              <Bell />
+              <Bell
+                onClick={() => {
+                  toast({
+                    position: 'top',
+                    render: () => (
+                      <Box color="white" p={3} rounded="12px" bg="purple.25">
+                        Coming Soon !
+                      </Box>
+                    ),
+                  });
+                }}
+              />
             </Box>
             <Box>
               <Home onClick={() => changeScreen('home')} />

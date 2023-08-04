@@ -2,6 +2,7 @@
 import { useContext, useState } from 'react';
 import {
   Box,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,12 +17,15 @@ import {
 import { NextPage } from 'next';
 import Link from 'next/router';
 import { nanoid } from 'nanoid';
+import Lottie from 'lottie-react';
 import ElementCard from '@/components/ElementCard';
 import TopHeading from '@/components/TopHeading';
 import CustomButton from '@/components/CustomButton';
 import authGuard from '../../util/AuthGuard';
 import { UserContext } from '@/context/UserContext';
 import { ReservationData } from '@/types/UserData';
+import { deleteReservation } from '@/hooks/api/reservation';
+import nothinghere from '../../public/nothinghere.json';
 
 const ViewBookings: NextPage = () => {
   const toast = useToast();
@@ -56,22 +60,20 @@ const ViewBookings: NextPage = () => {
   };
 
   const cancelNow = () => {
-    toast({
-      position: 'bottom',
-      render: () => (
-        <Box color="white" p={3} rounded="12px" bg="green.300">
-          Booking Cancelled
-        </Box>
-      ),
+    deleteReservation(selectedBooking.id).then(() => {
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color="white" p={3} rounded="12px" bg="green.300">
+            Booking Cancelled
+          </Box>
+        ),
+      });
+      Link.push('/');
     });
-    Link.push('/');
-    // console.log({
-    //   registerNumber: userContext?.userData.registerNumber,
-    //   reservationId: selectedBooking.id,
-    // });
   };
   return (
-    <>
+    <Box pb={20}>
       <TopHeading heading="My Bookings" subText="View my bookings" arrow />
       {userContext?.userData.reservation.length !== 0 ? (
         userContext?.userData.reservation.map(({ id, labName, dateOfRequest, status }, key) => (
@@ -116,9 +118,11 @@ const ViewBookings: NextPage = () => {
           />
         ))
       ) : (
-        <Text fontSize="md" mb={4} fontWeight="semibold">
-          Nothing to Show
-        </Text>
+        <Flex justifyContent="center">
+          <Box w={64} mb={36}>
+            <Lottie animationData={nothinghere} />
+          </Box>
+        </Flex>
       )}
 
       <Modal
@@ -181,7 +185,7 @@ const ViewBookings: NextPage = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

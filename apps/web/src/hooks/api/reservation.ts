@@ -4,7 +4,7 @@ import { LabBookingDetails } from '@/types/BookLab';
 
 const config = {
   headers: {
-    'Content-Type': 'application/json', // Specify the content type for the request
+    'Content-Type': 'application/json',
   },
 };
 
@@ -27,4 +27,19 @@ const bookLab = async (bookingData: LabBookingDetails) => {
   return data;
 };
 
-export { getFreeLabs, getLabRervations, bookLab };
+const deleteReservation = async (reservationInfo: string) => {
+  const { data } = await apiHandler.delete(
+    `/reservation/delete?reservationInfo=${reservationInfo}`
+  );
+  return data;
+};
+
+const reviewReservation = async (reservationId: string, status: 'APPROVED' | 'REJECTED') => {
+  const { data } = await apiHandler.patch(`/reservation/review`, {
+    reservationId,
+    status,
+  });
+  return data;
+};
+
+export { getFreeLabs, getLabRervations, bookLab, deleteReservation, reviewReservation };
